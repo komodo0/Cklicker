@@ -1,0 +1,82 @@
+<!--- {% load staticfiles %} --->
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="static/templates/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'static/templates/style.css' %}">
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/fileManager/grid.css" %}'>
+
+    <title>Сквозная диагностика</title>
+
+</head>
+<body onload="slider('slider',0)">
+
+<div class="container main-container">
+    <div class="jumbotron">
+        <table class="main-table">
+            <tr>
+                <td colspan="3" class="ramka section-title">Сквозная диагностика Call-центра</td>
+            </tr>
+            <tr>
+                <td rowspan="4" class="ramka section-file-manager">
+
+                    {% block file_manager %}
+                    {% endblock %}
+
+                </td>
+                <td rowspan="2" class="ramka section-variants">
+                    <div class="section-variants-title">
+
+                    {% block state_move %}{% endblock %}
+
+
+                    </div>
+                    <div class="wrap-variants b-init b-target">
+
+                    {% block state_variants %}{% endblock %}
+
+                    </div>
+
+                    <div class="btn btn-primary confirm-button">OK!</div>
+
+                </td>
+                <td class="ramka reserved">=Reserved 1=</td>
+            </tr>
+            </tr>
+            <tr>
+
+                <td class="ramka reserved">=Reserved 2=</td>
+            </tr>
+            </tr>
+            <tr>
+                <td class="ramka section-results">
+                    <div class="form-group">
+                        <textarea class="form-control section-results-txt" rows="3" id="comment">Составление коментария, промежуточный итог, который можно редактировать</textarea>
+                    </div>
+                </td>
+                <td class="ramka reserved">=Reserved 3=</td>
+            </tr>
+            </tr>
+            <tr>
+                <td class="ramka section-tips">
+                    {% block tips %}{% endblock %}
+                </td>
+                <td class="ramka reserved">=Reserved 4=</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src='{% static "static/templates/jquery.min.js" %}'></script>
+<script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
+<script src='{% static "static/templates/fileManager/tree_toggle.js" %}'></script>
+    <script src='{% static "static/templates/variantsBuilder.js" %}'></script>
+</body>
+</html>

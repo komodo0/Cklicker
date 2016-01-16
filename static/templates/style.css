@@ -1,0 +1,200 @@
+body {
+	padding-top:10px;
+}
+
+hr{
+	
+	margin-top:2px!important;
+	margin-bottom:2px!important;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.checkbox{
+	margin-top:0!important;
+	margin-bottom:0!important;
+}
+
+.radio{
+	margin-top:0!important;
+	margin-bottom:0!important;
+}
+
+.input-cable{
+	width:35px!important;
+	display:inline!important;
+	padding-left:4px!important;
+	padding-right:4px!important;
+	height:20px!important;
+}
+
+.b-list-item_active {
+	box-shadow: 0px 0px 40px red;
+	border:1px solid red!important;
+}
+
+.main-container{
+
+}
+.ramka{
+	border:1px solid black;
+	//background-color:white!important;
+}
+
+.main-table{
+	border:1px solid black;
+}
+
+.confirm-button{
+	padding:17px!important;
+	margin:10px!important;
+	width:150px;
+	font-size:25px!important;
+}
+
+.section-title{
+	background-color:red;
+	height:50px;
+	text-align:center;
+	font-size:30px;
+	width:1020px;
+}
+
+.section-file-manager{
+	vertical-align:top;
+	text-align:left;
+	background-color:green;
+	width:270px;
+}
+
+.section-variants{
+	background-color:blue;
+	padding-left:22px;
+	padding-right:22px;
+	width:750px;
+	vertical-align:top;
+	text-align:center;
+}
+
+.section-variants-title{
+	text-align:center;
+	font-size:25px;
+	padding:7px;
+	border:1px solid black;
+	margin:10px;
+	background-color:white;
+}
+
+.section-results{
+	background-color:pink;
+	padding:3px;
+}
+
+.section-results-txt{
+	resize: none;
+}
+
+.form-group{
+	marging:0!important;
+}
+
+.section-tips{
+	background-color:brown;
+	padding-left:13px;
+	padding-right:13px;
+	padding-bottom:13px;
+	height:250px;
+	vertical-align:top;
+}
+
+.reserved{
+	background-color:white;
+	display:none;
+}
+
+/*Горизонтальный скроллер вариантов*/
+.wrap-variants {
+	/*border:1px solid black;*/
+	width: 700px;
+	height: auto;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+.wrap-variants ul {
+	min-width: 100%;
+	white-space: nowrap;
+	padding: 0;
+	
+}
+.wrap-variants li {
+	display:inline-block;
+	vertical-align:top;
+	width:200px;
+	height:270px;
+	margin-left:10px;
+	margin-right:10px;
+	border:1px solid black;
+	border-radius: 10px;
+	background-color:white;
+	cursor: pointer;
+}
+
+/*Вертикально-горизонтальный скроллер файл-менеджера*/
+.wrap-file-manager {
+	/*border:1px solid black;*/
+	width:270px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+.wrap-file-manager ul {
+	min-width: 100%;
+	white-space: nowrap;
+	padding: 0;
+	
+}
+.wrap-file-manager li {
+	margin-top:3px;
+}
+
+
+/*теги вариантов*/
+.variant{
+	margin:3px;
+	white-space: normal;
+	
+	text-align:left;
+}
+
+.var-name{
+	font-size:20px;
+	text-align:center;
+}
+/*Раскрывающийся список подсказок*/
+#slider {
+ width: 720px;
+ color: #66666;
+ }
+.slider-header {
+	width: 720px;
+	border: 1px solid #000;
+	padding: 5px;
+	margin-top: 5px;
+	cursor: pointer;
+	text-align: left;
+	font-size: 20px;
+	 background-color:red;
+ }
+.slider-header:hover {
+	color: #666666;
+ }
+.slider-content {
+	overflow: hidden;
+ }
+.slider-text {
+	width: 720px;
+	border: 1px solid #cccccc;
+	border-top: none;
+	padding: 4px;
+	text-align: left;
+	background: yellow;
+ }

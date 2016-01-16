@@ -1,0 +1,176 @@
+{%extends 'main.html' %}
+
+{% block file_manager %}
+                    <div class="wrap-file-manager">
+                        <ul>
+                            <li>
+                                <div onclick="tree_toggle(arguments[0])">
+                                    <ul class="Container">
+                                        <li class="Node IsRoot ExpandClosed">
+                                            <div class="Expand"></div>
+                                            <input type="checkbox">
+                                            <div class="Content">Item 1</div>
+                                            <ul class="Container">
+                                                <li class="Node ExpandClosed">
+                                                    <div class="Expand"></div>
+                                                    <input type="checkbox">
+                                                    <div class="Content">Item 1.1</div>
+                                                    <ul class="Container">
+                                                        <li class="Node ExpandLeaf IsLast">
+                                                            <div class="Expand"></div>
+                                                            <input type="checkbox">
+                                                            <div class="Content">Item 1.1.2</div>
+                                                            <ul class="Container">
+                                                                <li class="Node ExpandLeaf IsLast">
+                                                                    <div class="Expand"></div>
+                                                                    <input type="checkbox">
+                                                                    <div class="Content">Item
+                                                                        1.1.2.1wsefwefwefwefwefweewfewewfwefwefwefwef
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="Node ExpandLeaf IsLast">
+                                                    <div class="Expand"></div>
+                                                    <input type="checkbox">
+                                                    <div class="Content">Item 1.2</div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="Node IsRoot ExpandClosed">
+                                            <div class="Expand"></div>
+                                            <input type="checkbox">
+                                            <div class="Content">Item 2</div>
+                                            <ul class="Container">
+                                                <li class="Node ExpandLeaf IsLast">
+                                                    <div class="Expand"></div>
+                                                    <input type="checkbox">
+                                                    <div class="Content">Item 2.1</div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="Node ExpandClosed IsRoot IsLast">
+                                            <div class="Expand"></div>
+                                            <input type="checkbox">
+                                            <div class="Content">Item 3</div>
+                                            <ul class="Container">
+                                                <li class="Node ExpandLeaf IsLast">
+                                                    <div class="Expand"></div>
+                                                    <input type="checkbox">
+                                                    <div class="Content">Item 3.1</div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+<hr>
+
+
+
+
+{% endblock%}
+
+{% tree states|astree:"parent" %}
+{{item}}
+{% endtree %}
+
+{%block state_move %}
+
+Кабель диагностику мне запили!
+
+{% endblock %}
+
+
+{% block state_variants %}
+
+                        <ul class="b-list">
+                            <li class="b-list-item">
+                                    <div class="variant">
+                                    <div class="var-name">Коллизия?!</div>
+                                    <div class="var-description">
+                                        Продиагностируй кабель при помощи заклинаний из гарри поттера
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="">Я голоден</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="">У клиента 2 мак адреса</label>
+                                        </div>
+                                        <hr/>
+                                        <div class="radio">
+                                            <label><input type="radio" name="optradio" checked>У клиента руки</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" name="optradio">У клиента клешни</label>
+                                        </div>
+                                        <hr/>
+                                        <div class="form-group">
+                                            Порван на <input type="text" class="form-control input-cable " id="usr">
+                                            метре.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="b-list-item">
+                                    <div class="variant">
+                                    <div class="var-name">Вариант 2</div>
+                                    <div class="var-description">
+                                        Описание варианта, которое подгружается из конфигурационного файла в
+                                        соответствующей директории.
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="b-list-item">
+                                    <div class="variant">
+                                    <div class="var-name">Вариант 3</div>
+                                    <div class="var-description">
+                                        Описание варианта, которое подгружается из конфигурационного файла в
+                                        соответствующей директории.
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="b-list-item">
+                                    <div class="variant">
+                                    <div class="var-name">Вариант 4</div>
+                                    <div class="var-description">
+                                        Описание варианта, которое подгружается из конфигурационного файла в
+                                        соответствующей директории.
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+{% endblock %}
+
+
+
+{% block tips %}
+                        <div class="slider-header" id="1-header">Подсказка 1</div>
+                        <div class="slider-content" id="1-content">
+                            <div class="slider-text">
+                                Содержимое блока.<br>
+                                Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая
+                                хурма Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и
+                                т.д.Всякая хурма Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма
+                                и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая
+                                хурма и т.д.
+                            </div>
+                        </div>
+                        <div class="slider-header" id="2-header">Подсказка 2</div>
+                        <div class="slider-content" id="2-content">
+                            <div class="slider-text">
+                                Содержимое блока.
+                            </div>
+                        </div>
+                        <div class="slider-header" id="3-header">Подсказка 3</div>
+                        <div class="slider-content" id="3-content">
+                            <div class="slider-text">
+                                Содержимое блока.
+                            </div>
+                        </div>
+{% endblock %}
