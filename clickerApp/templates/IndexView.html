@@ -1,176 +1,226 @@
 {%extends 'main.html' %}
+<!--- {% load staticfiles %} --->
+
 
 {% block file_manager %}
-                    <div class="wrap-file-manager">
-                        <ul>
-                            <li>
-                                <div onclick="tree_toggle(arguments[0])">
-                                    <ul class="Container">
-                                        <li class="Node IsRoot ExpandClosed">
-                                            <div class="Expand"></div>
-                                            <input type="checkbox">
-                                            <div class="Content">Item 1</div>
-                                            <ul class="Container">
-                                                <li class="Node ExpandClosed">
-                                                    <div class="Expand"></div>
-                                                    <input type="checkbox">
-                                                    <div class="Content">Item 1.1</div>
-                                                    <ul class="Container">
-                                                        <li class="Node ExpandLeaf IsLast">
-                                                            <div class="Expand"></div>
-                                                            <input type="checkbox">
-                                                            <div class="Content">Item 1.1.2</div>
-                                                            <ul class="Container">
-                                                                <li class="Node ExpandLeaf IsLast">
-                                                                    <div class="Expand"></div>
-                                                                    <input type="checkbox">
-                                                                    <div class="Content">Item
-                                                                        1.1.2.1wsefwefwefwefwefweewfewewfwefwefwefwef
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="Node ExpandLeaf IsLast">
-                                                    <div class="Expand"></div>
-                                                    <input type="checkbox">
-                                                    <div class="Content">Item 1.2</div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="Node IsRoot ExpandClosed">
-                                            <div class="Expand"></div>
-                                            <input type="checkbox">
-                                            <div class="Content">Item 2</div>
-                                            <ul class="Container">
-                                                <li class="Node ExpandLeaf IsLast">
-                                                    <div class="Expand"></div>
-                                                    <input type="checkbox">
-                                                    <div class="Content">Item 2.1</div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="Node ExpandClosed IsRoot IsLast">
-                                            <div class="Expand"></div>
-                                            <input type="checkbox">
-                                            <div class="Content">Item 3</div>
-                                            <ul class="Container">
-                                                <li class="Node ExpandLeaf IsLast">
-                                                    <div class="Expand"></div>
-                                                    <input type="checkbox">
-                                                    <div class="Content">Item 3.1</div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+<div class="wrap-file-manager">
+    <ul>
+        <li>
+            <div id="file_manager" onclick="tree_toggle(arguments[0])">
+                {% for state in states %}
+                {{ state.pre_tags|safe}}
+                <div class="Expand"></div>
+                <input type="checkbox">
+                <div class="Content b-list-item" id="tree_{{ state.id }}">{{ state.state_title }}</div>
+                {{ state.post_tags|safe}}
+                {% endfor %}
+            </div>
 
-<hr>
-
-
-
-
+        </li>
+    </ul>
+</div>
 {% endblock%}
 
-{% tree states|astree:"parent" %}
-{{item}}
-{% endtree %}
 
 {%block state_move %}
+{%for state in states %}
 
-Кабель диагностику мне запили!
+{% if state.id == 1 %}
+<div class="move_title_elem visible" id="title_{{state.id}}">{{ state.move_title }}
+    <div class="question pull-right" id="question_{{state.id}}">
+        <img src="{% static '/static/static/templates/question.png' %}" class="img">
+    </div>
+</div>
+{% else %}
+<div class="move_title_elem not_visible" id="title_{{state.id}}">{{ state.move_title }}
+    <div class="question pull-right" id="question_{{state.id}}">
+        <img src="{% static '/static/static/templates/question.png' %}" class="img">
+    </div>
+</div>
+{% endif %}
+{%endfor%}
 
 {% endblock %}
 
 
 {% block state_variants %}
 
-                        <ul class="b-list">
-                            <li class="b-list-item">
-                                    <div class="variant">
-                                    <div class="var-name">Коллизия?!</div>
-                                    <div class="var-description">
-                                        Продиагностируй кабель при помощи заклинаний из гарри поттера
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="">Я голоден</label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="">У клиента 2 мак адреса</label>
-                                        </div>
-                                        <hr/>
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" checked>У клиента руки</label>
-                                        </div>
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio">У клиента клешни</label>
-                                        </div>
-                                        <hr/>
-                                        <div class="form-group">
-                                            Порван на <input type="text" class="form-control input-cable " id="usr">
-                                            метре.
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="b-list-item">
-                                    <div class="variant">
-                                    <div class="var-name">Вариант 2</div>
-                                    <div class="var-description">
-                                        Описание варианта, которое подгружается из конфигурационного файла в
-                                        соответствующей директории.
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="b-list-item">
-                                    <div class="variant">
-                                    <div class="var-name">Вариант 3</div>
-                                    <div class="var-description">
-                                        Описание варианта, которое подгружается из конфигурационного файла в
-                                        соответствующей директории.
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="b-list-item">
-                                    <div class="variant">
-                                    <div class="var-name">Вариант 4</div>
-                                    <div class="var-description">
-                                        Описание варианта, которое подгружается из конфигурационного файла в
-                                        соответствующей директории.
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+<ul class="b-list">
+
+    {% for state in states %}
+
+    {% if state.parent_id == 1 %}
+
+    <li class="b-list-item visible" id="variant_{{state.id}}">
+        <div class="variant">
+            <div class="var-name">{{state.state_title}}</div>
+            <hr>
+            <div class="var-description">
+                {% for txtInp in text_inputs %}
+                {% if txtInp.state_input_id_id == state.id %}
+                <div class="text" id="input_{{ txtInp.id }}">
+                {{txtInp.text_input_title}} <input type="text" class="form-control input-cable"
+                                                   style="width:{{txtInp.text_input_max_width}}px;"> {{txtInp.text_input_after}}
+                    </div>
+                <hr>
+                {% endif %}
+                {% endfor %}
+
+
+                {% for checkInp in checkbox_inputs %}
+                {% if checkInp.state_input_id_id == state.id %}
+                <div class="checkbox" id="input_{{ checkInp.id }}">
+                    <label><input type="checkbox" value="{{checkInp.checkbox_input_title}}">{{checkInp.checkbox_input_title}}</label>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <hr>
+
+                {% for radInp in radio_inputs %}
+
+                {% if radInp.state_input_id_id == state.id %}
+
+                <div class="radio" id="input_{{ radInp.id }}">
+                    {{ radInp.radio_input_title }}:<br>
+                    {% for radInpVar in radio_input_variants %}
+
+                    {% if radInp.id == radInpVar.radio_input_id_id %}
+
+                    <label><input type="radio" name="{{radInp.id}}" id="radio_var_{{radInpVar.id}}" checked>{{radInpVar.radio_input_variant_title}}</label><br>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                </div>
+                <hr>
+
+                {% endif %}
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </li>
+
+    {% else %}
+
+    <li class="b-list-item not_visible" id="variant_{{state.id}}">
+        <div class="variant">
+            <div class="var-name">{{state.state_title}}</div>
+
+            <hr>
+
+            <div class="var-description">
+
+                {% for txtInp in text_inputs %}
+
+                {% if txtInp.state_input_id_id == state.id %}
+
+                {{txtInp.text_input_title}}
+                <input type="text" class="form-control input-cable" size="{{txtInp.text_input_max_width}}">
+                {{txtInp.text_input_after}}
+
+                <hr>
+                {% endif %}
+
+                {% endfor %}
+
+
+                {% for checkInp in checkbox_inputs %}
+
+                {% if checkInp.state_input_id_id == state.id %}
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="{{checkInp.checkbox_input_title}}">{{checkInp.checkbox_input_title}}
+                    </label>
+                </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+                <hr>
+
+                {% for radInp in radio_inputs %}
+
+                {% if radInp.state_input_id_id == state.id %}
+
+                <div class="radio">
+
+                    {{ radInp.radio_input_title }}:<br>
+
+                    {% for radInpVar in radio_input_variants %}
+
+                    {% if radInp.id == radInpVar.radio_input_id_id %}
+
+                    <label><input type="radio" name="{{radInp.id}}">{{radInpVar.radio_input_variant_title}}</label><br>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                </div>
+                <hr>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </li>
+
+    {% endif %}
+
+    {% endfor %}
+
+</ul>
 
 {% endblock %}
 
 
-
 {% block tips %}
-                        <div class="slider-header" id="1-header">Подсказка 1</div>
-                        <div class="slider-content" id="1-content">
-                            <div class="slider-text">
-                                Содержимое блока.<br>
-                                Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая
-                                хурма Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и
-                                т.д.Всякая хурма Всякая хурма и т.д. Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма
-                                и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая хурма и т.д.Всякая
-                                хурма и т.д.
-                            </div>
-                        </div>
-                        <div class="slider-header" id="2-header">Подсказка 2</div>
-                        <div class="slider-content" id="2-content">
-                            <div class="slider-text">
-                                Содержимое блока.
-                            </div>
-                        </div>
-                        <div class="slider-header" id="3-header">Подсказка 3</div>
-                        <div class="slider-content" id="3-content">
-                            <div class="slider-text">
-                                Содержимое блока.
-                            </div>
-                        </div>
+
+
+<div class="commentsContainer">
+
+    {% for tip in tips %}
+
+    {% if tip.state_id_id == 1 %}
+
+    <div class="tip visible" id="tip_parent_{{tip.state_id_id}}">
+        <div class="slider-header">
+            {{ tip.tip_title }}
+        </div>
+        <div class="slider-content">
+            <div class="slider-text">
+                {{ tip.tip_description }}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="tip not_visible" id="tip_parent_{{tip.state_id_id}}">
+        <div class="slider-header">
+            {{ tip.tip_title }}
+        </div>
+        <div class="slider-content">
+            <div class="slider-text">
+                {{ tip.tip_description }}
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+
+</div>
+
+
 {% endblock %}

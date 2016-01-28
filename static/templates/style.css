@@ -21,7 +21,6 @@ hr{
 }
 
 .input-cable{
-	width:35px!important;
 	display:inline!important;
 	padding-left:4px!important;
 	padding-right:4px!important;
@@ -36,13 +35,10 @@ hr{
 .main-container{
 
 }
-.ramka{
-	border:1px solid black;
-	//background-color:white!important;
-}
+
 
 .main-table{
-	border:1px solid black;
+
 }
 
 .confirm-button{
@@ -83,6 +79,7 @@ hr{
 	border:1px solid black;
 	margin:10px;
 	background-color:white;
+	vertical-align: middle;
 }
 
 .section-results{
@@ -109,7 +106,7 @@ hr{
 
 .reserved{
 	background-color:white;
-	display:none;
+	//display:none;
 }
 
 /*Горизонтальный скроллер вариантов*/
@@ -197,4 +194,84 @@ hr{
 	padding: 4px;
 	text-align: left;
 	background: yellow;
+ }
+
+ .question{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right:20px;
+    position: relative;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+    border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    padding: 0;
+    cursor: pointer;
+ }
+
+.question:hover{
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-right:20px;
+    position: relative;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+    border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    padding: 0;
+    cursor: pointer;
+    cursor: pointer;
+ }
+
+
+.question:active{
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-right:20px;
+    position: relative;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+    border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+    padding: 0;
+    cursor: pointer;
+    cursor: pointer;
+ }
+
+
+
+ .question img{
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    height: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+ }
+
+ .not_visible{
+    display:none!important;
  }

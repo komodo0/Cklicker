@@ -1,16 +1,102 @@
 # coding: utf-8
+from types import NoneType
+
 from django.db import models
-from mptt.models import MPTTModel, TreeForeignKey
+
+
+class FunctionsBase():
+    def printPreTags(self, currentState, preState, postState):
+        isLeaf = False
+        if currentState['depth'] >= postState['depth']:
+            isLeaf = True
+        result = ""
+
+        count = currentState['depth'] - preState['depth']
+        if count > 0:
+            if isLeaf:
+                result = "<ul class='Container'><li class='Node ExpandLeaf'>"
+            else:
+                result = "<ul class='Container'><li class='Node ExpandClosed'>"
+        if count <= 0:
+            if isLeaf:
+                result = "<li class='Node ExpandLeaf'>"
+            else:
+                result = "<li class='Node ExpandClosed'>"
+        return result.encode("utf8")
+
+
+    def printPreTagsForLast(self, currentState, preState):
+        count = currentState['depth'] - preState['depth']
+        if count > 0:
+            result = "<ul class='Container'><li class='Node ExpandLeaf>"
+        if count <= 0:
+            result = "<li class='Node ExpandClosed ExpandLeaf'>"
+        return result.encode("utf8")
+
+
+    def printPostTags(self, currentState, postState):
+        result = ""
+        count = currentState['depth'] - postState['depth']
+
+        if count > 0:
+            j = 0
+            while j < count:
+                result+="</li></ul>"
+                j+=1
+            result+="</li>"
+        if count < 0:
+            result = ""
+        if count == 0:
+            result = "</li>"
+        return result.encode("utf8")
+
+
+    def printPostTagsForLast(self, currentState):
+        result = ""
+        count = currentState['depth']
+        if count > 0:
+            j = 0
+            while j <= count:
+                result+="</li></ul>"
+                j+=1
+        if count == 0:
+            result = "</li>"
+        return result.encode("utf8")
+
+
+
+
+
+class TreeOrderField(models.CharField):
+    def pre_save(self, model_instance, add):
+        if add:
+            parent=(model_instance.parent)
+            if type(parent) == NoneType:
+                value="001"
+            else:
+                parent.seq+=1
+                parent.save()
+                value=('%s%03d'%(getattr(parent, self.attname, ''), parent.seq, ))[:255]
+            setattr(model_instance, self.attname, value)
+            return value
+        return models.CharField.pre_save(self, model_instance, add)
+
 
 
 class State(models.Model):
     class Meta():
         db_table = 'state'
 
-    parent = models.ForeignKey('self', null=True, blank=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='child_set')
     state_title = models.CharField(max_length=200)
     move_title = models.CharField(max_length=300)
     move_description = models.TextField(max_length=2000, blank=True)
+    seq = models.PositiveIntegerField(default=0)
+    path = TreeOrderField(max_length=255, blank=True)
+
+    @property
+    def level(self):
+        return max(0, len(self.path)/3-1)
 
     def __str__(self):
         parent = self.parent
@@ -48,7 +134,7 @@ class TextInput(models.Model):
 
     state_input_id = models.ForeignKey(State)
     text_input_title = models.CharField(max_length=300, blank=True)
-    text_input_max_width = models.IntegerField(max_length=3)
+    text_input_max_width = models.IntegerField()
     text_input_after = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
