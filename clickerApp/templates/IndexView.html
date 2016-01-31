@@ -110,11 +110,10 @@
     {% else %}
 
     <li class="b-list-item not_visible" id="variant_{{state.id}}">
+
         <div class="variant">
             <div class="var-name">{{state.state_title}}</div>
-
             <hr>
-
             <div class="var-description">
 
                 {% for txtInp in text_inputs %}
@@ -153,13 +152,21 @@
 
                 <div class="radio">
 
-                    {{ radInp.radio_input_title }}:<br>
+                    <span class="radio_title">
+                    {{ radInp.radio_input_title|safe }}:
+                    </span><br>
 
                     {% for radInpVar in radio_input_variants %}
 
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
-                    <label><input type="radio" name="{{radInp.id}}">{{radInpVar.radio_input_variant_title}}</label><br>
+                    <label>
+                        <input type="radio" name="{{radInp.id}}">
+                        <span class="radio_value">
+                            {{radInpVar.radio_input_variant_title}}
+                        </span>
+                    </label>
+                    <br>
 
                     {% endif %}
 

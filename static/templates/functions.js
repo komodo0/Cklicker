@@ -89,6 +89,12 @@ function rebuildComment(){
 
 
     input_radio = variant.find("div.radio");
+    for (radioInp in step.inputs.radio){
+        chosen_variant_id = step.inputs.radio[radioInp];
+        radio_title = $(".radio"+"#"+radioInp).find("span.radio_title")
+        radio_value = $(".radio"+"#"+radioInp).find("span.radio_value").text()
+        alert(radio_value)
+    }
 
 
 
