@@ -6,7 +6,7 @@
 <div class="wrap-file-manager">
     <ul>
         <li>
-            <div id="file_manager" onclick="tree_toggle(arguments[0])">
+            <div id="file_manager">
                 {% for state in states %}
                 {{ state.pre_tags|safe}}
                 <div class="Expand"></div>
@@ -23,11 +23,12 @@
 
 
 {%block state_move %}
+
 {%for state in states %}
 
 {% if state.id == 1 %}
 <div class="move_title_elem visible" id="title_{{state.id}}">{{ state.move_title }}
-    <div class="question pull-right" id="question_{{state.id}}">
+    <div class="question pull-right" id="question_state_id_{{state.id}}">
         <img src="{% static '/static/static/templates/question.png' %}" class="img">
     </div>
 </div>
@@ -59,8 +60,9 @@
                 {% for txtInp in text_inputs %}
                 {% if txtInp.state_input_id_id == state.id %}
                 <div class="text" id="input_{{ txtInp.id }}">
-                {{txtInp.text_input_title}} <input type="text" class="form-control input-cable"
-                                                   style="width:{{txtInp.text_input_max_width}}px;"> {{txtInp.text_input_after}}
+                    <span class="pre_text">{{txtInp.text_input_title}}</span>
+                    <input type="text" class="form-control input-cable" style="width:{{txtInp.text_input_max_width}}px;">
+                    <span class="post_text">{{txtInp.text_input_after}}</span>
                     </div>
                 <hr>
                 {% endif %}
@@ -87,7 +89,7 @@
 
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
-                    <label><input type="radio" name="{{radInp.id}}" id="radio_var_{{radInpVar.id}}" checked>{{radInpVar.radio_input_variant_title}}</label><br>
+                    <label><input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" checked>{{radInpVar.radio_input_variant_title}}</label><br>
 
                     {% endif %}
 
@@ -221,6 +223,25 @@
     {% endfor %}
 
 </div>
+
+
+{% endblock %}
+
+
+
+
+{% block move_description %}
+
+    {% for state in states %}
+
+        <div class="move_description not_visible" id="state_id_{{state.id}}">
+            <div class="mode_description_content">
+                {{ state.move_description|safe }}
+            </div>
+        </div>
+
+    {% endfor %}
+
 
 
 {% endblock %}

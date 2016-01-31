@@ -13,7 +13,6 @@
 
 </head>
 <body>
-
 <div class="container main-container">
     <div class="jumbotron">
 
@@ -22,6 +21,7 @@
 
             <tr>
                 <td colspan="2" class="section-title">Сквозная диагностика Call-центра</td>
+                <td></td>
             </tr>
 
             <tr>
@@ -47,6 +47,10 @@
 
                 </td>
 
+                <td rowspan="3" class="ramka section-move-description">
+                    {% block move_description %}{% endblock %}
+                </td>
+
             </tr>
 
             <tr>
@@ -54,9 +58,7 @@
                 <td class="section-results">
 
                     <div class="form-group">
-                        <textarea class="form-control section-results-txt" rows="3" id="comment">
-                            Составление коментария, промежуточный итог, который можно редактировать
-                        </textarea>
+                        <textarea class="form-control section-results-txt" rows="3" id="comment" placeholder="Текст комментария"></textarea>
                     </div>
 
                 </td>
@@ -74,10 +76,9 @@
             </tr>
 
         </table>
-
-
     </div>
 </div>
+
 
 
 <!-- Bootstrap core JavaScript

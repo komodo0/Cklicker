@@ -32,13 +32,18 @@ hr{
 	border:1px solid red!important;
 }
 
-.main-container{
-
+.main_container_big{
+width:1600px!important;
 }
 
+.main-container{
+    position:absolute;
+    left:10px;
+    top:5px;
+}
 
 .main-table{
-
+    display:inline-table;
 }
 
 .confirm-button{
@@ -82,6 +87,10 @@ hr{
 	vertical-align: middle;
 }
 
+.section-move-description{
+    vertical-align:top;
+}
+
 .section-results{
 	background-color:pink;
 	padding:3px;
@@ -111,7 +120,6 @@ hr{
 
 /*Горизонтальный скроллер вариантов*/
 .wrap-variants {
-	/*border:1px solid black;*/
 	width: 700px;
 	height: auto;
 	overflow-x: auto;
@@ -138,7 +146,6 @@ hr{
 
 /*Вертикально-горизонтальный скроллер файл-менеджера*/
 .wrap-file-manager {
-	/*border:1px solid black;*/
 	width:270px;
 	overflow-x: auto;
 	overflow-y: auto;
@@ -166,11 +173,13 @@ hr{
 	font-size:20px;
 	text-align:center;
 }
+
 /*Раскрывающийся список подсказок*/
 #slider {
  width: 720px;
  color: #66666;
  }
+
 .slider-header {
 	width: 720px;
 	border: 1px solid #000;
@@ -181,12 +190,11 @@ hr{
 	font-size: 20px;
 	 background-color:red;
  }
-.slider-header:hover {
-	color: #666666;
- }
+
 .slider-content {
-	overflow: hidden;
+
  }
+
 .slider-text {
 	width: 720px;
 	border: 1px solid #cccccc;
@@ -196,6 +204,7 @@ hr{
 	background: yellow;
  }
 
+/*Значек подсказки для текущего действия*/
  .question{
     display: inline-block;
     width: 30px;
@@ -275,3 +284,18 @@ hr{
  .not_visible{
     display:none!important;
  }
+
+
+.move_description{
+    display:inline-block;
+    border:1px solid black;
+    width:400px;
+    min-height:700px;
+    padding-left:20px;
+    padding-right:20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 0 10px 10px 0;
+}
+
