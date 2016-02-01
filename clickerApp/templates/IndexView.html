@@ -61,9 +61,10 @@
                 {% if txtInp.state_input_id_id == state.id %}
                 <div class="text" id="input_{{ txtInp.id }}">
                     <span class="pre_text">{{txtInp.text_input_title}}</span>
-                    <input type="text" class="form-control input-cable" style="width:{{txtInp.text_input_max_width}}px;">
+                    <input type="text" class="form-control input-cable"
+                           style="width:{{txtInp.text_input_max_width}}px;">
                     <span class="post_text">{{txtInp.text_input_after}}</span>
-                    </div>
+                </div>
                 <hr>
                 {% endif %}
                 {% endfor %}
@@ -84,12 +85,23 @@
                 {% if radInp.state_input_id_id == state.id %}
 
                 <div class="radio" id="input_{{ radInp.id }}">
-                    {{ radInp.radio_input_title }}:<br>
+                    <span class="radio_title">
+                        {{ radInp.radio_input_title }}
+                    </span>
+
+
+                    <br>
                     {% for radInpVar in radio_input_variants %}
 
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
-                    <label><input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" checked>{{radInpVar.radio_input_variant_title}}</label><br>
+                    <label>
+                        <input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" checked>
+                        <span class="radio_value">
+                            {{radInpVar.radio_input_variant_title}}
+                        </span>
+                    </label>
+                    <br>
 
                     {% endif %}
 
@@ -161,7 +173,7 @@
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
                     <label>
-                        <input type="radio" name="{{radInp.id}}">
+                        <input type="radio" name="{{radInp.id}}" value="{{radInpVar.radio_input_variant_title}}">
                         <span class="radio_value">
                             {{radInpVar.radio_input_variant_title}}
                         </span>
@@ -235,20 +247,17 @@
 {% endblock %}
 
 
-
-
 {% block move_description %}
 
-    {% for state in states %}
+{% for state in states %}
 
-        <div class="move_description not_visible" id="state_id_{{state.id}}">
-            <div class="mode_description_content">
-                {{ state.move_description|safe }}
-            </div>
-        </div>
+<div class="move_description not_visible" id="state_id_{{state.id}}">
+    <div class="mode_description_content">
+        {{ state.move_description|safe }}
+    </div>
+</div>
 
-    {% endfor %}
-
+{% endfor %}
 
 
 {% endblock %}

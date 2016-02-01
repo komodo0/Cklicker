@@ -1,6 +1,8 @@
 //возвращает true, если элемент принадлежит данному классу
 function hasClass(elem, className) {
-	return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
+	return new RegExp("(^|\\s)"+
+	className +
+	"(\\s|$)").test(elem.className)
 }
 
 // возвращает cookie с именем name, если есть, если нет, то undefined
@@ -48,17 +50,11 @@ function deleteCookie(name) {
   })
 }
 
-
 //Возвращает id элемента, очищенный от префикса
 function getPrefixElementId(element, id_prefix){
-var var_id = element;
-var_id = var_id.slice(var_id.indexOf(id_prefix)+id_prefix.length);
-return var_id;
-}
-
-//Заполняет значения step для построения комментария при переключении варианта
-function fillState(){
-
+    var var_id = element;
+    var_id = var_id.slice(var_id.indexOf(id_prefix)+id_prefix.length);
+    return var_id;
 }
 
 //Перезаполняет текст комментария в зависимости от значения инпутов
@@ -82,25 +78,64 @@ function rebuildComment(){
         current_comment += step.inputs.text[textInp] + ". ";
     }
 
-
     for (checkInp in step.inputs.check){
         current_comment += step.inputs.check[checkInp] + ". ";
     }
 
-
     input_radio = variant.find("div.radio");
     for (radioInp in step.inputs.radio){
         chosen_variant_id = step.inputs.radio[radioInp];
-        radio_title = $(".radio"+"#"+radioInp).find("span.radio_title")
-        radio_value = $(".radio"+"#"+radioInp).find("span.radio_value").text()
-        alert(radio_value)
+        radio_input = variant.find("div.radio#"+radioInp)
+        radio_title = radio_input.find("span.radio_title").text().replace(/\s+/g,' ');
+        radio_value = radio_input.find("input#"+chosen_variant_id).siblings().text().replace(/\s+/g,' ');
+        current_comment += radio_title + ":" + radio_value +". ";
     }
 
-
-
-    //alert(input_text.text().replace(/\s+/g,' ') + input_check.text().replace(/\s+/g,' ') + input_radio.text().replace(/\s+/g,' '));
-
     $('#comment').val(step.prev_comment + current_comment);
+}
+
+//Заполняет выбранные значения состояния по умолчанию для вновь выбранного варианта.
+function fillState(){
+
+
+    step.inputs.text = new Object();
+    step.inputs.check = new Object();
+    //step.input.radio = new Object();
+
+    variant = $("li#variant_"+step.chosen_id);
+
+    variant.find("div.text").each(function(){
+        var id = $(this).attr("id");
+        var pre_text = $(this).find(".pre_text").text();
+        var value = $(this).find("input").val();
+        var post_text = $(this).find(".post_text").text();
+
+        if (value != ""){
+            step.inputs.text[id] = pre_text + " " + value + " " + post_text;
+        }
+
+    });
+
+
+    variant.find("div.checkbox").each(function(){
+        var id = $(this).attr("id");
+        var value = $(this).find("input").val();
+        var isChecked = $(this).find("input").prop("checked");
+
+        if (isChecked){
+            step.inputs.check[id] = value;
+        }
+    })
+
+
+    variant.find("div.radio").each(function(){
+        var id = $(this).find("input").attr("name");
+        var title = $(this).find("span.radio_title").text().replace(/\s+/g,' ');
+        var variant = $(this).find("input[name="+id+"]:checked").attr("id");
+        alert(id + " " + title)
+    })
+
+
 }
 
 /*
@@ -258,8 +293,7 @@ $('div.checkbox').find('input').change(function(event){
 $('div.radio').find('input').change(function(event){
     var target = event.target;
     var rad_input_var_id = target.id;
-    var rad_input_id = target.name;
-
+    var rad_input_id = target.parentNode.parentNode.id;
     if (step.inputs.radio[rad_input_id] != rad_input_var_id){
         step.inputs.radio[rad_input_id] = rad_input_var_id;
         rebuildComment();
