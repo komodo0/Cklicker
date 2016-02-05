@@ -54,34 +54,53 @@ width:1600px!important;
 }
 
 .section-title{
-	background-color:red;
+	//background-color:red;
 	height:50px;
 	text-align:center;
 	font-size:30px;
 	width:1020px;
+	border-bottom:1px solid black;
+
+}
+
+.section-title div{
+width:1020px;
+    background:linear-gradient(to top, #eee, #bbb);
+    border-top:2px solid #aaa;
+    border-left:2px solid #aaa;
+    border-right:2px solid #aaa;
+
+	border-radius:10px 10px 0px 0px;
 }
 
 .section-file-manager{
 	vertical-align:top;
 	text-align:left;
-	background-color:green;
+	//background-color:green;
 	width:270px;
 }
 
+.section-file-manager{
+    border-left:2px solid #aaa;
+    border-bottom:2px solid #aaa;
+    border-right:2px solid #ddd;
+}
+
 .section-variants{
-	background-color:blue;
+	//background-color:blue;
 	padding-left:22px;
 	padding-right:22px;
 	width:750px;
 	vertical-align:top;
 	text-align:center;
+	border-right:2px solid #aaa;
 }
 
 .section-variants-title{
 	text-align:center;
 	font-size:25px;
 	padding:7px;
-	border:1px solid black;
+	//border:1px solid black;
 	margin:10px;
 	background-color:white;
 	vertical-align: middle;
@@ -92,8 +111,9 @@ width:1600px!important;
 }
 
 .section-results{
-	background-color:pink;
+	//background-color:pink;
 	padding:3px;
+	border-right:1px solid black;
 }
 
 .section-results-txt{
@@ -105,12 +125,13 @@ width:1600px!important;
 }
 
 .section-tips{
-	background-color:brown;
+	//background-color:brown;
 	padding-left:13px;
 	padding-right:13px;
 	padding-bottom:13px;
 	height:250px;
 	vertical-align:top;
+	border-bottom:2px solid #aaa;
 }
 
 .reserved{
@@ -182,17 +203,27 @@ width:1600px!important;
 
 .slider-header {
 	width: 720px;
-	border: 1px solid #000;
+	border-top: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-radius: 10px 10px 0 0;
 	padding: 5px;
 	margin-top: 5px;
+	padding-left:10px;
+	padding-right:10px;
 	cursor: pointer;
 	text-align: left;
 	font-size: 20px;
-	 background-color:red;
+	//background-color:red;
  }
 
 .slider-content {
-
+    padding:10px;
+    width: 720px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
  }
 
 .slider-text {
@@ -201,7 +232,7 @@ width:1600px!important;
 	border-top: none;
 	padding: 4px;
 	text-align: left;
-	background: yellow;
+	//background: yellow;
  }
 
 /*Значек подсказки для текущего действия*/
@@ -225,8 +256,8 @@ width:1600px!important;
 
 .question:hover{
     display: inline-block;
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     margin-right:20px;
     position: relative;
     vertical-align: middle;
@@ -245,8 +276,8 @@ width:1600px!important;
 
 .question:active{
     display: inline-block;
-    width: 34px;
-    height: 34px;
+    width: 31px;
+    height: 31px;
     margin-right:20px;
     position: relative;
     vertical-align: middle;
@@ -258,7 +289,6 @@ width:1600px!important;
     font-weight: inherit;
     outline: 0;
     padding: 0;
-    cursor: pointer;
     cursor: pointer;
  }
 
@@ -288,7 +318,9 @@ width:1600px!important;
 
 .move_description{
     display:inline-block;
-    border:1px solid black;
+    border-top:2px solid #aaa;
+    border-right:2px solid #aaa;
+    border-bottom:2px solid #aaa;
     width:400px;
     min-height:700px;
     padding-left:20px;
@@ -297,5 +329,59 @@ width:1600px!important;
     font-size: 14px;
     line-height: 1.42857143;
     border-radius: 0 10px 10px 0;
+}
+
+.used_tree_elem{
+    background-color:yellow;
+}
+
+.go_prev_state{
+display:inline;
+cursor: pointer;
+margin-right:100px;
+}
+
+.go_next_state{
+display:inline;
+cursor: pointer;
+margin-left:100px;
+}
+
+ .go_prev_state img, .go_next_state img{
+    max-height: 10%;
+    box-sizing: border-box;
+
+ }
+
+  .go_prev_state img:hover, .go_next_state img:hover{
+    max-height: 10.5%;
+    box-sizing: border-box;
+
+ }
+
+ .go_prev_state img{
+    transform: scale(-1, 1)
+ }
+
+
+.go_prev_state img:active, .go_next_state img:active{
+    max-height: 10.1%;
+ }
+
+ .tree_cursor{
+    background-color:red!important;
+}
+
+.diag_result{
+    width:97%!important;
+}
+
+.mode_description_content{
+    margin-top:20px;
+    margin-right:20px;
+    padding-left:20px;
+    padding-right:10px;
+    height:650px;
+    border:1px solid black;
 }
 

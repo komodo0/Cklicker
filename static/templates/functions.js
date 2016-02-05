@@ -50,10 +50,34 @@ function deleteCookie(name) {
   })
 }
 
+//Возвращает массив со всеми ключами cookie
+function getCookieList(){
+    var mas = document.cookie.split(';')
+    var names = [];
+    var i = 0;
+    var l = mas.length;
+    for(;i<l;i++){
+        names.push(mas[i].split('=')[0]);
+    }
+    return names;
+}
+
+//Удаляет записи куки о всех шагах, после указанного
+function deleteLaterStepsCookies(current_step){
+    var cookie_list = getCookieList();
+    for (cookie_name in cookie_list){
+        if (getPrefixElementId(cookie_list[cookie_name], "step_") > current_step){
+            deleteCookie(cookie_list[cookie_name]);
+        }
+    }
+}
+
 //Возвращает id элемента, очищенный от префикса
 function getPrefixElementId(element, id_prefix){
     var var_id = element;
+    //alert("element = " + var_id);
     var_id = var_id.slice(var_id.indexOf(id_prefix)+id_prefix.length);
+    //alert("cleaned elem = " + var_id)
     return var_id;
 }
 
@@ -88,10 +112,21 @@ function rebuildComment(){
         radio_input = variant.find("div.radio#"+radioInp)
         radio_title = radio_input.find("span.radio_title").text().replace(/\s+/g,' ');
         radio_value = radio_input.find("input#"+chosen_variant_id).siblings().text().replace(/\s+/g,' ');
-        current_comment += radio_title + ":" + radio_value +". ";
+        current_comment += radio_title.trim() + ": " + radio_value.trim() +". ";
     }
 
-    $('#comment').val(step.prev_comment + current_comment);
+    step.comment = current_comment;
+    $('#comment').val(concatComments());
+}
+
+//Проходится по всем step'ам и собирает комментарий.
+function concatComments(){
+    var result = "";
+    for (i = 0; i < count_current_step; i+=1){
+        result += JSON.parse(getCookie("step_"+i)).comment;
+    }
+    result += step.comment;
+    return result;
 }
 
 //Заполняет выбранные значения состояния по умолчанию для вновь выбранного варианта.
@@ -100,15 +135,15 @@ function fillState(){
 
     step.inputs.text = new Object();
     step.inputs.check = new Object();
-    //step.input.radio = new Object();
+    step.inputs.radio = new Object();
 
     variant = $("li#variant_"+step.chosen_id);
 
     variant.find("div.text").each(function(){
         var id = $(this).attr("id");
-        var pre_text = $(this).find(".pre_text").text();
+        var pre_text = $(this).find(".pre_text").text().replace(/\s+/g,' ');
         var value = $(this).find("input").val();
-        var post_text = $(this).find(".post_text").text();
+        var post_text = $(this).find(".post_text").text().replace(/\s+/g,' ');
 
         if (value != ""){
             step.inputs.text[id] = pre_text + " " + value + " " + post_text;
@@ -129,20 +164,94 @@ function fillState(){
 
 
     variant.find("div.radio").each(function(){
-        var id = $(this).find("input").attr("name");
+        var block_id = $(this).attr("id");
+        var radio_id = $(this).find("input").attr("name");
         var title = $(this).find("span.radio_title").text().replace(/\s+/g,' ');
-        var variant = $(this).find("input[name="+id+"]:checked").attr("id");
-        alert(id + " " + title)
+        var variant = $(this).find("input[name="+radio_id+"]:checked").attr("id");
+        step.inputs.radio[block_id] = variant;
     })
 
 
 }
 
+/*Выделяет, раскрывает и отмечает элеент дерева с id = tree_id*/
+function setActiveNode(tree_id){
+
+    $("div#file_manager").find("div.b-list-item.tree_cursor").removeClass("tree_cursor");
+    tree_elem = $(".b-list-item#tree_"+tree_id);
+    tree_elem.addClass("used_tree_elem");
+    tree_elem.addClass("tree_cursor");
+    tree_elem = tree_elem.parent();
+    tree_elem.removeClass("ExpandClosed");
+    tree_elem.addClass("ExpandOpen");
+    input = $(".b-list-item#tree_"+tree_id).siblings("input");
+    input.prop('checked', true);
+
+}
+
+/* Снимает выделение, закрывает и убирает отметку с элемента дерева с id = tree_id */
+function setPassiveNode(tree_id){
+    tree_elem = $(".b-list-item#tree_"+tree_id);
+    tree_elem.removeClass("used_tree_elem");
+    tree_elem = tree_elem.parent();
+    tree_elem.removeClass("ExpandOpen");
+    tree_elem.addClass("ExpandClosed");
+    input = $(".b-list-item#tree_"+tree_id).siblings("input");
+    input.prop('checked', false);
+}
+
+/*Отрисовывает значения инпутов по заданному объекту*/
+function recoverInputs(recover_state){
+    var variant = $(".section-variants").find(".b-list-item#variant_"+recover_state.chosen_id);
+
+    for (input_text in recover_state.inputs.text){
+        var pre_text = variant.find(".pre_text").text();
+        var post_text = variant.find(".post_text").text();
+        var input_value = recover_state.inputs.text[input_text].replace(pre_text, "").replace(post_text, "").trim();
+        variant.find(".text#"+input_text).find("input").val(input_value);
+    }
+
+    for (input_check in recover_state.inputs.check){
+
+        variant.find(".checkbox#"+input_check).find("input").prop('checked', true);
+    }
+
+    for (input_radio in recover_state.inputs.radio){
+        variant.find("[name=radio_"+input_radio+"]#"+recover_state.inputs.radio[input_radio]).prop('checked', true);
+    }
+}
+
+/*Восстанавливает состояние и отметки из куки, в случае, если файл был закрыт*/
+function recoverStateFromCookie(){
+
+    count_current_step = -1;
+    var cookie_list = getCookieList();
+    for (cookie_name in cookie_list){
+        var key = cookie_list[cookie_name].trim();
+        if (key.indexOf("step_") == 0){
+            var step_id = getPrefixElementId(key, "step_");
+            var temp_step = JSON.parse(getCookie("step_"+step_id));
+
+            if (count_current_step < step_id){
+                count_current_step = step_id;
+            }
+
+            //step_id - номер найденного шага, надо:
+            //открыть шаг в дереве, поставить галочку, подсветить шаг
+            setActiveNode(temp_step.state_id);
+            //заполнить все инпуты соответственно кукам из этого шага
+            recoverInputs(temp_step);
+        }
+    }
+
+    return parseInt(count_current_step)+1;
+}
+
+
 /*
 _________Схема данных:____________
 
-current_step    - переменная, обозначающая, на каком шагу ведется диагностика.
-
+step    - переменная, обозначающая, на каком шагу ведется диагностика.
 
 Каждый шаг представленн элементом step_i , где i - номер шага.
 Первый шаг - step
@@ -151,7 +260,7 @@ current_step    - переменная, обозначающая, на како�
 step:
     state_id;
     chosen_id;
-    prev_comment;
+    comment;
     inputs:
         text:
             text_input_id = value or undefined
@@ -167,28 +276,76 @@ step:
 
 Затем создается новый step, в котором заполняются:
     - state_id - текущий state
-    - prev_comment - значение аналогчнйо переменной передыдущего step-а + парсинг inputs
+    - comment - значение аналогчнйо переменной step-а + парсинг inputs
 
 Затем меняются атрибуты блоков visible, not_visible и другие, в соответствии с новым шагом
     - также нужно добавить обработчик последнего шага для вывода результата и навигации.
 
 */
+//$(".b-list-item.not_visible").removeClass("not_visible");
+
+if (getCookie("step_0")==undefined){
+
+    count_current_step = 0;
+    var step = new Object();
+    step.state_id = getCookie('fist_step_id');
+    step.comment = "";
+    step.chosen_id = -1;
+    step.inputs = new Object();
+    step.inputs.text = new Object();
+    step.inputs.check = new Object();
+    step.inputs.radio = new Object();
+    setActiveNode(step.state_id);
+
+} else {
+
+    count_current_step = recoverStateFromCookie();
+    step = new Object();
+    step.state_id = JSON.parse(getCookie("step_"+(count_current_step-1))).chosen_id
+    step.comment = "";
+    step.chosen_id = -1;
+    step.inputs = new Object();
+    step.inputs.text = new Object();
+    step.inputs.check = new Object();
+    step.inputs.radio = new Object();
+    setActiveNode(step.state_id);
+
+    rebuildComment();
+
+    $(".section-variants .b-list-item").removeClass("visible");
+    $(".section-variants .b-list-item").addClass("not_visible");
+    $(".section-variants .b-list-item.parent_state_id_"+step.state_id).removeClass("not_visible");
+    $(".section-variants .b-list-item.parent_state_id_"+step.state_id).addClass("visible");
+
+    $(".tip.visible").addClass("not_visible").removeClass("visible");
+    $(".tip#tip_parent_"+step.state_id).addClass("visible").removeClass("not_visible");
 
 
+    var temp = $(".move_title_elem.visible");
+    temp.removeClass("visible");
+    temp.addClass("not_visible");
+    temp = $(".move_title_elem#title_"+step.state_id);
+    temp.removeClass("not_visible");
+    temp.addClass("visible");
+    temp = $(".move_description.visible");
+    temp.removeClass("visible");
+    temp.addClass("not_visible");
 
-count_current_step = 0;
-var step = new Object();
-step.state_id = getCookie('fist_step_id');
-step.prev_comment = "";
-step.chosen_id = -1;
-step.inputs = new Object();
-step.inputs.text = new Object();
-step.inputs.check = new Object();
-step.inputs.radio = new Object();
+    if ($(".section-variants").find("li.b-list-item.visible").size() == 0){
+
+            var title = $(".section-variants-title").find(".move_title_elem.visible").text().replace(/\s+/g,' ');
+            $("#diag_result").removeClass("not_visible").addClass("visible");
+            $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4><br>" + $(".section-results-txt").val());
+
+        }
+
+};
+
+
 
 
 /* Event Listener для выбора варианта */
-$('.b-init').find('.b-list-item').click(function() {
+$('td.section-variants').find('.b-list-item').click(function() {
     var variants_target = $('.b-target').find('.b-list');
     var variants_active_class = 'b-list-item_active';
 
@@ -201,8 +358,6 @@ $('.b-init').find('.b-list-item').click(function() {
 
     if (step.chosen_id != getPrefixElementId(element, id_prefix)){
         step.chosen_id = getPrefixElementId(element, id_prefix);
-        $('#comment').val(step.prev_comment);
-        //Заполняет значения step для построения комментария
         fillState();
         rebuildComment();
     }
@@ -234,17 +389,17 @@ $('div#file_manager').click(function(event){
 
 /* Event Listener для всплывающих подсказок */
 $('div.question').click(function(){
-    var id = getPrefixElementId(this.id, "question_");
-
-    if($.inArray("visible", $('div.move_description#'+id).attr('class').split(' ')) == -1){
-        $('div.move_description#'+id).removeClass("not_visible");
-        $('div.move_description#'+id).addClass("visible");
-        $('div.main-container').addClass("main_container_big");
-    } else {
-        $('div.move_description#'+id).removeClass("visible");
-        $('div.move_description#'+id).addClass("not_visible");
+    var id = getPrefixElementId( $(this).attr("id"), "question_");
+    elem = $(".move_description#"+id);
+     if (elem.is(":visible")){
+        elem.removeClass("visible");
+        elem.addClass("not_visible");
         $('div.main-container').removeClass("main_container_big");
-    }
+     } else {
+        elem.removeClass("not_visible");
+        elem.addClass("visible");
+        $('div.main-container').addClass("main_container_big");
+     }
 })
 
 /*Event Listener для input text */
@@ -284,7 +439,6 @@ $('div.checkbox').find('input').change(function(event){
         }
     } else {
         step.inputs.check[check_input_id] = value;
-
         rebuildComment();
     }
 })
@@ -298,4 +452,89 @@ $('div.radio').find('input').change(function(event){
         step.inputs.radio[rad_input_id] = rad_input_var_id;
         rebuildComment();
     }
+
 })
+
+/*Event Listener для главной кнопки*/
+$(".confirm-button").click(function(){
+
+    if (step.chosen_id == -1){
+        alert("Выберите вариант!");
+    } else {
+
+        var prev_comments = "";
+         for (i = 0; i < count_current_step; i+=1){
+            prev_comments += JSON.parse(getCookie("step_"+i)).comment;
+         }
+
+         //Вычленяем текущий коммента из текст пространства, вырезая все предыдущие комментарии. Проще, чем парсить снова все чекбоксы
+        step.comment = $("textarea.form-control").val().replace(prev_comments, "");
+
+        step_state = JSON.stringify(step);
+        setCookie("step_"+count_current_step, step_state);
+        count_current_step +=1;
+
+        step_state += 1;
+        step.state_id = step.chosen_id;
+        step.chosen_id = -1;
+        step.comment = "";
+        step.inputs.text = new Object();
+        step.inputs.check = new Object();
+        step.inputs.radio = new Object();
+
+        $(".b-list-item_active").removeClass("b-list-item_active");
+
+        $(".section-variants .b-list-item").removeClass("visible");
+        $(".section-variants .b-list-item").addClass("not_visible");
+        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).removeClass("not_visible");
+        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).addClass("visible");
+
+        $(".tip.visible").addClass("not_visible").removeClass("visible");
+        $(".tip#tip_parent_"+step.state_id).addClass("visible").removeClass("not_visible");
+
+
+        var temp = $(".move_title_elem.visible");
+        temp.removeClass("visible");
+        temp.addClass("not_visible");
+        temp = $(".move_title_elem#title_"+step.state_id);
+        temp.removeClass("not_visible");
+        temp.addClass("visible");
+        temp = $(".move_description.visible");
+        temp.removeClass("visible");
+        temp.addClass("not_visible");
+
+        setActiveNode(step.state_id);
+
+        if ($(".section-variants").find("li.b-list-item.visible").size() == 0){
+            $("#diag_result").removeClass("not_visible").addClass("visible");
+            $("#diag_result").find(".var-description").text($(".section-results-txt").val());
+
+        }
+    }
+})
+
+/*Event Listener для кнопки "Предыдущий шаг"*/
+$("div.go_prev_state").click(function(){
+
+    alert("go previous page")
+})
+
+/*Event Listener для кнопки "Следующий шаг"*/
+$("div.go_next_state").click(function(){
+
+    alert("go next page")
+})
+
+/*Event Listener для кнопки тест again*/
+$("#again").click(function(){
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+    	var cookie = cookies[i];
+    	var eqPos = cookie.indexOf("=");
+    	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    window.location.reload()
+})
+

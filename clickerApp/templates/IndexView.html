@@ -10,7 +10,7 @@
                 {% for state in states %}
                 {{ state.pre_tags|safe}}
                 <div class="Expand"></div>
-                <input type="checkbox">
+                <input type="checkbox" disabled>
                 <div class="Content b-list-item" id="tree_{{ state.id }}">{{ state.state_title }}</div>
                 {{ state.post_tags|safe}}
                 {% endfor %}
@@ -34,7 +34,7 @@
 </div>
 {% else %}
 <div class="move_title_elem not_visible" id="title_{{state.id}}">{{ state.move_title }}
-    <div class="question pull-right" id="question_{{state.id}}">
+    <div class="question pull-right" id="question_state_id_{{state.id}}">
         <img src="{% static '/static/static/templates/question.png' %}" class="img">
     </div>
 </div>
@@ -52,7 +52,7 @@
 
     {% if state.parent_id == 1 %}
 
-    <li class="b-list-item visible" id="variant_{{state.id}}">
+    <li class="b-list-item visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
         <div class="variant">
             <div class="var-name">{{state.state_title}}</div>
             <hr>
@@ -60,10 +60,10 @@
                 {% for txtInp in text_inputs %}
                 {% if txtInp.state_input_id_id == state.id %}
                 <div class="text" id="input_{{ txtInp.id }}">
-                    <span class="pre_text">{{txtInp.text_input_title}}</span>
+                    <span class="pre_text">{{txtInp.text_input_title|safe}}</span>
                     <input type="text" class="form-control input-cable"
-                           style="width:{{txtInp.text_input_max_width}}px;">
-                    <span class="post_text">{{txtInp.text_input_after}}</span>
+                           style="width:{{txtInp.text_input_max_width|safe}}px;">
+                    <span class="post_text">{{txtInp.text_input_after|safe}}</span>
                 </div>
                 <hr>
                 {% endif %}
@@ -96,9 +96,9 @@
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
                     <label>
-                        <input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" checked>
+                        <input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" vaue="{{radInpVar.radio_input_variant_title|safe}}" checked>
                         <span class="radio_value">
-                            {{radInpVar.radio_input_variant_title}}
+                            {{radInpVar.radio_input_variant_title|safe}}
                         </span>
                     </label>
                     <br>
@@ -121,7 +121,7 @@
 
     {% else %}
 
-    <li class="b-list-item not_visible" id="variant_{{state.id}}">
+    <li class="b-list-item not_visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
 
         <div class="variant">
             <div class="var-name">{{state.state_title}}</div>
@@ -131,11 +131,12 @@
                 {% for txtInp in text_inputs %}
 
                 {% if txtInp.state_input_id_id == state.id %}
-
-                {{txtInp.text_input_title}}
-                <input type="text" class="form-control input-cable" size="{{txtInp.text_input_max_width}}">
-                {{txtInp.text_input_after}}
-
+                <div class="text" id="input_{{ txtInp.id }}">
+                     <span class="pre_text">{{txtInp.text_input_title|safe}}</span>
+                    <input type="text" class="form-control input-cable"
+                           style="width:{{txtInp.text_input_max_width|safe}}px;">
+                    <span class="post_text">{{txtInp.text_input_after|safe}}</span>
+                </div>
                 <hr>
                 {% endif %}
 
@@ -146,9 +147,9 @@
 
                 {% if checkInp.state_input_id_id == state.id %}
 
-                <div class="checkbox">
+                <div class="checkbox" id="input_{{ checkInp.id|safe }}">
                     <label>
-                        <input type="checkbox" value="{{checkInp.checkbox_input_title}}">{{checkInp.checkbox_input_title}}
+                        <input type="checkbox" value="{{checkInp.checkbox_input_title|safe}}">{{checkInp.checkbox_input_title|safe}}
                     </label>
                 </div>
 
@@ -162,7 +163,7 @@
 
                 {% if radInp.state_input_id_id == state.id %}
 
-                <div class="radio">
+                <div class="radio" id="input_{{ radInp.id }}">
 
                     <span class="radio_title">
                     {{ radInp.radio_input_title|safe }}:
@@ -173,9 +174,9 @@
                     {% if radInp.id == radInpVar.radio_input_id_id %}
 
                     <label>
-                        <input type="radio" name="{{radInp.id}}" value="{{radInpVar.radio_input_variant_title}}">
+                        <input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" vaue="{{radInpVar.radio_input_variant_title|safe}}" checked>
                         <span class="radio_value">
-                            {{radInpVar.radio_input_variant_title}}
+                            {{radInpVar.radio_input_variant_title|safe}}
                         </span>
                     </label>
                     <br>
@@ -199,6 +200,31 @@
 
     {% endfor %}
 
+
+
+
+
+
+    <li class="not_visible diag_result" id="diag_result">
+
+        <div class="variant">
+            <div class="var-name">Результат диагностики:</div>
+            <hr>
+            <div class="var-description">
+
+
+
+            </div>
+            <button id="again">Заново</button>
+        </div>
+    </li>
+
+
+
+
+
+
+
 </ul>
 
 {% endblock %}
@@ -215,12 +241,10 @@
 
     <div class="tip visible" id="tip_parent_{{tip.state_id_id}}">
         <div class="slider-header">
-            {{ tip.tip_title }}
+            {{ tip.tip_title|safe }}
         </div>
         <div class="slider-content">
-            <div class="slider-text">
-                {{ tip.tip_description }}
-            </div>
+                {{ tip.tip_description|safe }}
         </div>
     </div>
 
@@ -228,12 +252,10 @@
 
     <div class="tip not_visible" id="tip_parent_{{tip.state_id_id}}">
         <div class="slider-header">
-            {{ tip.tip_title }}
+            {{ tip.tip_title|safe }}
         </div>
         <div class="slider-content">
-            <div class="slider-text">
-                {{ tip.tip_description }}
-            </div>
+                {{ tip.tip_description|safe }}
         </div>
     </div>
 

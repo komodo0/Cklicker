@@ -20,7 +20,11 @@
         <table class="main-table">
 
             <tr>
-                <td colspan="2" class="section-title">Сквозная диагностика Call-центра</td>
+                <td colspan="2" class="section-title">
+                    <div>
+                        Утырки
+                    </div>
+                </td>
                 <td></td>
             </tr>
 
@@ -43,7 +47,13 @@
                         {% block state_variants %}{% endblock %}
                     </div>
 
+                    <div class="go_prev_state">
+                        <img src="{% static '/static/static/templates/arrow_right.png' %}" class="img">
+                    </div>
                     <div class="btn btn-primary confirm-button">OK!</div>
+                    <div class="go_next_state">
+                        <img src="{% static '/static/static/templates/arrow_right.png' %}" class="img">
+                    </div>
 
                 </td>
 
