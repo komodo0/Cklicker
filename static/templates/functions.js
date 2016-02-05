@@ -129,6 +129,16 @@ function concatComments(){
     return result;
 }
 
+//Проходится по всем step'ам и собирает комментарий с BR между вариантами.
+function concatBrComments(){
+    var result = "";
+    for (i = 0; i < count_current_step; i+=1){
+        result += JSON.parse(getCookie("step_"+i)).comment;
+    }
+    result += step.comment + "<br/>";
+    return result;
+}
+
 //Заполняет выбранные значения состояния по умолчанию для вновь выбранного варианта.
 function fillState(){
 
@@ -335,7 +345,9 @@ if (getCookie("step_0")==undefined){
 
             var title = $(".section-variants-title").find(".move_title_elem.visible").text().replace(/\s+/g,' ');
             $("#diag_result").removeClass("not_visible").addClass("visible");
-            $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4><br>" + $(".section-results-txt").val());
+            $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4><br>" + concatBrComments());
+            $(".confirm-button").addClass("not_visible");
+            $("#again").removeClass("not_visible");
 
         }
 
@@ -508,6 +520,9 @@ $(".confirm-button").click(function(){
         if ($(".section-variants").find("li.b-list-item.visible").size() == 0){
             $("#diag_result").removeClass("not_visible").addClass("visible");
             $("#diag_result").find(".var-description").text($(".section-results-txt").val());
+            $(".confirm-button").addClass("not_visible");
+            $("#again").removeClass("not_visible");
+
 
         }
     }

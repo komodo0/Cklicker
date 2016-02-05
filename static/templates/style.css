@@ -28,7 +28,7 @@ hr{
 }
 
 .b-list-item_active {
-	box-shadow: 0px 0px 40px red;
+	box-shadow: 0px 0px 15px red;
 	border:1px solid red!important;
 }
 
@@ -51,6 +51,8 @@ width:1600px!important;
 	margin:10px!important;
 	width:150px;
 	font-size:25px!important;
+    background-color:#aaa!important;
+    border:2px solid #888!important;
 }
 
 .section-title{
@@ -59,7 +61,7 @@ width:1600px!important;
 	text-align:center;
 	font-size:30px;
 	width:1020px;
-	border-bottom:1px solid black;
+	border-bottom:1px solid #aaa;
 
 }
 
@@ -87,7 +89,6 @@ width:1020px;
 }
 
 .section-variants{
-	//background-color:blue;
 	padding-left:22px;
 	padding-right:22px;
 	width:750px;
@@ -100,10 +101,11 @@ width:1020px;
 	text-align:center;
 	font-size:25px;
 	padding:7px;
-	//border:1px solid black;
+	border:1px solid #aaa;
 	margin:10px;
 	background-color:white;
 	vertical-align: middle;
+	border-radius:10px;
 }
 
 .section-move-description{
@@ -125,7 +127,6 @@ width:1020px;
 }
 
 .section-tips{
-	//background-color:brown;
 	padding-left:13px;
 	padding-right:13px;
 	padding-bottom:13px;
@@ -159,7 +160,7 @@ width:1020px;
 	height:270px;
 	margin-left:10px;
 	margin-right:10px;
-	border:1px solid black;
+	border:1px solid #888;
 	border-radius: 10px;
 	background-color:white;
 	cursor: pointer;
@@ -203,9 +204,9 @@ width:1020px;
 
 .slider-header {
 	width: 720px;
-	border-top: 1px solid #000;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
+	border-top: 1px solid #888;
+	border-left: 1px solid #888;
+	border-right: 1px solid #888;
 	border-radius: 10px 10px 0 0;
 	padding: 5px;
 	margin-top: 5px;
@@ -214,16 +215,18 @@ width:1020px;
 	cursor: pointer;
 	text-align: left;
 	font-size: 20px;
+	background:linear-gradient(to top, #eee, #bbb);
 	//background-color:red;
  }
 
 .slider-content {
     padding:10px;
     width: 720px;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+	border-left: 1px solid #888;
+	border-right: 1px solid #888;
+	background: #fff;
  }
 
 .slider-text {
@@ -332,7 +335,10 @@ width:1020px;
 }
 
 .used_tree_elem{
-    background-color:yellow;
+    border:1px solid #bbb;
+    background-color:#bbb;
+    color:#fff!important;
+    border-radius:0 8px 8px 0;
 }
 
 .go_prev_state{
@@ -369,11 +375,16 @@ margin-left:100px;
  }
 
  .tree_cursor{
-    background-color:red!important;
+    border:1px solid #bbb;
+    background-color:red;
+    color:#fff!important;
+    border-radius:0 8px 8px 0;
 }
 
 .diag_result{
     width:97%!important;
+    padding-left:30px;
+    padding-right:30px;
 }
 
 .mode_description_content{
@@ -382,6 +393,18 @@ margin-left:100px;
     padding-left:20px;
     padding-right:10px;
     height:650px;
-    border:1px solid black;
+    border:1px solid #888;
+    background-color:#fff;
+    border-radius: 0 5px 5px 0;
 }
 
+#again{
+    width:150px;
+    padding:17px;
+    margin:10px;
+    font-size:25px;
+    border:2px solid #888;
+    border-radius:5px;
+    color:white;
+    background-color:#aaa!important;
+}
