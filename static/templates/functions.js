@@ -306,6 +306,7 @@ if (getCookie("step_0")==undefined){
     step.inputs.check = new Object();
     step.inputs.radio = new Object();
     setActiveNode(step.state_id);
+    rebuildComment();
 
 } else {
 

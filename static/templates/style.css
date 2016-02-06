@@ -1,5 +1,6 @@
 body {
-	padding-top:10px;
+	padding:0!important;
+	margin:0!important;
 }
 
 hr{
@@ -34,12 +35,16 @@ hr{
 
 .main_container_big{
 width:1600px!important;
+padding:0!important;
+margin:0!important;
 }
 
 .main-container{
     position:absolute;
-    left:10px;
-    top:5px;
+    left:2px;
+    top:2px;
+    padding:0!important;
+margin:0!important;
 }
 
 .main-table{
@@ -56,10 +61,8 @@ width:1600px!important;
 }
 
 .section-title{
-	//background-color:red;
-	height:50px;
 	text-align:center;
-	font-size:30px;
+	font-size:20px;
 	width:1020px;
 	border-bottom:1px solid #aaa;
 
@@ -67,6 +70,7 @@ width:1600px!important;
 
 .section-title div{
     width:1023px;
+    padding:8px;
     background:linear-gradient(to top, #eee, #bbb);
     border-top:2px solid #aaa;
     border-left:2px solid #aaa;
@@ -80,10 +84,11 @@ width:1600px!important;
 	vertical-align:top;
 	text-align:left;
 	background-color:#eee;
-	width:270px;
+	width:260px;
     border-left:2px solid #aaa;
     border-bottom:2px solid #aaa;
     border-right:2px solid #ddd;
+    border-top:1px solid #aaa;
 }
 
 .section-variants{
@@ -92,6 +97,7 @@ width:1600px!important;
 	width:750px;
 	vertical-align:top;
 	text-align:center;
+	border-top:1px solid #aaa;
 	border-right:1px solid #aaa;
 	background-color:#eee;
 }
@@ -113,10 +119,8 @@ width:1600px!important;
 }
 
 .section-results{
-	//background-color:pink;
 	padding:3px;
-	border-right:1px solid black;
-
+	border-right:1px solid #aaa;
 	background-color:#eee;
 }
 
@@ -137,6 +141,7 @@ width:1600px!important;
 	height:250px;
 	vertical-align:top;
 	border-bottom:2px solid #aaa;
+	border-right:1px solid #aaa;
 }
 
 /*Горизонтальный скроллер вариантов*/
@@ -167,7 +172,7 @@ width:1600px!important;
 
 /*Вертикально-горизонтальный скроллер файл-менеджера*/
 .wrap-file-manager {
-	width:270px;
+	width:260px;
 	overflow-x: auto;
 	overflow-y: auto;
 }
@@ -215,7 +220,6 @@ width:1600px!important;
 	text-align: left;
 	font-size: 20px;
 	background:linear-gradient(to top, #eee, #bbb);
-	//background-color:red;
  }
 
 .slider-content {
@@ -234,7 +238,6 @@ width:1600px!important;
 	border-top: none;
 	padding: 4px;
 	text-align: left;
-	//background: yellow;
  }
 
 /*Значек подсказки для текущего действия*/
