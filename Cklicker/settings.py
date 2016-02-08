@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'clickerApp',
+    'fileUpload',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -82,3 +83,7 @@ TEMPLATE_DIRS = (
 DEFAULT_CHARSET = "utf-8"
 
 FILE_CHARSET = "utf-8"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'

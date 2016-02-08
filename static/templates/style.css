@@ -25,7 +25,7 @@ hr{
 	display:inline!important;
 	padding-left:4px!important;
 	padding-right:4px!important;
-	height:20px!important;
+	height:25px!important;
 }
 
 .b-list-item_active {
@@ -49,6 +49,7 @@ margin:0!important;
 
 .main-table{
     display:inline-table;
+    border-collapse:separate;
 }
 
 .confirm-button{
@@ -98,7 +99,7 @@ margin:0!important;
 	vertical-align:top;
 	text-align:center;
 	border-top:1px solid #aaa;
-	border-right:1px solid #aaa;
+	border-right:2px solid #aaa;
 	background-color:#eee;
 }
 
@@ -120,7 +121,7 @@ margin:0!important;
 
 .section-results{
 	padding:3px;
-	border-right:1px solid #aaa;
+	border-right:2px solid #aaa;
 	background-color:#eee;
 }
 
@@ -141,7 +142,7 @@ margin:0!important;
 	height:250px;
 	vertical-align:top;
 	border-bottom:2px solid #aaa;
-	border-right:1px solid #aaa;
+	border-right:2px solid #aaa;
 }
 
 /*Горизонтальный скроллер вариантов*/

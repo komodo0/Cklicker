@@ -28,7 +28,7 @@ class FunctionsBase():
     def printPreTagsForLast(self, currentState, preState):
         count = currentState['depth'] - preState['depth']
         if count > 0:
-            result = "<ul class='Container'><li class='Node ExpandLeaf>"
+            result = "<ul class='Container'><li class='Node ExpandLeaf'>"
         if count <= 0:
             result = "<li class='Node ExpandClosed ExpandLeaf'>"
         return result.encode("utf8")

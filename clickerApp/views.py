@@ -38,7 +38,3 @@ def IndexView(request):
     response = render_to_response('IndexView.html', args)
     response.set_cookie("fist_step_id", beginState)
     return response
-
-def AboutView(request):
-    args = {}
-    return render_to_response('about.html', args)
