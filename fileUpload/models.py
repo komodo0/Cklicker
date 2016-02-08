@@ -14,7 +14,7 @@ class Document(models.Model):
                         "<img src='" + self.docfile.url + "' style='max-height:100px;'/>" \
                     "</td>" \
                     "<td style='text-align:left; vertical-align:middle; cursor:default!important;' >" \
-                        "<textarea style='resize: none; width:100%; height:18px;'>" \
+                        "<textarea onmouseover='this.select()' style='resize: none; width:100%; height:18px;'>" \
                             "&lt;img src='" + self.docfile.url + "'/&gt;" \
                         "</textarea>" \
                     "</td>" \
