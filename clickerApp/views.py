@@ -38,3 +38,8 @@ def IndexView(request):
     response = render_to_response('IndexView.html', args)
     response.set_cookie("fist_step_id", beginState)
     return response
+
+def ReinitializeSteps(request):
+    fun = FunctionsBase()
+    fun.reinitializeStates()
+    return True

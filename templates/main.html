@@ -84,6 +84,9 @@
             </tr>
 
         </table>
+
+
+    <button id="reinitializeStates">Обновить базу состояний</button>
 </div>
 
 
@@ -94,5 +97,18 @@
 <script src='{% static "static/templates/jquery.min.js" %}'></script>
 <script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
 <script src='{% static "static/templates/functions.js" %}'></script>
+
+<script>
+    $("#reinitializeStates").click(function(){
+
+        $.ajax({
+            url: '/reinitializeStates/',
+            method: 'post'
+        });
+
+         window.location.reload();
+    });
+</script>
+
 </body>
 </html>
