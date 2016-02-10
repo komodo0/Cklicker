@@ -42,4 +42,4 @@ def IndexView(request):
 def ReinitializeSteps(request):
     fun = FunctionsBase()
     fun.reinitializeStates()
-    return True
+    return render_to_response(IndexView)

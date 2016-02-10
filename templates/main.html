@@ -16,7 +16,7 @@
 <div class="container main-container">
         <table class="main-table">
 
-            <tr>
+            <tr class="line_1">
                 <td colspan="2" class="section-title">
                     <div>
                         Диагностика v0.1
@@ -25,7 +25,7 @@
                 <td></td>
             </tr>
 
-            <tr>
+            <tr class="line_2">
 
                 <td rowspan="4" class="section-file-manager">
 
@@ -61,7 +61,7 @@
 
             </tr>
 
-            <tr>
+            <tr class="line_3">
 
                 <td class="section-results">
 
@@ -73,7 +73,7 @@
 
             </tr>
 
-            <tr>
+            <tr class="line_4">
 
                 <td class="section-tips">
 
@@ -102,8 +102,7 @@
     $("#reinitializeStates").click(function(){
 
         $.ajax({
-            url: '/reinitializeStates/',
-            method: 'post'
+            url: '/reinitializeStates/'
         });
 
          window.location.reload();

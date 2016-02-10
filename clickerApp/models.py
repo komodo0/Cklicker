@@ -6,14 +6,16 @@ from django.db import models
 class TreeOrderField(models.CharField):
     def pre_save(self, model_instance, add):
         parent=(model_instance.parent)
-        if type(parent) == NoneType:
-            value="001"
-        else:
+        if type(parent) != NoneType:
             parent.seq+=1
             parent.save()
             value=('%s%03d'%(getattr(parent, self.attname, ''), parent.seq, ))[:255]
+        else:
+            value = "001"
         setattr(model_instance, self.attname, value)
         return value
+
+
 
 
 class State(models.Model):
@@ -31,21 +33,28 @@ class State(models.Model):
     def level(self):
         return max(0, len(self.path)/3-1)
 
+    def alredyUpdated(self):
+        if self.seq == 0:
+            return False
+        else:
+            return True
+
     def __str__(self):
         parent = self.parent
         if type(parent) == NoneType:
-            parentTitle = "None"
+            parentTitle = "[root]"
         else:
             parentTitle = parent.state_title.encode("utf8") + " (" + parent.move_title.encode("utf-8") + ")"
             pro_parent = parent.parent
             if type(pro_parent) == NoneType:
-                parentTitle = "None > " + parentTitle
+                parentTitle = parentTitle + "< [root]"
             else:
-                parentTitle = pro_parent.state_title.encode("utf8") + " (" + pro_parent.move_title.encode("utf-8") + ") > " + parentTitle
+                parentTitle = pro_parent.state_title.encode("utf8") + " (" + pro_parent.move_title.encode("utf-8") + ") < " + parentTitle
 
-        return parentTitle + " > " + \
-               self.state_title.encode("utf8") + \
-               " (" + self.move_title.encode("utf-8") + ")"
+        return self.state_title.encode("utf8") + \
+               " (" + self.move_title.encode("utf-8") + ")" + \
+               " < " + parentTitle
+
 
 
 class Tip(models.Model):
@@ -141,7 +150,6 @@ class FunctionsBase():
             result = "<li class='Node ExpandClosed ExpandLeaf'>"
         return result.encode("utf8")
 
-
     def printPostTags(self, currentState, postState):
         result = ""
         count = currentState['depth'] - postState['depth']
@@ -158,7 +166,6 @@ class FunctionsBase():
             result = "</li>"
         return result.encode("utf8")
 
-
     def printPostTagsForLast(self, currentState):
         result = ""
         count = currentState['depth']
@@ -171,10 +178,8 @@ class FunctionsBase():
             result = "</li>"
         return result.encode("utf8")
 
-
     def reinitializeStates(self):
         states = State.objects.all()
         for state in states:
             state.seq = 0
-            state.path = 0
             state.save()
