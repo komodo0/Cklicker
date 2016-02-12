@@ -4,16 +4,17 @@ from django.db import models
 
 
 class TreeOrderField(models.CharField):
-    def pre_save(self, model_instance, add):
-        parent=(model_instance.parent)
-        if type(parent) != NoneType:
-            parent.seq+=1
-            parent.save()
-            value=('%s%03d'%(getattr(parent, self.attname, ''), parent.seq, ))[:255]
-        else:
-            value = "001"
-        setattr(model_instance, self.attname, value)
-        return value
+     def pre_save(self, model_instance, add):
+         parent=(model_instance.parent)
+         if type(parent) != NoneType:
+             parent.seq+=1
+             parent.save()
+             value=('%s%03d'%(getattr(parent, self.attname, ''), parent.seq, ))[:255]
+         else:
+             value = "001"
+         setattr(model_instance, self.attname, value)
+         return value
+
 
 
 
@@ -49,7 +50,7 @@ class State(models.Model):
             if type(pro_parent) == NoneType:
                 parentTitle = parentTitle + "< [root]"
             else:
-                parentTitle = pro_parent.state_title.encode("utf8") + " (" + pro_parent.move_title.encode("utf-8") + ") < " + parentTitle
+                parentTitle = parentTitle + " < " + pro_parent.state_title.encode("utf8") + " (" + pro_parent.move_title.encode("utf-8") + ")"
 
         return self.state_title.encode("utf8") + \
                " (" + self.move_title.encode("utf-8") + ")" + \
@@ -179,7 +180,37 @@ class FunctionsBase():
         return result.encode("utf8")
 
     def reinitializeStates(self):
+        #Позволяет "Починить дерево"
+        #Прежде чем запускать требуется переопределить pre_save для TreeOrderField следующим образом:
+    #     def pre_save(self, model_instance, add):
+    #         value = model_instance.path
+    #         setattr(model_instance, self.attname, value)
+    #         return value
+
+
+        value = model_instance.path
+        setattr(model_instance, self.attname, value)
+        return value
         states = State.objects.all()
         for state in states:
-            state.seq = 0
+            seq = 0
+            for inner_state in states:
+                if inner_state.parent_id == state.id:
+                    seq+=1
+            state.seq = seq
+
+            if type(state.parent) == NoneType:
+                state.path = "001"
+            else:
+                counter = 1
+                parent_seq = state.parent.seq
+                parent_path = state.parent.path
+                current_path = parent_path + "001"
+                for inner_state in states:
+                    if inner_state.path == current_path:
+                        counter += 1
+                        current_path = parent_path + "00" + str(counter)
+
+                state.path = current_path
+
             state.save()
