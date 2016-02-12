@@ -16,9 +16,6 @@ class TreeOrderField(models.CharField):
          return value
 
 
-
-
-
 class State(models.Model):
     class Meta():
         db_table = 'state'
@@ -142,7 +139,6 @@ class FunctionsBase():
                 result = "<li class='Node ExpandClosed'>"
         return result.encode("utf8")
 
-
     def printPreTagsForLast(self, currentState, preState):
         count = currentState['depth'] - preState['depth']
         if count > 0:
@@ -179,18 +175,16 @@ class FunctionsBase():
             result = "</li>"
         return result.encode("utf8")
 
-    def reinitializeStates(self):
-        #Позволяет "Починить дерево"
-        #Прежде чем запускать требуется переопределить pre_save для TreeOrderField следующим образом:
+
+    #Позволяет "Починить дерево, когда оно едет. Связано это с кривым pre_save в TreeOrderField"
+    #Я его, конечно, починю, но пока не до этого
+    #Данная прикручено
+    #Прежде чем запускать требуется переопределить pre_save для TreeOrderField следующим образом:
     #     def pre_save(self, model_instance, add):
     #         value = model_instance.path
     #         setattr(model_instance, self.attname, value)
     #         return value
-
-
-        value = model_instance.path
-        setattr(model_instance, self.attname, value)
-        return value
+    def reinitializeStates(self):
         states = State.objects.all()
         for state in states:
             seq = 0
