@@ -1,0 +1,18 @@
+{% extends 'drive_main.html' %}
+{% block restore %}
+
+<form action="/auth/restore/" method="post">
+    {% csrf_token %}
+    <label for="username">Имя пользователя</label>
+    <input type="text" name="username" id="username">
+    <label for="password">Пароль</label>
+    <input type="password" name="password" id="password">
+    {% if login_error %}
+    <label class="error">{{ login_error }}</label>
+    {% endif %}
+    <input class="button" type="submit" value="Войти">
+
+    <button class="button" type="button" onclick="window.location.href='/auth/register/'">Восстановить пароль</button>
+</form>
+
+{% endblock %}

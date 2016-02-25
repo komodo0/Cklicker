@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Развозка</title>
+    <link rel="shortcut icon" href="{% static 'static/templates/favicon.png' %}"/>
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap.css" %}'>
+    <style>
+        .helptext{
+            display:none;
+        }
+
+        #register_form br{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+
+<nav role="navigation" class="navbar navbar-default">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">Охуитительная развозка!</a>
+    </div>
+
+
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav">
+            <li><a href="/drive/">Главная</a></li>
+            <li>
+                {% if username %}
+                <a href="/drive/signup/">Записаться</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if username %}
+                <a href="/drive/addresses/">Мои адреса</a>
+                {% endif %}
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                {% if username %}
+                <a href="/auth/logout/">Выйти ({{ username }})</a>
+                {% else %}
+                <a href="/auth/login/">Войти</a>
+                {% endif %}
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div>
+    {% block login %}{% endblock %}
+    {% block drive_list %}{% endblock %}
+    {% block signup %}{% endblock %}
+    {% block my_drive_list %}{% endblock %}
+    {% block drive_error %}{% endblock %}
+</div>
+</body>
+</html>

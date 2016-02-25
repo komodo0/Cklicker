@@ -1,0 +1,50 @@
+{% extends 'drive_main.html' %}
+{% block signup %}
+<div class="container">
+    <div class="page-header">
+        <h1>Запись в развозку
+            <small>Сегодня {{date}}</small>
+        </h1>
+    </div>
+    {% if wrong_time %}
+    <div class="jumbotron">
+        <h1>Запись окончена </h1>
+        <p>Сейчас {{current_time}}!!!</p>
+        <p>Запись на развозку у нас с 9:00 до 19:00, у тебя было сраных 10 часов, чтобы подумать об этом.</p>
+        <p>На сегодня запись закончена, ищи себя в списках, если успел записаться.</p>
+        <p>Если не успел - сам виноват. Пидорь пешком.</p>
+        </p>
+    </div>
+    {% else %}
+
+    {% if current_address == None %}
+    <div class="alert alert-danger">
+        <p><strong>Запишись!</strong></p>
+        <p>Ты еще не записался в развозку, надо сделать это до <strong>19:00</strong></p>
+    </div>
+
+    {% else %}
+    <div class="alert alert-success">
+        <p><strong>Запись выполнена!</strong></p>
+        <p>Ты записан в развозку по адресу: <strong>{{current_address.address.address}}, р-н {{current_address.address.area}}</strong></p>
+    </div>
+    <br>
+    Можешь сменить адрес ниже:
+    {% endif %}
+
+    <form action="/drive/signup/" method="post">
+        Подразделение: <input type="text" value="{{ department }}" readonly disabled>
+        Дата развозки: <input type="date" value="{{date}}" readonly disabled>
+        Адрес:
+        <select name="address">
+            {% for address in addresses %}
+            <option value="{{address.id}}">{{address.address }}, {{ address.area.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Записаться" {% if addresses %}> {% else %} disabled> Сначала адресов добавь, потом
+        записывайся {% endif %}
+    </form>
+
+    {% endif %}
+</div>
+{% endblock %}

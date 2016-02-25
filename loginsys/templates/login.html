@@ -1,0 +1,22 @@
+{% extends 'drive_main.html' %}
+
+{% block login %}
+    <div class="large-offset-3 large-6 columns">
+        <form action="/auth/login/" method="post">
+            {% csrf_token %}
+            <label for="username">Имя пользователя</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Пароль</label>
+            <input type="password" name="password" id="password">
+            {% if login_error %}
+                <label class="error">{{ login_error }}</label>
+            {% endif %}
+            <input class="button" type="submit" value="Войти">
+
+            <button class="button" type="button" onclick="window.location.href='/auth/register/'">Регистрация</button>
+
+            <button class="button" type="button" onclick="window.location.href='/auth/restore/'">Восстановить пароль</button>
+
+        </form>
+    </div>
+{% endblock %}

@@ -30,6 +30,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'clickerApp',
     'fileUpload',
+    'drive',
+    'loginsys',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,6 +79,8 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     'templates/',
     'clickerApp/templates/',
+    'drive/templates/',
+    'loginsys/templates/',
 )
 
 DEFAULT_CHARSET = "utf-8"
