@@ -22,11 +22,11 @@ class State(models.Model):
 
     parent = models.ForeignKey('self', null=True, blank=True, related_name='child_set')
     state_title = models.CharField(max_length=200)
+    add_title_to_comment = models.BooleanField(default=False, null=False, blank=False)
     move_title = models.CharField(max_length=300)
-    move_description = models.TextField(max_length=2000, blank=True)
+    move_description = models.TextField(max_length=2000, blank=True, null=False)
     seq = models.PositiveIntegerField(default=0)
     path = TreeOrderField(max_length=255, blank=True)
-
     @property
     def level(self):
         return max(0, len(self.path)/3-1)

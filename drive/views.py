@@ -114,7 +114,7 @@ def SignUpDriveView(request):
 
 
     args['current_time'] = datetime.now()
-    if args['current_time'] > datetime.now().replace(hour=2, minute=0, second=0) and args['current_time'] < datetime.now().replace(hour=9, minute=0, second=0):
+    if args['current_time'] > datetime.now().replace(hour=2, minute=0, second=0) or args['current_time'] < datetime.now().replace(hour=9, minute=0, second=0) or args['current_time'] > datetime.now().replace(hour=21, minute=0, second=0):
         args['wrong_time'] = True
     else:
         args['wrong_time'] = False
