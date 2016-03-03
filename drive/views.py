@@ -5,7 +5,6 @@ from django.contrib import auth
 from datetime import date, datetime
 from drive.models import DriveList, Area, FullAddress, OperatorToDepartnemt, Department
 
-# Create your views here.
 def DriveView(request):
 
     if request.POST:
@@ -77,7 +76,7 @@ def SignUpDriveView(request):
                 current_note = note
 
         if current_note is None:
-            current_note = DriveList(address=address)
+            current_note = DriveList(address=address, drive_date = date.today())
         else:
             current_note.address = address
         current_note.save()
@@ -114,7 +113,7 @@ def SignUpDriveView(request):
 
 
     args['current_time'] = datetime.now()
-    if args['current_time'] > datetime.now().replace(hour=2, minute=0, second=0) or args['current_time'] < datetime.now().replace(hour=9, minute=0, second=0) or args['current_time'] > datetime.now().replace(hour=21, minute=0, second=0):
+    if args['current_time'] < datetime.now().replace(hour=9, minute=0, second=0) or args['current_time'] > datetime.now().replace(hour=19, minute=10, second=0):
         args['wrong_time'] = True
     else:
         args['wrong_time'] = False

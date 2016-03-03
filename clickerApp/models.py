@@ -19,6 +19,8 @@ class TreeOrderField(models.CharField):
 class State(models.Model):
     class Meta():
         db_table = 'state'
+        verbose_name = u"Шаг диагностики"
+        verbose_name_plural = u"Шаги диагностики"
 
     parent = models.ForeignKey('self', null=True, blank=True, related_name='child_set')
     state_title = models.CharField(max_length=200)
@@ -56,8 +58,11 @@ class State(models.Model):
 
 
 class Tip(models.Model):
+
     class Meta():
         db_table = 'tip'
+        verbose_name = u"Подсказка"
+        verbose_name_plural = u"Подсказки"
 
     state_id = models.ForeignKey(State)
     tip_title = models.CharField(max_length=300)
@@ -71,6 +76,8 @@ class Tip(models.Model):
 class CheckboxInput(models.Model):
     class Meta():
         db_table = 'checkbox_input'
+        verbose_name = u"Чекбокс атрибут"
+        verbose_name_plural = u"Чекбокс атрибуты"
 
     state_input_id = models.ForeignKey(State)
     checkbox_input_title = models.CharField(max_length=300)
@@ -83,6 +90,8 @@ class CheckboxInput(models.Model):
 class TextInput(models.Model):
     class Meta():
         db_table = 'text_input'
+        verbose_name = u"Текстовый атрибут"
+        verbose_name_plural = u"Текстовые атрибуты"
 
     state_input_id = models.ForeignKey(State)
     text_input_title = models.CharField(max_length=300, blank=True)
@@ -98,6 +107,8 @@ class TextInput(models.Model):
 class RadioInput(models.Model):
     class Meta():
         db_table = 'radio_input'
+        verbose_name = u"Радио атрибут"
+        verbose_name_plural = u"Радио атрибуты"
 
     state_input_id = models.ForeignKey(State)
     radio_input_title = models.CharField(max_length=300, blank=True)
@@ -110,6 +121,8 @@ class RadioInput(models.Model):
 class RadioInputVariant(models.Model):
     class Meta():
         db_table = 'radio_input_variant'
+        verbose_name = u"Вариант радио атрибута"
+        verbose_name_plural = u"Варианты радио атрибуты"
 
     radio_input_id = models.ForeignKey(RadioInput)
     radio_input_variant_title = models.CharField(max_length=300, blank=True)

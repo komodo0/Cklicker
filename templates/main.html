@@ -13,82 +13,90 @@
 
 </head>
 <body>
-<div class="container main-container">
-        <table class="main-table">
-
-            <tr class="line_1">
-                <td colspan="2" class="section-title">
-                    <div>
-                        Диагностика v0.1
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-
-            <tr class="line_2">
-
-                <td rowspan="4" class="section-file-manager">
-
-                    {% block file_manager %}
-                    {% endblock %}
-
-                </td>
-
-                <td class="section-variants">
-
-                    <div class="section-variants-title">
-                        {% block state_move %}{% endblock %}
-                    </div>
-
-                    <div class="wrap-variants b-init b-target">
-                        {% block state_variants %}{% endblock %}
-                    </div>
-
-                    <div class="go_prev_state">
-                        <img src="{% static '/static/static/templates/arrow_right.png' %}" class="img">
-                    </div>
-                    <div class="btn btn-primary confirm-button">OK!</div>
-                    <button id="again" class="not_visible">Заново</button>
-                    <div class="go_next_state">
-                        <img src="{% static '/static/static/templates/arrow_right.png' %}" class="img">
-                    </div>
-
-                </td>
-
-                <td rowspan="3" class="section-move-description">
-                    {% block move_description %}{% endblock %}
-                </td>
-
-            </tr>
-
-            <tr class="line_3">
-
-                <td class="section-results">
-
-                    <div class="form-group">
-                        <textarea class="form-control section-results-txt" rows="3" id="comment" placeholder="Текст комментария"></textarea>
-                    </div>
-
-                </td>
-
-            </tr>
-
-            <tr class="line_4">
-
-                <td class="section-tips">
-
-                    {% block tips %}{% endblock %}
-
-                </td>
-
-            </tr>
-
-        </table>
+<div class="container">
 
 
-   <!---- <button id="reinitializeStates">Обновить базу состояний</button> --->
+    <div class="section-title">
+        <div>
+            <a>Сетевые подключеня</a>
+        </div>
+    </div>
+
+
+    <div class="section-move-description">
+        {% block move_description %}{% endblock %}
+    </div>
+
+    <div class="section-file-manager">
+
+        {% block file_manager %}
+        {% endblock %}
+
+    </div>
+    <div class="section-tips not_visible">
+        <div class="section_tips_whitespace"></div>
+        <div class="section_tips_title">Подсказки</div>
+        <div class="close_tips">
+            Закрыть
+        </div>
+        {% block tips %}{% endblock %}
+
+    </div>
+    <div class="section-variants">
+
+        <div class="section-variants-title">
+            {% block state_move %}{% endblock %}
+        </div>
+
+        <div class="wrap-variants b-init b-target">
+            {% block state_variants %}{% endblock %}
+        </div>
+
+        <div class="variant_navigation">
+
+            <div class="reserved_cell"></div>
+
+            <div class="go_prev_state">
+                <img src="{% static '/static/static/templates/arrow_left.png' %}" class="img">
+            </div>
+
+            <div class="submit-buttons">
+                <div class="btn btn-primary confirm-button disabled">OK!</div>
+                <button id="again" class="btn btn-primary not_visible">Заново</button>
+            </div>
+
+
+            <div class="go_next_state">
+                <img src="{% static '/static/static/templates/arrow_right.png' %}" class="img">
+            </div>
+
+            <div class="show_tips">
+                <img src="{% static '/static/static/templates/look.png' %}" class="img">
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="section-results">
+        <div class="splitter">
+
+        </div>
+        <div class="form-group">
+            <textarea class="form-control section-results-txt" rows="3" id="comment"
+                      placeholder="Текст комментария"></textarea>
+        </div>
+
+    </div>
+
+
+
+
+
+    <!---- <button id="reinitializeStates">Обновить базу состояний</button> --->
 </div>
-
 
 
 <!-- Bootstrap core JavaScript
@@ -107,6 +115,8 @@
 
          window.location.reload();
     });
+
+
 </script>
 
 </body>

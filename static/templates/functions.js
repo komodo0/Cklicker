@@ -355,7 +355,8 @@ step:
     };
 
 /* Event Listener для выбора варианта */
-$('td.section-variants').find('.b-list-item').click(function() {
+$('.section-variants').find('.b-list-item').click(function() {
+    $(".confirm-button").removeClass('disabled');
     var variants_target = $('.b-target').find('.b-list');
     var variants_active_class = 'b-list-item_active';
 
@@ -371,7 +372,6 @@ $('td.section-variants').find('.b-list-item').click(function() {
         fillState();
         rebuildComment();
     }
-
 })
 
 /* Event Listener для File Manager*/
@@ -395,21 +395,6 @@ $('div#file_manager').click(function(event){
 	// регексп находит отдельно стоящий open|close и меняет на newClass
 	var re =  /(^|\s)(ExpandOpen|ExpandClosed)(\s|$)/
 	node.className = node.className.replace(re, '$1'+newClass+'$3')
-})
-
-/* Event Listener для всплывающих подсказок */
-$('div.question').click(function(){
-    var id = getPrefixElementId( $(this).attr("id"), "question_");
-    elem = $(".move_description#"+id);
-     if (elem.is(":visible")){
-        elem.removeClass("visible");
-        elem.addClass("not_visible");
-        $('div.main-container').removeClass("main_container_big");
-     } else {
-        elem.removeClass("not_visible");
-        elem.addClass("visible");
-        $('div.main-container').addClass("main_container_big");
-     }
 })
 
 /*Event Listener для input text */
@@ -469,9 +454,9 @@ $('div.radio').find('input').change(function(event){
 $(".confirm-button").click(function(){
 
     if (step.chosen_id == -1){
-        alert("Выберите вариант!");
-    } else {
 
+    } else {
+        $(".confirm-button").addClass('disabled');
         var prev_comments = "";
          for (i = 0; i < count_current_step; i+=1){
             prev_comments += JSON.parse(getCookie("step_"+i)).comment;
@@ -528,13 +513,11 @@ $(".confirm-button").click(function(){
 
 /*Event Listener для кнопки "Предыдущий шаг"*/
 $("div.go_prev_state").click(function(){
-
     alert("go previous page")
 })
 
 /*Event Listener для кнопки "Следующий шаг"*/
 $("div.go_next_state").click(function(){
-
     alert("go next page")
 })
 
@@ -551,3 +534,39 @@ $("#again").click(function(){
     window.location.reload()
 })
 
+/* Event Listener для всплывающих подсказок */
+$('div.question').click(function(){
+    $(".form-control").addClass("disabled");
+    var id = getPrefixElementId( $(this).attr("id"), "question_");
+    elem = $(".move_description#"+id);
+     if (elem.is(":visible")){
+        elem.removeClass("visible");
+        elem.addClass("not_visible");
+        $('div.main-container').removeClass("main_container_big");
+     } else {
+        elem.removeClass("not_visible");
+        elem.addClass("visible");
+        $('div.main-container').addClass("main_container_big");
+     }
+})
+
+$(".close_move_descriprion").click(function(){
+    var elem = $(".move_description.visible");
+    elem.removeClass("visible");
+    elem.addClass("not_visible");
+    $(".form-control").removeClass("disabled");
+})
+
+$(".show_tips img").click(function(){
+
+    $(".section-tips").addClass("visible");
+    $(".section-tips").removeClass("not_visible");
+    $(".form-control").addClass("disabled");
+})
+
+$(".close_tips").click(function(){
+    var elem = $(".section-tips.visible");
+    elem.removeClass("visible");
+    elem.addClass("not_visible");
+    $(".form-control").removeClass("disabled");
+})

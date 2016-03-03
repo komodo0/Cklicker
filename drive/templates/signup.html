@@ -26,24 +26,53 @@
     {% else %}
     <div class="alert alert-success">
         <p><strong>Запись выполнена!</strong></p>
-        <p>Ты записан в развозку по адресу: <strong>{{current_address.address.address}}, р-н {{current_address.address.area}}</strong></p>
+        <p>Ты записан в развозку по адресу: <strong>{{current_address.address.address}}, р-н
+            {{current_address.address.area}}</strong></p>
     </div>
     <br>
     Можешь сменить адрес ниже:
     {% endif %}
-
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
     <form action="/drive/signup/" method="post">
-        Подразделение: <input type="text" value="{{ department }}" readonly disabled>
-        Дата развозки: <input type="date" value="{{date}}" readonly disabled>
-        Адрес:
-        <select name="address">
-            {% for address in addresses %}
-            <option value="{{address.id}}">{{address.address }}, {{ address.area.name}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Записаться" {% if addresses %}> {% else %} disabled> Сначала адресов добавь, потом
-        записывайся {% endif %}
+
+        <table class="table">
+            <tr>
+                <td><strong>Подразделение:</strong></td>
+                <td><input type="text" value="{{ department }}" readonly disabled class="form-control"></td>
+            </tr>
+            <tr>
+                <td><strong>Дата развозки:</strong></td>
+                <td><input type="date" value="{{date}}" readonly disabled class="form-control"></td>
+            </tr>
+            <tr>
+                <td><strong>Адрес:</strong></td>
+                <td><select name="address" class="form-control">
+                    {% for address in addresses %}
+                    <option value="{{address.id}}">{{address.address }}, {{ address.area.name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">
+
+                    <button type="submit"
+                            {% if addresses %}
+                                class="btn btn-default">Записаться</button>
+                            {% else %}
+                                disabled class="btn btn-danger">Записаться</button>
+                                <br>
+                                Сначала добавь хотябы один адрес!
+                            {% endif %}
+                </td>
+            </tr>
+        </table>
     </form>
+
+        </div>
+        <div class="col-md-2"></div>
+        </div>
 
     {% endif %}
 </div>

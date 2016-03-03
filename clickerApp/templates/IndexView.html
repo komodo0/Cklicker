@@ -27,14 +27,20 @@
 {%for state in states %}
 
 {% if state.id == 1 %}
-<div class="move_title_elem visible" id="title_{{state.id}}">{{ state.move_title }}
-    <div class="question pull-right" id="question_state_id_{{state.id}}">
+<div class="move_title_elem visible" id="title_{{state.id}}">
+    <div class="move_title">
+        {{ state.move_title }}
+    </div>
+    <div class="question" id="question_state_id_{{state.id}}">
         <img src="{% static '/static/static/templates/question.png' %}" class="img">
     </div>
 </div>
 {% else %}
-<div class="move_title_elem not_visible" id="title_{{state.id}}">{{ state.move_title }}
-    <div class="question pull-right" id="question_state_id_{{state.id}}">
+<div class="move_title_elem not_visible" id="title_{{state.id}}">
+    <div class="move_title">
+        {{ state.move_title }}
+    </div>
+    <div class="question" id="question_state_id_{{state.id}}">
         <img src="{% static '/static/static/templates/question.png' %}" class="img">
     </div>
 </div>
@@ -268,6 +274,8 @@
 {% for state in states %}
 
 <div class="move_description not_visible" id="state_id_{{state.id}}">
+    <div class="move_description_whitespace"></div>
+    <div class="move_description_title">Описание действия</div> <div class="close_move_descriprion">Закрыть</div>
     <div class="mode_description_content">
         {{ state.move_description|safe }}
     </div>

@@ -1,22 +1,37 @@
 {% extends 'drive_main.html' %}
 
 {% block login %}
-    <div class="large-offset-3 large-6 columns">
-        <form action="/auth/login/" method="post">
-            {% csrf_token %}
-            <label for="username">Имя пользователя</label>
-            <input type="text" name="username" id="username">
-            <label for="password">Пароль</label>
-            <input type="password" name="password" id="password">
-            {% if login_error %}
-                <label class="error">{{ login_error }}</label>
-            {% endif %}
-            <input class="button" type="submit" value="Войти">
-
-            <button class="button" type="button" onclick="window.location.href='/auth/register/'">Регистрация</button>
-
-            <button class="button" type="button" onclick="window.location.href='/auth/restore/'">Восстановить пароль</button>
-
-        </form>
+<div class="container">
+    <div class="page-header">
+        <h1>Авторизация</h1>
     </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+
+
+        <div class="col-md-6">
+            <form action="/auth/login/" method="post">
+                {% csrf_token %}
+                <p><label for="username">Имя пользователя</label>
+                    <input type="text" name="username" id="username" class="form-control">
+                </p>
+                <p>
+                    <label for="password">Пароль</label>
+                    <input type="password" name="password" id="password" class="form-control">
+                </p>
+                {% if login_error %}
+                <label class="error">{{ login_error }}</label>
+                {% endif %}
+                <p>
+                    <button class="btn btn-default" type="submit">Войти</button>
+                    <button class="btn btn-default" type="button" onclick="window.location.href='/auth/register/'">Регистрация</button>
+                    <!---  <button class="btn btn-default" type="button" onclick="window.location.href='/auth/restore/'">Восстановить пароль</button> --->
+                </p>
+            </form>
+        </div>
+
+        <div class="col-md-3"></div>
+    </div>
+</div>
 {% endblock %}

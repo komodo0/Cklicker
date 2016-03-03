@@ -1,69 +1,83 @@
 {% extends 'drive_main.html' %}
 {% block drive_list %}
-
 {% if username and user_department == None %}
+<div class="container">
 
-Товарищ, {{ username }}!<br>
-Спасибо тебе за регистрацию, теперь укажи,в каком отделе ты работаешь.<br>
-Честное слово, лучше указть верно, если ошибешься, развозки тебе никогда не видать.
-<form action="/drive/" method="post">
-    Я работаю в
-    <select name="department">
-        {% for department in departments %}
-        <option value="{{department.id}}">{{department.name}}</option>
-        {% endfor %}
-    </select>
-    <br>
-    <input type="submit" value="OK!">
-</form>
-
+    <div class="page-header">
+        <h1>Спасибо за регистрацию!
+        </h1>
+    </div>
+    <div class="alert alert-warning">
+        <p><strong>Укажите ваше подразделение:</strong></p>
+        <p>Если подразделение будет указано неверно, вы можете быть не включены в развозку.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <form action="/drive/" method="post">
+            <div class="col-md-2">
+                Мое подразделение:
+            </div>
+            <div class="col-md-2">
+                <select name="department" class="form-control">
+                    {% for department in departments %}
+                    <option value="{{department.id}}">{{department.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-default ">Выбрать</button>
+            </div>
+        </form>
+        <div class="col-md-3"></div>
+    </div>
+</div>
 {% else %}
 
 
 <div class="container">
-        <div class="page-header">
-            <h1>Развозка на {{ date }}</h1>
-        </div>
-
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>
-                    Подразделение:
-                </th>
-                <th>
-                    Оператор:
-                </th>
-                <th>
-                    Район:
-                </th>
-                <th>
-                    Адрес:
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for note in registered_notes %}
-            <tr>
-                <td>
-                    {{ note.department }}
-                </td>
-                <td>
-                    {{ note.address.operator }}
-                </td>
-                <td>
-                    {{ note.address.area.name }}
-                </td>
-                <td>
-                    {{ note.address.address }}
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="page-header">
+        <h1>Развозка на {{ date }}</h1>
     </div>
 
-    {% endif %}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                Подразделение:
+            </th>
+            <th>
+                Оператор:
+            </th>
+            <th>
+                Район:
+            </th>
+            <th>
+                Адрес:
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for note in registered_notes %}
+        <tr>
+            <td>
+                {{ note.department }}
+            </td>
+            <td>
+                {{ note.address.operator }}
+            </td>
+            <td>
+                {{ note.address.area.name }}
+            </td>
+            <td>
+                {{ note.address.address }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
 
 
-    {% endblock %}
+{% endblock %}
