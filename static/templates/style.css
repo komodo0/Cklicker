@@ -33,6 +33,19 @@ hr{
 	border:1px solid red!important;
 }
 
+.section-variants .wrap-variants .b-list .b-list-item{
+    display:inline-table;
+}
+
+.section-variants .wrap-variants .b-list .b-list-item .variant{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.var-description{
+    text-align:center;
+}
+
 .main_container_big{
 width:1600px!important;
 padding:0!important;
@@ -64,24 +77,56 @@ margin:0!important;
 }
 
 .section-title{
-
-
-
+    width:882px!important;
 }
 
-.section-title div{df-[ds.]\
-\\\\gb
+.title-container{
     width:882px!important;
     height:70px;
     padding:8px;
+    margin-top:10px;
     background:url('/static/static/templates/head.png') no-repeat;
     text-align:left;
+    display:table;
+
 
 }
 
-.section-title div a{
+.title-menu-elem{
+	font-size:12px;
+	vertical-align:bottom;
+	text-align:center;
+	display:table-cell;
+	height:100%;
+    width:20%;
+    color:white;
+}
+
+.title-menu-elem a{
+    color:white;
+}
+
+.title-menu-elem a:hover{
+    color:white!important;
+    font-size:13px;
+}
+
+.title-menu-elem a:active{
+    font-size:12px!important;
+}
+
+.title-menu-elem a:visited{
+    color:white!important;
+}
+
+
+.section-title .title-menu-whitespace{
 	font-size:10px;
-	 vertical-align:bottom;
+	vertical-align:bottom;
+	display:table-cell;
+	height:100%;
+	vertical-align:bottom;
+	width:40%;
 }
 
 .section-file-manager{
@@ -246,9 +291,13 @@ width:882px;
 	margin-left:7px;
 	margin-right:7px;
 	margin-bottom:7px;
-	border:1px solid #888;
-	border-radius: 10px;
-	background-color:white;
+	border:3px solid #337ab7;
+	background:#fefefe;
+	border-radius:4px;
+    //border-image: linear-gradient(to bottom, #4a6ef5, #3a4ed5);
+	//background: linear-gradient(to bottom,#93ffff, #6ad7ff);
+	border-image-slice: 1;
+
 	cursor: pointer;
 }
 
@@ -271,15 +320,17 @@ width:882px;
 
 /*теги вариантов*/
 .variant{
+    display:inline-block;
 	margin:3px;
 	white-space: normal;
-	
 	text-align:left;
+	vertical-align:middle;
 }
 
 .var-name{
 	font-size:20px;
 	text-align:center;
+	text-shadow:1px 1px 1px grey;
 }
 
 /*Раскрывающийся список подсказок*/
@@ -313,6 +364,10 @@ width:882px;
 	border-right: 1px solid #888;
 	background: #fff;
 	text-align:left;
+ }
+
+ .slider-content img{
+ max-width:100%;
  }
 
 .slider-text {
@@ -414,13 +469,6 @@ width:882px;
 }
 
 
-
-
-
-
-
-
-
 .move_title{
     width:80%;
     display:table-cell;
@@ -445,25 +493,29 @@ width:882px;
 }
 
 .go_prev_state{
-cursor: pointer;
-margin-right:100px;
-display:table-cell;
-width:20%;
-text-align:right;
-padding-right:25px;
+    margin-right:100px;
+    display:table-cell;
+    width:20%;
+    text-align:right;
+    padding-right:25px;
 }
 
 .go_next_state{
-display:table-cell;
-cursor: pointer;
-width:25%;
-text-align:left;
-padding-left:25px;
+    display:table-cell;
+    width:25%;
+    text-align:left;
+    padding-left:25px;
+
+}
+
+.go_next_state img{
+    display:none;
 
 }
 
  .go_prev_state img, .go_next_state img{
     height: 50px;
+    cursor: pointer;
 
  }
 
@@ -492,6 +544,16 @@ padding-left:25px;
     width:97%!important;
     padding-left:30px;
     padding-right:30px;
+}
+
+.diag_result .variant{
+    width:97%;
+}
+
+.diag_result .var-description{
+    display:block;
+    width:100%;
+    text-align:left!important;
 }
 
 .mode_description_content{
@@ -526,30 +588,39 @@ padding-left:25px;
     vertical-align:middle;
 }
 
-
-
-
 .show_tips img:hover{
     width: 58px;
  }
 
 .show_tips img:active{
     width: 57px;
- }
+}
 
  .show_tips img{
     width: 56px;
     box-sizing: border-box;
     vertical-align:bottom;
     cursor: pointer;
- }
+}
 
-
-
-
-
-
-.reserved_cell{
+.start_again{
 display:table-cell;
     width:20%;
+    text-align:center;
+    vertical-align:middle;
 }
+
+.start_again img:hover{
+    width: 69px;
+ }
+
+.start_again img:active{
+    width: 67px;
+ }
+
+ .start_again img{
+    width: 66px;
+    box-sizing: border-box;
+    vertical-align:bottom;
+    cursor: pointer;
+ }

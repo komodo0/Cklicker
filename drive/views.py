@@ -19,6 +19,12 @@ def DriveView(request):
 
     args['username'] = auth.get_user(request).username
 
+    if not args['username']:
+        args['user_is_staff'] = False
+    else:
+        args['user_is_staff'] = auth.get_user(request).is_staff
+
+
     if datetime.now().hour < 3:
         args['date'] = date.today().replace(day=date.today().day-1)
     else:
@@ -90,6 +96,8 @@ def SignUpDriveView(request):
     if not args['username']:
         return redirect("/drive/")
 
+    args['user_is_staff'] = auth.get_user(request).is_staff
+
     args['date'] = date.today()
 
     drive_list_today = DriveList.objects.filter(drive_date=date.today())
@@ -127,6 +135,7 @@ def AdressesDriveView(request):
     args['username'] = auth.get_user(request).username
     if not args['username']:
         return redirect("/drive/")
+    args['user_is_staff'] = auth.get_user(request).is_staff
     args['addresses'] = FullAddress.objects.filter(operator = user, was_deleted=False)
     args['areas'] = Area.objects.all()
     if not args['username']:
@@ -156,3 +165,14 @@ def DeleteAddress(request):
             address_note.save()
 
     return redirect("/drive/addresses/")
+
+def DriveHistory(request):
+
+    args = {}
+    args['username'] = auth.get_user(request).username
+    if not args['username']:
+        return redirect("/drive/")
+    args['user_is_staff'] = auth.get_user(request).is_staff
+
+
+    return render_to_response('history.html', args)

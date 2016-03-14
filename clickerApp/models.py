@@ -23,12 +23,14 @@ class State(models.Model):
         verbose_name_plural = u"Шаги диагностики"
 
     parent = models.ForeignKey('self', null=True, blank=True, related_name='child_set')
-    state_title = models.CharField(max_length=200)
+    state_title = models.CharField(max_length=200, blank=False, null=False)
+    variant_description = models.CharField(max_length=500, blank=True, null=False)
     add_title_to_comment = models.BooleanField(default=False, null=False, blank=False)
-    move_title = models.CharField(max_length=300)
+    move_title = models.CharField(max_length=300, null=False, blank=False)
     move_description = models.TextField(max_length=2000, blank=True, null=False)
     seq = models.PositiveIntegerField(default=0)
     path = TreeOrderField(max_length=255, blank=True)
+
     @property
     def level(self):
         return max(0, len(self.path)/3-1)
@@ -55,6 +57,35 @@ class State(models.Model):
                " (" + self.move_title.encode("utf-8") + ")" + \
                " < " + parentTitle
 
+    def parent_title(self):
+        if self.parent:
+            return self.parent.state_title
+        else:
+            return "-"
+
+    def parent_move(self):
+        if self.parent:
+            return self.parent.move_title
+        else:
+            return "-"
+
+    def pro_parent_title(self):
+        if self.parent:
+            if self.parent.parent:
+                return self.parent.parent.state_title
+            else:
+                return "-"
+        else:
+            return "-"
+
+    def pro_parent_move(self):
+        if self.parent:
+            if self.parent.parent:
+                return self.parent.parent.move_title
+            else:
+                return "-"
+        else:
+            return "-"
 
 
 class Tip(models.Model):

@@ -3,6 +3,7 @@
 
 
 {% block file_manager %}
+<!---
 <div class="wrap-file-manager">
     <ul>
         <li>
@@ -19,6 +20,7 @@
         </li>
     </ul>
 </div>
+--->
 {% endblock%}
 
 
@@ -58,9 +60,17 @@
 
     {% if state.parent_id == 1 %}
 
-    <li class="b-list-item visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
+        {% if state.add_title_to_comment %}
+             <li class="b-list-item visible parent_state_id_{{state.parent_id}} important_title" id="variant_{{state.id}}">
+        {% else %}
+             <li class="b-list-item visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
+        {% endif %}
         <div class="variant">
+            <hr>
+
             <div class="var-name">{{state.state_title}}</div>
+
+            <div class="var-description">{{state.variant_description|safe}}</div>
             <hr>
             <div class="var-description">
                 {% for txtInp in text_inputs %}
@@ -81,26 +91,20 @@
                 <div class="checkbox" id="input_{{ checkInp.id }}">
                     <label><input type="checkbox" value="{{checkInp.checkbox_input_title}}">{{checkInp.checkbox_input_title}}</label>
                 </div>
+                <hr>
                 {% endif %}
                 {% endfor %}
 
-                <hr>
 
                 {% for radInp in radio_inputs %}
-
                 {% if radInp.state_input_id_id == state.id %}
-
                 <div class="radio" id="input_{{ radInp.id }}">
                     <span class="radio_title">
                         {{ radInp.radio_input_title }}
                     </span>
-
-
                     <br>
                     {% for radInpVar in radio_input_variants %}
-
                     {% if radInp.id == radInpVar.radio_input_id_id %}
-
                     <label>
                         <input type="radio" name="radio_input_{{radInp.id}}" id="radio_input_var_{{radInpVar.id}}" vaue="{{radInpVar.radio_input_variant_title|safe}}" checked>
                         <span class="radio_value">
@@ -108,16 +112,12 @@
                         </span>
                     </label>
                     <br>
-
                     {% endif %}
 
                     {% endfor %}
-
                 </div>
                 <hr>
-
                 {% endif %}
-
                 {% endfor %}
 
 
@@ -127,9 +127,15 @@
 
     {% else %}
 
-    <li class="b-list-item not_visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
+        {% if state.add_title_to_comment %}
+             <li class="b-list-item not_visible parent_state_id_{{state.parent_id}} important_title" id="variant_{{state.id}}">
+        {% else %}
+             <li class="b-list-item not_visible parent_state_id_{{state.parent_id}}" id="variant_{{state.id}}">
+        {% endif %}
+
 
         <div class="variant">
+            <hr>
             <div class="var-name">{{state.state_title}}</div>
             <hr>
             <div class="var-description">
@@ -158,12 +164,11 @@
                         <input type="checkbox" value="{{checkInp.checkbox_input_title|safe}}">{{checkInp.checkbox_input_title|safe}}
                     </label>
                 </div>
-
+                <hr>
                 {% endif %}
-
                 {% endfor %}
 
-                <hr>
+
 
                 {% for radInp in radio_inputs %}
 

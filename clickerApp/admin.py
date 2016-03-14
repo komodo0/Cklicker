@@ -24,17 +24,19 @@ class ClickerTextInput(admin.TabularInline):
 
 
 class ClickerState(admin.ModelAdmin):
-    list_filter = ["state_title", "parent", "move_title"]
     inlines = [ClickerTip, ClickerCheckboxInput, ClickerTextInput, ClickerRadioInput]
 
     fieldsets = (
         ('ParentChoise', {
-            'fields': ('parent', 'state_title', 'add_title_to_comment'),
+            'fields': ('parent', 'state_title', 'add_title_to_comment', 'variant_description'),
         }),
         ('CurrentContent', {
             'fields': ('move_title', 'move_description')
         }),
     )
+
+    list_display = ('move_title', 'state_title', 'parent_move', 'parent_title',  'pro_parent_move', 'pro_parent_title')
+    list_filter = ('move_title', 'state_title')
 
 
 class ClickerRadioInputVariant(admin.TabularInline):

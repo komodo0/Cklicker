@@ -4,8 +4,30 @@ from drive.models import Area, FullAddress, DriveList,Department, OperatorToDepa
 # Register your models here.
 
 
-admin.site.register(Area)
-admin.site.register(FullAddress)
-admin.site.register(DriveList)
-admin.site.register(Department)
-admin.site.register(OperatorToDepartnemt)
+class AreaAdmin(admin.ModelAdmin):
+    list_display = ("name", "id")
+    list_filter = ("name", "id")
+
+
+
+class FullAddressAdmin(admin.ModelAdmin):
+    list_display = ("operator", "area", "address", "was_deleted")
+    list_filter = ("operator", "area", "address", "was_deleted")
+
+class DriveListAdmin(admin.ModelAdmin):
+    list_display = ("drive_date", "address")
+    list_filter = ("drive_date", "address")
+
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ("name", "id")
+    list_filter = ("name", "id")
+
+class OperatorToDepartnemtAdmin(admin.ModelAdmin):
+    list_display = ("operator", "department")
+    list_filter = ("operator", "department")
+
+admin.site.register(Area, AreaAdmin)
+admin.site.register(FullAddress, FullAddressAdmin)
+admin.site.register(DriveList, DriveListAdmin)
+admin.site.register(Department, DepartmentAdmin)
+admin.site.register(OperatorToDepartnemt, OperatorToDepartnemtAdmin)

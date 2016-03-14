@@ -29,16 +29,25 @@
 
         <ul class="nav navbar-nav">
             <li><a href="/drive/">Главная</a></li>
-            <li>
-                {% if username %}
-                <a href="/drive/signup/">Записаться</a>
-                {% endif %}
-            </li>
-            <li>
-                {% if username %}
-                <a href="/drive/addresses/">Мои адреса</a>
-                {% endif %}
-            </li>
+            {% if username %}
+                <li>
+                    <a href="/drive/signup/">Записаться</a>
+                </li>
+            {% endif %}
+
+
+            {% if username %}
+                <li>
+                    <a href="/drive/addresses/">Мои адреса</a>
+                </li>
+            {% endif %}
+
+
+            {% if user_is_staff %}
+                <li>
+                    <a href="/drive/history/">История развозок</a>
+                </li>
+            {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -63,6 +72,7 @@
     {% block drive_list %}{% endblock %}
     {% block signup %}{% endblock %}
     {% block my_drive_list %}{% endblock %}
+    {% block drive_history %}{% endblock %}
     {% block drive_error %}{% endblock %}
 </div>
 </body>

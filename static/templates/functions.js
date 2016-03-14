@@ -88,6 +88,11 @@ function rebuildComment(){
 
     var variant = $(".b-list-item" + "#variant_"+chosen_id);
 
+
+    if (variant.hasClass("important_title")){
+        current_comment = variant.find(".var-name").text().replace(/\s+/g,' ') + ". ";
+    }
+
     //Вылеояем рамкой выбранный вариант
     var variants_target = $('.b-target').find('.b-list');
     var variants_active_class = 'b-list-item_active';
@@ -257,6 +262,17 @@ function recoverStateFromCookie(){
     return parseInt(count_current_step)+1;
 }
 
+function showOrHideControlButtons(current_state_id){
+    if ($(".move_description#state_id_"+current_state_id+" .mode_description_content").text().replace(/\s+/g,' ')==" "){
+            $("#question_state_id_"+current_state_id+" img").hide();
+        }
+
+        if ($("#tip_parent_"+current_state_id).is(".tip")){
+            $(".show_tips img").show();
+        } else {
+            $(".show_tips img").hide();
+        }
+}
 
 /*
 _________Схема данных:____________
@@ -297,6 +313,8 @@ step:
     $("input[type='checkbox").prop("checked", false);
     if (getCookie("step_0")==undefined){
 
+        $(".go_prev_state img").hide();
+
         count_current_step = 0;
         var step = new Object();
         step.state_id = getCookie('fist_step_id');
@@ -308,6 +326,17 @@ step:
         step.inputs.radio = new Object();
         setActiveNode(step.state_id);
         rebuildComment();
+
+        showOrHideControlButtons(step.state_id);
+
+        first_variants = $(".section-variants .b-list-item.parent_state_id_"+step.state_id);
+        if (first_variants.size() > 8){
+            var n = Math.floor(first_variants.size()/4) + 1;
+            var h = 400/n - n*8;
+            first_variants.height(h);
+        } else {
+            first_variants.height(180);
+        }
 
     } else {
 
@@ -326,8 +355,19 @@ step:
 
         $(".section-variants .b-list-item").removeClass("visible");
         $(".section-variants .b-list-item").addClass("not_visible");
-        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).removeClass("not_visible");
-        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).addClass("visible");
+
+        first_variants = $(".section-variants .b-list-item.parent_state_id_"+step.state_id);
+        first_variants.addClass("visible").removeClass("not_visible");
+
+
+
+        if (first_variants.size() > 8){
+            var n = Math.floor((first_variants.size()-1)/4) + 1;
+            var h = 400/n - n*8;
+            first_variants.height(h);
+        } else {
+            first_variants.height(180);
+        }
 
         $(".tip.visible").addClass("not_visible").removeClass("visible");
         $(".tip#tip_parent_"+step.state_id).addClass("visible").removeClass("not_visible");
@@ -344,18 +384,18 @@ step:
         temp.addClass("not_visible");
 
         if ($(".section-variants").find("li.b-list-item.visible").size() == 0){
+            var title = $(".section-variants-title").find(".move_title_elem.visible").text().replace(/\s+/g,' ');
+            $("#diag_result").removeClass("not_visible").addClass("visible");
+            $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4>" + concatBrComments());
+            $(".confirm-button").addClass("not_visible");
+            $("#again").removeClass("not_visible");
+        }
 
-                var title = $(".section-variants-title").find(".move_title_elem.visible").text().replace(/\s+/g,' ');
-                $("#diag_result").removeClass("not_visible").addClass("visible");
-                $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4><br>" + concatBrComments());
-                $(".confirm-button").addClass("not_visible");
-                $("#again").removeClass("not_visible");
-
-            }
+        showOrHideControlButtons(step.state_id);
     };
 
 /* Event Listener для выбора варианта */
-$('.section-variants').find('.b-list-item').click(function() {
+$('.section-variants .b-list-item').click(function() {
     $(".confirm-button").removeClass('disabled');
     var variants_target = $('.b-target').find('.b-list');
     var variants_active_class = 'b-list-item_active';
@@ -456,6 +496,8 @@ $(".confirm-button").click(function(){
     if (step.chosen_id == -1){
 
     } else {
+        $(".go_prev_state img").show();
+
         $(".confirm-button").addClass('disabled');
         var prev_comments = "";
          for (i = 0; i < count_current_step; i+=1){
@@ -481,8 +523,16 @@ $(".confirm-button").click(function(){
 
         $(".section-variants .b-list-item").removeClass("visible");
         $(".section-variants .b-list-item").addClass("not_visible");
-        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).removeClass("not_visible");
-        $(".section-variants .b-list-item.parent_state_id_"+step.state_id).addClass("visible");
+        current_variants = $(".section-variants .b-list-item.parent_state_id_"+step.state_id);
+        current_variants.removeClass("not_visible").addClass("visible");
+
+        if (current_variants.size() > 8){
+            var n = Math.floor((current_variants.size()-1)/4)+1;
+            var h = 400/n - n*8;
+            current_variants.height(h);
+        } else {
+            current_variants.height(180);
+        }
 
         $(".tip.visible").addClass("not_visible").removeClass("visible");
         $(".tip#tip_parent_"+step.state_id).addClass("visible").removeClass("not_visible");
@@ -494,6 +544,9 @@ $(".confirm-button").click(function(){
         temp = $(".move_title_elem#title_"+step.state_id);
         temp.removeClass("not_visible");
         temp.addClass("visible");
+
+        showOrHideControlButtons(step.state_id);
+
         temp = $(".move_description.visible");
         temp.removeClass("visible");
         temp.addClass("not_visible");
@@ -501,23 +554,28 @@ $(".confirm-button").click(function(){
         setActiveNode(step.state_id);
 
         if ($(".section-variants").find("li.b-list-item.visible").size() == 0){
+
+            var title = $(".section-variants-title").find(".move_title_elem.visible").text().replace(/\s+/g,' ');
             $("#diag_result").removeClass("not_visible").addClass("visible");
-            $("#diag_result").find(".var-description").text($(".section-results-txt").val());
+            $("#diag_result").find(".var-description").html("<h4>"+ title + "</h4>" + concatBrComments());
             $(".confirm-button").addClass("not_visible");
             $("#again").removeClass("not_visible");
-
-
         }
+
     }
 })
 
+
+
+
 /*Event Listener для кнопки "Предыдущий шаг"*/
-$("div.go_prev_state").click(function(){
-    alert("go previous page")
-})
+$(".go_prev_state img").click(function(){
+        deleteCookie("step_" + (count_current_step-1));
+        window.location.reload();
+});
 
 /*Event Listener для кнопки "Следующий шаг"*/
-$("div.go_next_state").click(function(){
+$(".go_next_state img").click(function(){
     alert("go next page")
 })
 
@@ -531,11 +589,23 @@ $("#again").click(function(){
     	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
     	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
-    window.location.reload()
+    window.location.reload();
+})
+
+$(".start_again").click(function(){
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+    	var cookie = cookies[i];
+    	var eqPos = cookie.indexOf("=");
+    	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    window.location.reload();
 })
 
 /* Event Listener для всплывающих подсказок */
-$('div.question').click(function(){
+$('.question').click(function(){
     $(".form-control").addClass("disabled");
     var id = getPrefixElementId( $(this).attr("id"), "question_");
     elem = $(".move_description#"+id);
@@ -550,12 +620,25 @@ $('div.question').click(function(){
      }
 })
 
+
+/*
 $(".close_move_descriprion").click(function(){
     var elem = $(".move_description.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
     $(".form-control").removeClass("disabled");
 })
+*/
+$(".move_description").click(function(){
+    var elem = $(".move_description.visible");
+    elem.removeClass("visible");
+    elem.addClass("not_visible");
+    $(".form-control").removeClass("disabled");
+})
+
+
+//-------------------------------------------//
+
 
 $(".show_tips img").click(function(){
 
@@ -564,7 +647,15 @@ $(".show_tips img").click(function(){
     $(".form-control").addClass("disabled");
 })
 
+/*
 $(".close_tips").click(function(){
+    var elem = $(".section-tips.visible");
+    elem.removeClass("visible");
+    elem.addClass("not_visible");
+    $(".form-control").removeClass("disabled");
+})
+*/
+$(".section-tips").click(function(){
     var elem = $(".section-tips.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
