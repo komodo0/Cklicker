@@ -23,12 +23,21 @@ class State(models.Model):
         verbose_name_plural = u"Шаги диагностики"
 
     parent = models.ForeignKey('self', null=True, blank=True, related_name='child_set')
+
     state_title = models.CharField(max_length=200, blank=False, null=False)
+
     variant_description = models.CharField(max_length=500, blank=True, null=False)
+
     add_title_to_comment = models.BooleanField(default=False, null=False, blank=False)
+
+    hidden_comment = models.CharField(max_length=500, blank=True, null=False)
+
     move_title = models.CharField(max_length=300, null=False, blank=False)
+
     move_description = models.TextField(max_length=2000, blank=True, null=False)
+
     seq = models.PositiveIntegerField(default=0)
+
     path = TreeOrderField(max_length=255, blank=True)
 
     @property

@@ -28,7 +28,7 @@ class ClickerState(admin.ModelAdmin):
 
     fieldsets = (
         ('ParentChoise', {
-            'fields': ('parent', 'state_title', 'add_title_to_comment', 'variant_description'),
+            'fields': ('parent', 'state_title', 'add_title_to_comment', 'variant_description', 'hidden_comment'),
         }),
         ('CurrentContent', {
             'fields': ('move_title', 'move_description')

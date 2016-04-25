@@ -2,8 +2,9 @@
 from types import NoneType
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from drive.models import DriveList, Area, FullAddress, OperatorToDepartnemt, Department
+import calendar
 
 def DriveView(request):
 
@@ -26,7 +27,7 @@ def DriveView(request):
 
 
     if datetime.now().hour < 3:
-        args['date'] = date.today().replace(day=date.today().day-1)
+        args['date'] = date.today() - timedelta(1)
     else:
         args['date'] = date.today()
 

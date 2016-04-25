@@ -93,6 +93,12 @@ function rebuildComment(){
         current_comment = variant.find(".var-name").text().replace(/\s+/g,' ') + ". ";
     }
 
+    hidden_comment = variant.find(".hidden_comment").text().replace(/\s+/g,' ');
+
+    if (hidden_comment!=""){
+        current_comment += hidden_comment + ". ";
+    }
+
     //Вылеояем рамкой выбранный вариант
     var variants_target = $('.b-target').find('.b-list');
     var variants_active_class = 'b-list-item_active';
@@ -264,7 +270,7 @@ function recoverStateFromCookie(){
 
 function showOrHideControlButtons(current_state_id){
     if ($(".move_description#state_id_"+current_state_id+" .mode_description_content").text().replace(/\s+/g,' ')==" "){
-            $("#question_state_id_"+current_state_id+" img").hide();
+            $("#question_state_id_"+current_state_id).hide();
         }
 
         if ($("#tip_parent_"+current_state_id).is(".tip")){
@@ -606,6 +612,7 @@ $(".start_again").click(function(){
 
 /* Event Listener для всплывающих подсказок */
 $('.question').click(function(){
+
     $(".form-control").addClass("disabled");
     var id = getPrefixElementId( $(this).attr("id"), "question_");
     elem = $(".move_description#"+id);
@@ -621,21 +628,21 @@ $('.question').click(function(){
 })
 
 
-/*
+
 $(".close_move_descriprion").click(function(){
     var elem = $(".move_description.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
     $(".form-control").removeClass("disabled");
 })
-*/
+/*
 $(".move_description").click(function(){
     var elem = $(".move_description.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
     $(".form-control").removeClass("disabled");
 })
-
+*/
 
 //-------------------------------------------//
 
@@ -647,17 +654,20 @@ $(".show_tips img").click(function(){
     $(".form-control").addClass("disabled");
 })
 
-/*
+
 $(".close_tips").click(function(){
     var elem = $(".section-tips.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
     $(".form-control").removeClass("disabled");
 })
-*/
+
+
+/*
 $(".section-tips").click(function(){
     var elem = $(".section-tips.visible");
     elem.removeClass("visible");
     elem.addClass("not_visible");
     $(".form-control").removeClass("disabled");
 })
+*/
