@@ -32,6 +32,10 @@ INSTALLED_APPS = (
     'fileUpload',
     'drive',
     'loginsys',
+    'mainpage',
+    'testingsys',
+    'feedback',
+    'news',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,9 +82,13 @@ STATICFILES_DIRS = (
 
 TEMPLATE_DIRS = (
     'templates/',
+    'mainpage/templates/',
     'clickerApp/templates/',
     'drive/templates/',
     'loginsys/templates/',
+    'testingsys/templates/',
+    'feedback/templates/',
+    'news/templates',
 )
 
 DEFAULT_CHARSET = "utf-8"

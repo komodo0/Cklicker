@@ -1,6 +1,5 @@
 # coding: utf-8
 from django.conf.urls import patterns, include, url
-
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -13,5 +12,7 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + pa
     url(r'^files/', include('fileUpload.urls')),
     url(r'^auth/', include('loginsys.urls')),
     url(r'^drive/', include('drive.urls')),
-    url(r'^', include('clickerApp.urls')),
+    url(r'^diagnostic/', include('clickerApp.urls')),
+    url(r'^testing/', include('testingsys.urls')),
+    url(r'^', include('mainpage.urls')),
 )

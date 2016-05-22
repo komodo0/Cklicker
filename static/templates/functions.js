@@ -280,6 +280,55 @@ function showOrHideControlButtons(current_state_id){
         }
 }
 
+
+
+/* Делает текст вертикальным для э-тов с классом vertical-text*/
+/*deprivated оставлено на всякий случа, мало ли когда нибудь понадобится */
+function GetVerticalLayout()
+{
+   /* Параметры */
+   var fontFamily = "sans-serif"; /* задаем шрифт */
+   var fontSize = 14; /* задаем размер шрифта */
+
+   var notIE = !(navigator.appVersion.indexOf("MSIE") != -1 && navigator.systemLanguage);
+   var supportSVG = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+
+   if (notIE && supportSVG)
+   {
+      /* Собираем все ячейки */
+      var td = document.getElementsByTagName("div");
+
+      /* Находим ячейки с классом vertical и заменяем в них текст svg-изображением */
+      var objElement = document.createElement("object");
+
+      for(i = 0; i < td.length; i++)
+      {
+         if (td[i].className.match(/vertical-text/i))
+         {
+            var text = td[i].innerHTML;
+            var h = td[i].clientHeight;
+            var w = td[i].clientWidth;
+
+            var obj = objElement.cloneNode(true);
+            obj.height = (h > w) ? h : w;
+            obj.type = "image/svg+xml";
+            obj.width = fontSize + 2;
+            obj.data = "data:image/svg+xml;charset/utf-8,<svg xmlns='http://www.w3.org/2000/svg'><text x='" + (- obj.height/2) + "' y='" + fontSize + "' style='font-family:" + fontFamily + "; font-size:" + fontSize + "px; text-anchor:middle' transform='rotate(-90)'>" + text + "</text></svg>";
+            td[i].replaceChild(obj, td[i].firstChild);
+         }
+      }
+   }
+}
+
+
+function buildShcema(){
+
+
+
+}
+
+
+
 /*
 _________Схема данных:____________
 
@@ -315,6 +364,8 @@ step:
 
 */
 //$(".b-list-item.not_visible").removeClass("not_visible");
+
+
     $("input[type='text']").val("");
     $("input[type='checkbox").prop("checked", false);
     if (getCookie("step_0")==undefined){
@@ -344,7 +395,8 @@ step:
             first_variants.height(180);
         }
 
-    } else {
+    } else
+    {
 
         count_current_step = recoverStateFromCookie();
         step = new Object();
@@ -671,3 +723,90 @@ $(".section-tips").click(function(){
     $(".form-control").removeClass("disabled");
 })
 */
+
+
+
+
+/*========    Формы новостей    =========*/
+
+$(".show_full_news_item").click(function(){
+    item_id = getPrefixElementId(this.id, "show_full_news_button_");
+    item_new = $("#news_area_"+item_id);
+    //show
+    item_new.find(".news_body_path").toggle('fast');
+    item_new.find(".news_hidden_path").toggle('slow');
+    item_new.find(".show_less_news_item").show();
+    $(this).hide();
+
+})
+
+$(".show_less_news_item").click(function(){
+    item_id = getPrefixElementId(this.id, "show_less_news_button_");
+    item_new = $("#news_area_"+item_id);
+    //hide
+    item_new.find(".news_hidden_path").toggle('fast');
+    item_new.find(".news_body_path").toggle('slow');
+    item_new.find(".show_full_news_item").show();
+    $(this).hide();
+})
+
+
+
+/*========    Формы добавления новостей    =========*/
+
+$(".show_add_news_form_button").click(function(event){
+    $(".add_news_form").toggle('normal');
+})
+
+
+$(".remove_add_news_form_button").click(function(){
+    $(".add_news_title_input").val("");
+    $(".add_news_body_input").val("");
+    $(".add_news_form").toggle('slow');
+    $(".show_add_news_form_button").show();
+})
+
+
+
+/*========    Формы редактирования новостей    =========*/
+
+$(".change_news_item").click(function(){
+    item_id = getPrefixElementId(this.id, "change_news_button_")
+    $("#news_area_"+item_id).hide();
+    $("#edit_news_area_"+item_id).find(".edit_news_title_input").val($("#news_area_"+item_id).find(".news_title").text());
+    $("#edit_news_area_"+item_id).find(".edit_news_body_input").val($("#news_area_"+item_id).find(".news_hidden_path").text());
+    //show
+    $("#edit_news_area_"+item_id).toggle('slow');
+    $(".show_add_news_form_button").hide();
+})
+
+
+$(".remove_change_news_form_button").click(function(){
+    item_id = getPrefixElementId(this.id, "change_news_button_")
+    //hide
+    $(this).parents("edit_news_form").toggle('slow');
+})
+
+
+$(".remove_edit_news_form_button").click(function(){
+    item_id = getPrefixElementId(this.id, "cancel_edit_news_button_");
+    $("#edit_news_area_"+item_id).hide();
+    item_new = $("#news_area_"+item_id);
+    //show
+    item_new.toggle('slow');
+    $(".show_add_news_form_button").show();
+    $(this).parents("form").children(".edit_news_title_input").val("");
+    $(this).parents("form").children(".edit_news_body_input").val("");
+})
+
+$(".delete_news_item").click(function(){
+    item_id = getPrefixElementId(this.id, "delete_news_button_");
+    $("#news_navigation_"+item_id).hide();
+    $("#comfirm_delete_new_"+item_id).toggle('slow');
+});
+
+$(".refuse_delete_news_item").click(function(){
+    item_id = getPrefixElementId(this.id, "refuse_delete_news_button_");
+    $("#comfirm_delete_new_"+item_id).hide();
+    $("#news_navigation_"+item_id).toggle('slow');
+})

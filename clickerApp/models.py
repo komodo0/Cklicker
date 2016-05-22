@@ -17,6 +17,7 @@ class TreeOrderField(models.CharField):
 
 
 class State(models.Model):
+
     class Meta():
         db_table = 'state'
         verbose_name = u"Шаг диагностики"
@@ -173,6 +174,7 @@ class RadioInputVariant(models.Model):
 
 
 class FunctionsBase():
+
     def printPreTags(self, currentState, preState, postState):
         isLeaf = False
         if currentState['depth'] >= postState['depth']:
@@ -192,6 +194,7 @@ class FunctionsBase():
                 result = "<li class='Node ExpandClosed'>"
         return result.encode("utf8")
 
+
     def printPreTagsForLast(self, currentState, preState):
         count = currentState['depth'] - preState['depth']
         if count > 0:
@@ -199,6 +202,7 @@ class FunctionsBase():
         if count <= 0:
             result = "<li class='Node ExpandClosed ExpandLeaf'>"
         return result.encode("utf8")
+
 
     def printPostTags(self, currentState, postState):
         result = ""
@@ -215,6 +219,7 @@ class FunctionsBase():
         if count == 0:
             result = "</li>"
         return result.encode("utf8")
+
 
     def printPostTagsForLast(self, currentState):
         result = ""
@@ -261,3 +266,140 @@ class FunctionsBase():
                 state.path = current_path
 
             state.save()
+
+
+    #находится ли элемент "под" другим
+    def currentStateIsUnderAnother(self, current_state, anoter_state):
+
+        st = current_state
+
+        if current_state == anoter_state:
+            return False
+
+        while type(st) != NoneType and st != anoter_state:
+            st = st.parent
+
+        if type(st) == NoneType:
+            return False
+        else:
+            return True
+
+    #Получаем все элементы под конкретным
+    def getAllStatesUnderCurrent(self, top_state):
+
+        fun = FunctionsBase()
+
+        states = State.objects.all()
+
+        all_states_under = []
+
+        for state in states:
+            if fun.currentStateIsUnderAnother(state, top_state):
+                all_states_under.append(state)
+
+        return all_states_under
+
+    #получаем список id`шников листьев
+    def getLeavesId(self, begin_state):
+
+        fun = FunctionsBase()
+
+        all_states = State.objects.all()
+
+        states = []
+
+        for state in all_states:
+            if fun.currentStateIsUnderAnother(state, begin_state):
+                states.append(state)
+
+        states_id = []
+        parents_id = []
+
+        for state in states:
+            states_id.append(state.id)
+            if type(state.parent) == NoneType:
+                parents_id.append(-1)
+            else:
+                parents_id.append(state.parent.id)
+
+        states_id = set(states_id)
+        parents_id = set(parents_id)
+        leaves_id = states_id - parents_id
+
+
+
+        return leaves_id
+
+    #Получаем глубину дерева (под элементом)
+    def getTreePathMaxDepth(self, begin_state):
+
+        fun = FunctionsBase
+
+        depth = 0
+        leaves_id = fun.getLeavesId(begin_state)
+
+        for leave_id in leaves_id:
+
+            state = State.objects.get(id = leave_id)
+            count = fun.getStateLevel(state)
+
+            if count > depth:
+                depth = count
+
+        return depth
+
+    #Получаем глубину всего
+    def getTreeDepth(self):
+
+        fun = FunctionsBase()
+
+        depth = 0
+        states = State.objects.all()
+
+        for state in states:
+            count = fun.getStateLevel(state)
+
+            if count > depth:
+                depth = count
+
+        return depth
+
+    #Получаем непосредственных потомков
+    def getFirstLevelChildren(self, parent_state):
+        children = State.objects.filter(parent = parent_state)
+        children = set(children)
+        return children
+
+    #Определяем глубину определенного элемента
+    def getStateLevel(self, current_state):
+        st = current_state
+        count = 0
+        while type(st) != NoneType:
+                count += 1
+                st = st.parent
+
+        return count
+
+    def getAllParents(self):
+        parents = []
+        states = State.objects.all()
+        for state in states:
+            parents.append(state.parent)
+
+        parents = set(parents)
+        return parents
+
+    def getStateRowspan(self, state):
+
+        fun = FunctionsBase()
+
+        parents = fun.getAllParents()
+
+        rowspan = 0
+
+        if state in parents:
+            rowspan = 1
+        else:
+            rowspan = fun.getTreeDepth() - fun.getStateLevel(state) + 1
+
+        return rowspan

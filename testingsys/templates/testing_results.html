@@ -1,0 +1,193 @@
+{% extends 'testing_index.html' %}
+
+{% block results %}
+
+<div class="page-header">
+    <h1>
+        <center>Мои результаты</center>
+    </h1>
+</div>
+
+<div class="row">
+
+
+    <div class="col-md-6">
+        <h3>
+            <table class="table">
+
+                 <tr>
+                    <td>
+                        Тестов в системе
+                    </td>
+                    <td>
+                        75
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Тестов доступно:
+                    </td>
+                    <td>
+                        50
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Тестов пройдено:
+                    </td>
+                    <td>
+                        20
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Тестов пропущенно:
+                    </td>
+                    <td>
+                        5
+                    </td>
+                </tr>
+
+
+
+            </table>
+        </h3>
+    </div>
+
+
+
+
+    <div class="col-md-6">
+        <h3>
+            <table class="table">
+                <tr>
+                    <td>
+                        Средний балл:
+                    </td>
+                    <td>
+                        50%
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Среднее время тестирования:
+                    </td>
+                    <td>
+                        20:02
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Высший балл:
+                    </td>
+                    <td>
+                        72,2%
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                       Процент обученности
+                    </td>
+                    <td>
+                        26,7%
+                    </td>
+                </tr>
+
+            </table>
+        </h3>
+    </div>
+
+
+
+&nbsp;
+<hr>
+    <div class="col-md-12">
+
+        <div class="page-header">
+    <h1>
+        <center>Пройденное тестирование:</center>
+    </h1>
+</div>
+
+        <table class="table table-hover">
+
+            <thead>
+            <tr>
+                <th>
+                    Название:
+                </th>
+                <th>
+                    Кол-во попыток:
+                </th>
+                <th>
+                    Проходной балл:
+                </th>
+                <th>
+                    Набранный балл:
+                </th>
+
+                <th>
+                    Последнее выполнение:
+                </th>
+                <th>
+                    Вердикт:
+                </th>
+
+
+            </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    Вводное тестирование
+                </td>
+                <td>
+                    2 / 3
+                </td>
+                <td>
+                    50%
+                </td>
+                <td>
+                    58,2%
+                </td>
+
+                <td>
+                    19.04.2933
+                </td>
+                <td>
+                    Зачет
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Тестирование по IPTV
+                </td>
+                <td>
+                    1 / 5
+                </td>
+                <td>
+                    80%
+                </td>
+                <td>
+                    64,3%
+                </td>
+
+                <td>
+                    19.04.2933
+                </td>
+                <td>
+                    Незачет
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

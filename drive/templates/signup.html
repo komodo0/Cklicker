@@ -25,7 +25,7 @@
     {% else %}
     <div class="alert alert-success">
         <p><strong>Запись выполнена!</strong></p>
-        <p>Ты записан в развозку по адресу: <strong>{{current_address.address.address}}, р-н
+        <p>Ты записан в развозку на время <strong>{{current_address.drive_time}}</strong> по адресу: <strong>{{current_address.address.address}}, р-н
             {{current_address.address.area}}</strong></p>
     </div>
     <br>
@@ -45,6 +45,18 @@
                 <td><strong>Дата развозки:</strong></td>
                 <td><input type="date" value="{{date}}" readonly disabled class="form-control"></td>
             </tr>
+
+
+            <tr>
+                <td><strong>Время развозки:</strong></td>
+                <td><select name="time" class="form-control">
+                    {% for time in drive_time_variants %}
+                    <option value="{{time.id}}">{{time}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+
+
             <tr>
                 <td><strong>Адрес:</strong></td>
                 <td><select name="address" class="form-control">

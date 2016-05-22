@@ -1,0 +1,159 @@
+{% extends 'testing_index.html' %}
+
+{% block statistic %}
+
+<div class="page-header">
+    <h1>
+        <center>Статистика по сотрудникам</center>
+    </h1>
+</div>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <h2>Параметры:</h2>
+
+        <div class="form-group">
+
+            <div class="row">
+                <div class="col-md-12">
+
+            <label>Сотрудник:</label>
+
+            <select class="form-control">
+                <option>Все</option>
+                <option>Дудин Денис Батькович</option>
+            </select>
+
+
+                    </div>
+            </div>
+
+            <br>
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+            <label>Тест:</label>
+
+            <select class="form-control">
+                <option>Все</option>
+                <option>Вводное тестирование</option>
+            </select>
+
+
+                    </div>
+            </div>
+
+
+            <br>
+
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+
+                    <label>Дата начало:</label>
+
+                    <div class="input-group date" id="datetimepicker1">
+
+                        <input type="text" class="form-control"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+                    <label>Дата конец:</label>
+                    <div class="input-group date" id="datetimepicker2">
+                        <input type="text" class="form-control"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <button type="submit" form="feedback" class="btn btn-success form-control">Запросить</button>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-9">
+        <h2>Результат:</h2>
+        <table class="table table-hover">
+
+            <thead>
+            <tr>
+                <th>
+                    Сотрудник:
+                </th>
+                <th>
+                    Тест:
+                </th>
+                <th>
+                    Высший балл:
+                </th>
+                <th>
+                    Попыток:
+                </th>
+                <th>
+                    Последнее выполнение:
+                </th>
+            </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    Сотрудников Сотрудник Сотрудникович
+                </td>
+                <td>
+                    Вводное тестирование
+                </td>
+                <td>
+                    47%
+                </td>
+                <td>
+                    2
+                </td>
+                <td>
+                    10.05.2016
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Дудин Денис Батькович
+                </td>
+                <td>
+                    Вводное тестирование
+                </td>
+                <td>
+                    42%
+                </td>
+                <td>
+                    1
+                </td>
+                <td>
+                    10.05.2016
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+{% endblock %}

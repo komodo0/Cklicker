@@ -1,7 +1,7 @@
 {% extends 'drive_main.html' %}
 {% block drive_list %}
 {% if username and user_department == None %}
-<div class="container">
+
 
     <div class="page-header">
         <h1>Спасибо за регистрацию!
@@ -30,52 +30,64 @@
         </form>
         <div class="col-md-3"></div>
     </div>
-</div>
+
 {% else %}
 
 
-<div class="container">
+
     <div class="page-header">
         <h1>Развозка на {{ date }}</h1>
     </div>
 
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>
-                Подразделение:
-            </th>
-            <th>
-                Оператор:
-            </th>
-            <th>
-                Район:
-            </th>
-            <th>
-                Адрес:
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for note in registered_notes %}
-        <tr>
-            <td>
-                {{ note.department }}
-            </td>
-            <td>
-                {{ note.address.operator }}
-            </td>
-            <td>
-                {{ note.address.area.name }}
-            </td>
-            <td>
-                {{ note.address.address }}
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+
+    {% for time_variant in drive_time_variants %}
+
+        <div class="page-header">
+            <h3>Список уезжающих в {{ time_variant }}</h3>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>
+                    Подразделение:
+                </th>
+                <th>
+                    Оператор:
+                </th>
+                <th>
+                    Район:
+                </th>
+                <th>
+                    Адрес:
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for note in registered_notes %}
+                {% if note.drive_time == time_variant %}
+                    <tr>
+                        <td>
+                            {{ note.department }}
+                        </td>
+                        <td>
+                            {{ note.address.operator }}
+                        </td>
+                        <td>
+                            {{ note.address.area.name }}
+                        </td>
+                        <td>
+                            {{ note.address.address }}
+                        </td>
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+    {% endfor %}
 
 {% endif %}
 

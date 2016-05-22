@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="{% static 'static/templates/favicon.png' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'static/templates/style.css' %}">
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" type="text/css"
+          href='{% static "static/templates/bootstrap/css/bootstrap-datetimepicker.min.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/fileManager/grid.css" %}'>
+
+    <title>Компьютерное тестирование</title>
+
+</head>
+<body>
+
+<nav role="navigation" class="navbar navbar-default">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">Компьютерное тестирование</a>
+    </div>
+
+
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav">
+            <li><a href="/">Главная</a></li>
+
+            {% if username %}
+            <li>
+                <a href="/testing/test_list/">Тестирование</a>
+            </li>
+            {% endif %}
+
+            {% if username %}
+            <li>
+                <a href="/testing/top/">ТОПы</a>
+            </li>
+            {% endif %}
+
+            {% if username %}
+            <li>
+                <a href="/testing/my_results/">Мои результаты</a>
+            </li>
+            {% endif %}
+
+
+            {% if user_is_staff %}
+            <li>
+                <a href="/testing/statistic/">Статистика по сотрудникам</a>
+            </li>
+            {% endif %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                {% if username %}
+                <a href="/auth/logout/">Выйти ({{ username }})</a>
+                {% else %}
+                <a href="/auth/login/">Войти</a>
+                {% endif %}
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+
+    {% block tops %}{% endblock %}
+    {% block results %}{% endblock %}
+    {% block statistic %}{% endblock %}
+    {% block test_list %}{% endblock %}
+
+
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src='{% static "static/templates/jquery.min.js" %}'></script>
+<script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
+<script src='{% static "static/templates/bootstrap/js/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "static/templates/functions.js" %}'></script>
+
+
+</body>
+</html>

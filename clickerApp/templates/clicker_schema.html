@@ -1,0 +1,81 @@
+{%extends 'clicker_index.html' %}
+
+
+{% block clicker_schema %}
+
+<style>
+
+    .container{
+        width:95%!important;
+        padding:0!important;
+        height: 78vh; /* 100vh - 100% от высоты viewport(окна браузера) */
+    }
+
+    .page-header{
+        margin:0!important;
+    }
+
+    .navbar {
+        margin:0!important;
+    }
+
+</style>
+
+<div class="page-header">
+        <h1><center>Схема диагностики</center></h1>
+    </div>
+
+<div class="schema-container wrap-container">
+
+
+
+    <table class="table table-bordered schema-table">
+
+
+
+    {% for level in states %}
+
+        <tr>
+
+        {% for state in level %}
+
+            <td colspan="{{state.state_width}}" rowspan="{{state.cell_rowspan}}" style="text-align:center!important;">
+
+
+        <div class="state_item">
+
+            <div class="item_id" style="display:none;">id = {{ state.id }}</div>
+            <div class="parent_id" style="display:none;">parentid = {{ state.parent.id }}</div>
+
+
+            <div class="item_title vertical-text">{{state.state_title}}</div>
+
+            <div class="item_move vertical-text">{{state.move_title}}</div>
+
+        </div>
+
+
+
+                </td>
+        {% endfor %}
+
+        </tr>
+
+
+
+    {% endfor %}
+
+
+        </table>
+
+
+    </div>
+
+{% endblock %}
+
+
+{% block schema_script %}
+    <script>
+        buildSchema();
+    </script>
+{% endblock %}

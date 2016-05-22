@@ -15,7 +15,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return redirect('/drive/')
+            return redirect('/')
         else:
             args['login_error'] = "Пользователь не найден"
             return render_to_response('login.html', args)
@@ -26,7 +26,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect("/drive/")
+    return redirect("/")
 
 def register(request):
     args = {}
@@ -38,7 +38,7 @@ def register(request):
             newuser_form.save()
             newuser = auth.authenticate(username=newuser_form.cleaned_data['username'], password=newuser_form.cleaned_data['password2'])
             auth.login(request, newuser)
-            return redirect('/drive/')
+            return redirect('/')
         else:
             args['form'] = newuser_form
     return render_to_response('register.html', args)
