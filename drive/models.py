@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils import timezone
 
-
 #Подразделение
 class Department(models.Model):
     class Meta():
@@ -50,7 +49,6 @@ class FullAddress(models.Model):
     def __str__(self):
         return (self.operator.username + " | " + self.area.name + " | " + self.address).encode("utf-8")
 
-
 #Класс - возможное время для записи на развозку.
 class DriveTime(models.Model):
     class Meta():
@@ -62,7 +60,6 @@ class DriveTime(models.Model):
 
     def __str__(self):
         return self.drive_time.__str__()
-
 
 #Класс - лист развозки
 class DriveList(models.Model):

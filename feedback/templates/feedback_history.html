@@ -1,0 +1,20 @@
+{% block feedback_history %}
+    <table id="feedback_history" class="table table-hover news_list" style="display:none">
+        {% for note in feedback_notes %}
+            <tr>
+                <td>
+                    <div style="font-weight:bold!important">
+                        <div class="pull-left">from {{ note.from_user }}</div>
+                        <div class="pull-right">{{ note.feedback_date|date:"d.m.Y"}}</div>
+                        <br>
+                        <div class="pull-right">{{ note.feedback_date|date:"h:i:s"}}</div>
+                    </div>
+                    <br>
+                    <div>
+                        {{ note.feedback_body | linebreaksbr}}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

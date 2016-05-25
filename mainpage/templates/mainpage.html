@@ -14,15 +14,13 @@
 </head>
 <body>
 
-
-
 <nav role="navigation" class="navbar navbar-default">
     <div class="navbar-header">
         <a href="#" class="navbar-brand">Органайзер саппортиста</a>
     </div>
 
 
-    <div id="navbarCollapse" class="collapse navbar-collapse">
+    <span id="navbarCollapse" class="collapse navbar-collapse">
 
         <ul class="nav navbar-nav">
             <li><a href="/">Главная</a></li>
@@ -47,6 +45,17 @@
             {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
+
+            {% if The_Creator_is_here %}
+            <li>
+
+                <a href="/feedback/show/">Отзывы пользователей {% if new_feedback_count %}
+                    <div class="feedback_count_message">{{ new_feedback_count }}</div>
+                    {% endif %}</a>
+            </li>
+            {% endif %}
+
+
             <li>
                 {% if username %}
                 <a href="/auth/logout/">Выйти ({{ username }})</a>
@@ -56,15 +65,10 @@
 
             </li>
         </ul>
-    </div>
+        </span>
 </nav>
 
-
-
-
 <div class="container">
-
-
 
     <div class="page-header">
         <h1>
@@ -74,21 +78,10 @@
 
     <div class="row">
 
-        <div class="col-md-9">
 
-            {% block news_form %}
+        {% block feedback_view_for_creator %}{% endblock %}
+        {% block maimpage_news_feedback %}{% endblock %}
 
-                {% include "news_form.html" %}
-
-            {% endblock %}
-
-        </div>
-
-        <div class="col-md-3">
-            {% block feedback_form %}
-                {% include "feedback_form.html" %}
-            {% endblock %}
-        </div>
 
     </div>
 

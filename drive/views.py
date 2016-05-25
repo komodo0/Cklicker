@@ -192,7 +192,7 @@ def DriveHistory(request):
         return redirect("/drive/")
 
     try:
-        args['search_date'] = request.POST.get('search_date', '')
+        args['search_date'] = request.GET.get('search_date', '')
         print(args['search_date'])
         args['search_date'] = datetime.strptime(args['search_date'], "%d.%m.%Y").date()
         print(args['search_date'])

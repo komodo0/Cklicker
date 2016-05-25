@@ -18,7 +18,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -88,7 +87,7 @@ TEMPLATE_DIRS = (
     'loginsys/templates/',
     'testingsys/templates/',
     'feedback/templates/',
-    'news/templates',
+    'news/templates'
 )
 
 DEFAULT_CHARSET = "utf-8"
@@ -98,3 +97,6 @@ FILE_CHARSET = "utf-8"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+
+

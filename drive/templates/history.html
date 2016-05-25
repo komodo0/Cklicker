@@ -2,7 +2,6 @@
 
 {% block drive_history %}
 
-
 <div class="row">
 
     <div class="page-header">
@@ -15,10 +14,10 @@
             <h2>Выбор даты:</h2>
         </div>
 
-        <form method="post" action="/drive/history/">
+        <form method="get" action="/drive/history/">
 
             <div class="form-group">
-                <div class="input-group date" id="datetimepicker1">
+                <div class="input-group date" id="datetimepicker_drive_history">
 
                     <input name="search_date"
                            type="text"
@@ -43,10 +42,8 @@
     <div class="col-md-9">
 
         <div class="page-header">
-            <h2>Результаты поиска{% if search_date != None %} за {{search_date}}{% endif %}:</h2>
+            <h2>Результаты поиска{% if search_date != None %} за {{search_date}}{% endif %}</h2>
         </div>
-
-
 
 
     {% for time_variant in drive_time_variants %}
@@ -73,6 +70,7 @@
             </tr>
             </thead>
             <tbody>
+
             {% for note in registered_notes %}
                 {% if note.drive_time == time_variant %}
                     <tr>
@@ -92,10 +90,15 @@
                 {% endif %}
 
             {% endfor %}
+
+
             </tbody>
         </table>
 
         <hr>
+
+    {% empty %}
+        <h5>Данных за текущий период не найдено.</h5>
     {% endfor %}
 
 
@@ -106,6 +109,8 @@
     </div>
 
 
-
+<script>
+    $('#datetimepicker_drive_history').datetimepicker({language: 'ru', pickTime: false, maxDate: "{% now "d.m.Y" %}", defaultDate:"{% now "d.m.Y" %}" });
+</script>
 
 {% endblock %}

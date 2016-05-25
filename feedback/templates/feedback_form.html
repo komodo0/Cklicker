@@ -1,15 +1,10 @@
 {% block feedback_form %}
+<div id="feedback_form_error_length" class="alert alert-danger alert-dismissable feedback_form_messages"><strong>Ошибка!</strong><hr><p>Заполните поле комментария более подробно!</p></div>
 
     <h2>Обратная связь</h2>
 
-    <form id="feedback">
-        <center>
-            <textarea type="textarea" class="form-control" style="resize:none; width:100%; height:200px;"
-                      placeholder="Напишите свои замечания или пожелания разработчику."></textarea>
-            <br>
-            <button type="submit" form="feedback" class="btn btn-primary form-control">Отправить</button>
-
-        </center>
+    <form id="feedback" method="post" action="/feedback/send/">
+        <textarea id="feedback_comment_textaera" form="feedback" class="form-control" style="resize:none; width:100%; height:110px; border-radius:4px 4px 0 0;" placeholder="Напишите свои замечания или пожелания разработчику." required></textarea>
+        <button id="send_feedback_button" type="button" form="feedback" class="btn btn-primary form-control" style="border-radius:0;">Отправить</button>
     </form>
-
 {% endblock %}

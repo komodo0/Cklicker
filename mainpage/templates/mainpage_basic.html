@@ -1,0 +1,17 @@
+{% extends 'mainpage.html' %}
+
+{% block maimpage_news_feedback %}
+
+    <div class="col-md-8">
+        {% block news_form %}
+        {% include "news_form.html" %}
+        {% endblock %}
+    </div>
+
+    <div class="col-md-4">
+        {% include "feedback_form.html" %}
+        {% include "feedback_visibility_button.html" %}
+        {% include "feedback_history.html" %}
+    </div>
+
+{% endblock %}

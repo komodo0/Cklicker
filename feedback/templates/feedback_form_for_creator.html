@@ -1,0 +1,28 @@
+{% block feedback_form_for_creator %}
+<form id="feedback" method="post" action="/feedback/send/">
+    <div class="col-md-10">
+        <textarea id="feedback_comment_textaera" form="feedback" class="form-control"
+                  style="resize:none; width:100%; height:70px;"
+                  placeholder="Напишите свои замечания или пожелания разработчику."></textarea>
+    </div>
+    <div class="col-md-2">
+        <button id="send_admin_feedback_button" type="button" form="feedback"
+                class="btn btn-primary form-control" style="height:70px;">Отправить
+        </button>
+    </div>
+</form>
+
+<div id="feedback_form_error_length"
+     class="alert alert-danger alert-dismissable feedback_creator_form_messages">
+    <strong>Ошибка!</strong>
+    <hr>
+    <p>Заполните поле комментария более подробно!</p>
+</div>
+
+<div id="feedback_form_error_unknown"
+     class="alert alert-danger alert-dismissable feedback_creator_form_messages">
+    <strong>Ошибка!</strong>
+    <hr>
+    <p>Неизвестная ошибка. Попробуйте перезагрузить страницу.</p>
+</div>
+{% endblock %}

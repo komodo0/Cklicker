@@ -1,3 +1,34 @@
+//Типа "расширение для jquery чтобы получить набор GET-параметров из строки браузера
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(name){
+    return $.getUrlVars()[name];
+  }
+});
+
+//Отсылает сообщение на сервер о том, что сообщения были прочитаны
+function feedbackHasBeenRead(){
+    user_id = $.getUrlVar('usr');
+    $.ajax({
+        url: "/feedback/feedback-been-read/",
+        method: "post",
+        data: {usr: user_id},
+        dataType: "text"
+    }).done(function(data){
+        //alert(data)
+    })
+}
+
 //возвращает true, если элемент принадлежит данному классу
 function hasClass(elem, className) {
 	return new RegExp("(^|\\s)"+
@@ -320,15 +351,6 @@ function GetVerticalLayout()
    }
 }
 
-
-function buildShcema(){
-
-
-
-}
-
-
-
 /*
 _________Схема данных:____________
 
@@ -365,7 +387,7 @@ step:
 */
 //$(".b-list-item.not_visible").removeClass("not_visible");
 
-
+    feedbackHasBeenRead();
     $("input[type='text']").val("");
     $("input[type='checkbox").prop("checked", false);
     if (getCookie("step_0")==undefined){
@@ -810,3 +832,92 @@ $(".refuse_delete_news_item").click(function(){
     $("#comfirm_delete_new_"+item_id).hide();
     $("#news_navigation_"+item_id).toggle('slow');
 })
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////       Модуль FeedBack         /////////////////////
+//=====================================================//
+
+
+/*=======       Отправка отзыва на сервер    ==========*/
+
+$("#send_feedback_button").click(function(){
+    var comment = $("#feedback_comment_textaera").val();
+    replaced = comment.replace(/[\s{1,}]+/g, '');
+
+    if (replaced.length < 10){
+        $("#feedback_form_error_length").toggle("normal");
+        setTimeout(function(){$("#feedback_form_error_length").toggle("fast");}, 2000);
+    } else {
+        $.ajax({
+            url: "/feedback/send/",
+            method: "post",
+            data: {feedback_comment: comment, addressed: "no"},
+            dataType: "text"
+        }).done(function(data) {
+            $("#feedback_comment_textaera").val('');
+            location.reload();
+        });
+
+    }
+})
+
+
+/*=======      Показать/скрыть историю        ==========*/
+
+$("#history_change_visibility").click(function(){
+    $(this).find(".show_h").toggle();
+    $(this).find(".hide_h").toggle();
+    $("#feedback_history").toggle("slow");
+})
+
+
+
+
+/*=======      Отправка ответа на отзыв       ==========*/
+
+$("#send_admin_feedback_button").click(function(){
+    var comment = $("#feedback_comment_textaera").val();
+    replaced = comment.replace(/[\s{1,}]+/g, '');
+    var feedback_to_user;
+    try{
+        feedback_to_user = getPrefixElementId($(".active").attr('id'), "user_id_");
+        feedback_to_user = parseInt(feedback_to_user);
+    } catch(e){
+        feedback_to_user = -1
+    }
+
+    if (replaced.length < 10){
+        $("#feedback_form_error_length").toggle("normal");
+        setTimeout(function(){$("#feedback_form_error_length").toggle("fast");}, 2000);
+    } else if (feedback_to_user==-1){
+        $("#feedback_form_error_unknown").toggle("normal");
+        setTimeout(function(){$("#feedback_form_error_unknown").toggle("fast");}, 8000);
+    }
+     else {
+        $.ajax({
+            url: "/feedback/send/",
+            method: "post",
+            data: {feedback_comment: comment, addressed: "yes", feedback_to_user: feedback_to_user},
+            dataType: "text"
+        }).done(function(data) {
+            $("#feedback_comment_textaera").val('');
+            location.reload();
+        });
+    }
+})
+
+
+
+
+/*=======Отправка информации о прочитанных сообщениях==========*/
+
