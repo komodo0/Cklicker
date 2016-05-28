@@ -5,6 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from feedback.models import FeedBackNote
 from Cklicker.project_config import PROJECT_ADMIN_USER_LOGIN
+from django.db.models import Count,Max
 
 
 def FeedbackBeenRead(request):
@@ -71,12 +72,17 @@ def ShowFeedbackView(request):
         args['The_Creator_is_here'] = True
         args['new_feedback_count'] = len(FeedBackNote.objects.filter(has_been_read=False).exclude(from_user= The_creator))
 
-        address_list = FeedBackNote.objects.filter(to_user = The_creator)
-        new_messages = address_list.exclude(has_been_read = True)
-       #
-       #
-       #
-       #
+        address_list = FeedBackNote.objects.filter(to_user = The_creator).values("from_user").annotate(last_id=Max('id')).order_by("-last_id")
+        address_list = list(address_list)
+        messages_count = FeedBackNote.objects.filter(to_user = The_creator).exclude(has_been_read = True).values('from_user').annotate(count=Count('id'))
+        for address in address_list:
+            address['user'] = User.objects.get(id=address['from_user'])
+            for usr_nw_msg in messages_count:
+                if (usr_nw_msg['from_user']==address['from_user']):
+                    address['message_count'] = usr_nw_msg['count']
+
+
+        args['address_list'] = address_list
 
         user_id = request.GET.get('usr', '')
 
@@ -85,6 +91,7 @@ def ShowFeedbackView(request):
         else:
             try:
                 user = User.objects.get(id=user_id)
+                args['target_user'] = user
                 user_messages = FeedBackNote.objects.filter(from_user=user, to_user=The_creator)
                 admin_messages = FeedBackNote.objects.filter(from_user = The_creator, to_user=user)
                 all_messages = list(user_messages)+ list(admin_messages)

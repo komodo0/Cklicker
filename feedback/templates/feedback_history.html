@@ -1,4 +1,5 @@
 {% block feedback_history %}
+<div class="feedback_chat_container_user">
     <table id="feedback_history" class="table table-hover news_list" style="display:none">
         {% for note in feedback_notes %}
             <tr>
@@ -17,4 +18,5 @@
             </tr>
         {% endfor %}
     </table>
+</div>
 {% endblock %}

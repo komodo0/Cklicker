@@ -645,9 +645,6 @@ $(".confirm-button").click(function(){
     }
 })
 
-
-
-
 /*Event Listener для кнопки "Предыдущий шаг"*/
 $(".go_prev_state img").click(function(){
         deleteCookie("step_" + (count_current_step-1));
@@ -920,4 +917,19 @@ $("#send_admin_feedback_button").click(function(){
 
 
 /*=======Отправка информации о прочитанных сообщениях==========*/
+
+/*
+$(".div2").each(function(){
+    colspan = $(this).attr('colspan');
+
+    if ( colspan & 1 ) {
+	    $(this).attr('colspan', Math.floor(colspan/2));
+	    $(this).attr('width', '50%');
+        $(this).after('<td colspan="'+Math.ceil(colspan/2)+'" width:"50%">'+ colspan +'</td>');
+	} else {
+	    $(this).attr('colspan', Math.floor(colspan/2));
+        $(this).after('<td colspan="'+Math.ceil(colspan/2)+'">'+ colspan +'</td>');
+	}
+});
+*/
 
