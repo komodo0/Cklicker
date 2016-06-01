@@ -1,7 +1,7 @@
 # coding: utf-8
 from types import NoneType
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class TreeOrderField(models.CharField):
      def pre_save(self, model_instance, add):
@@ -88,6 +88,25 @@ class State(models.Model):
                 return "-"
         else:
             return "-"
+
+
+class StateUserNotes(models.Model):
+    class Meta():
+        verbose_name = u"Заметка пользователя к шагу диагностики"
+        verbose_name_plural = u"Заметки пользователе к шагам диагностики"
+
+    state = models.ForeignKey(State)
+    user = models.ForeignKey(User)
+    note_body = models.TextField(null=False, blank=True, default="")
+
+
+class GlobalUserNotes(models.Model):
+    class Meta():
+        verbose_name = u"Глобальная заметки пользователя"
+        verbose_name_plural = u"Глобальные заметки пользователя"
+
+    user = models.ForeignKey(User)
+    note_body = models.TextField(null=False, blank=True, default="")
 
 
 class Tip(models.Model):

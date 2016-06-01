@@ -417,6 +417,8 @@ step:
             first_variants.height(180);
         }
 
+        $('#state_usernotes_form').val($('#state_usernote_'+step.state_id).text())
+
     } else
     {
 
@@ -472,6 +474,7 @@ step:
         }
 
         showOrHideControlButtons(step.state_id);
+        $('#state_usernotes_form').val($('#state_usernote_'+step.state_id).text())
     };
 
 /* Event Listener для выбора варианта */
@@ -585,7 +588,7 @@ $(".confirm-button").click(function(){
          }
 
          //Вычленяем текущий коммента из текст пространства, вырезая все предыдущие комментарии. Проще, чем парсить снова все чекбоксы
-        step.comment = $("textarea.form-control").val().replace(prev_comments, "");
+        step.comment = $("textarea#comment").val().replace(prev_comments, "");
 
         step_state = JSON.stringify(step);
         setCookie("step_"+count_current_step, step_state);
@@ -642,8 +645,54 @@ $(".confirm-button").click(function(){
             $("#again").removeClass("not_visible");
         }
 
+        $('#state_usernotes_form').val($('#state_usernote_'+step.state_id).text())
     }
 })
+
+/*Для изменения коммента к шагу*/
+$("#save_state_usernote_changes").click(function(){
+    var note_body = $("#state_usernotes_form").val();
+    var state_id = step.state_id;
+    var is_global = false
+    $.ajax({
+        url: "/diagnostic/",
+        method: "post",
+        data: {is_global: is_global, note_body: note_body, state_id: state_id},
+        dataType: "text"
+    }).done(function(data) {
+
+        if (data==1){
+            $("#state_note_saved_ok").toggle("normal");
+            setTimeout(function(){$("#state_note_saved_ok").toggle("fast");}, 1000);
+        } else {
+            $("#state_note_saved_error").toggle("normal");
+            setTimeout(function(){$("#state_note_saved_error").toggle("fast");}, 1000);
+        }
+    });
+})
+
+
+/*Для изменения глобальных заметов */
+$("#save_global_usernote_changes").click(function(){
+    var note_body = $("#global_usernotes_form").val();
+    var is_global = true
+    $.ajax({
+        url: "/diagnostic/",
+        method: "post",
+        data: {is_global: is_global, note_body: note_body},
+        dataType: "text"
+    }).done(function(data) {
+
+        if (data==1){
+            $("#global_note_saved_ok").toggle("normal");
+            setTimeout(function(){$("#global_note_saved_ok").toggle("fast");}, 1000);
+        } else {
+            $("#global_note_saved_error").toggle("normal");
+            setTimeout(function(){$("#global_note_saved_error").toggle("fast");}, 1000);
+        }
+    });
+})
+
 
 /*Event Listener для кнопки "Предыдущий шаг"*/
 $(".go_prev_state img").click(function(){

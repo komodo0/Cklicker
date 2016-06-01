@@ -6,13 +6,16 @@
     nav {
     margin-bottom:0!important;
     }
+
+    .container{
+
+    }
 </style>
 
 
-<div class="container">
+
     <div class="row">
-        <div class="col-md-1">
-        </div>
+
 
         <div class="col-md-10">
 
@@ -27,6 +30,13 @@
                 </div>
             </div>
 
+            <div class="section-state-user-notes">
+                {% block state_user_notes %}{% endblock %}
+            </div>
+
+            <div class="section-user-global-notes">
+                {% block user_global_notes %}{% endblock %}
+            </div>
 
             <div class="section-move-description">
                 {% block move_description %}{% endblock %}
@@ -38,6 +48,7 @@
                 {% endblock %}
 
             </div>
+
             <div class="section-tips not_visible">
                 <div class="section_tips_whitespace"></div>
                 <div class="section_tips_title">Подсказки</div>
@@ -47,6 +58,7 @@
                 {% block tips %}{% endblock %}
 
             </div>
+
             <div class="section-variants">
 
                 <div class="section-variants-title">
@@ -87,7 +99,6 @@
 
             </div>
 
-
             <div class="section-results">
                 <div class="splitter">
 
@@ -109,6 +120,5 @@
     <div class="col-md-1">
     </div>
 
-</div>
 
 {% endblock %}

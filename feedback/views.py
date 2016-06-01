@@ -80,8 +80,6 @@ def ShowFeedbackView(request):
             for usr_nw_msg in messages_count:
                 if (usr_nw_msg['from_user']==address['from_user']):
                     address['message_count'] = usr_nw_msg['count']
-
-
         args['address_list'] = address_list
 
         user_id = request.GET.get('usr', '')
@@ -94,7 +92,7 @@ def ShowFeedbackView(request):
                 args['target_user'] = user
                 user_messages = FeedBackNote.objects.filter(from_user=user, to_user=The_creator)
                 admin_messages = FeedBackNote.objects.filter(from_user = The_creator, to_user=user)
-                all_messages = list(user_messages)+ list(admin_messages)
+                all_messages = list(set(user_messages) | set(admin_messages))
                 all_messages.sort(key= lambda x: x.feedback_date, reverse=True)
                 args['feedback_notes'] = all_messages
             except:

@@ -3,6 +3,51 @@
 
 
 
+{% block user_global_notes %}
+    <center><h4 style="margin-top:0;">Общие заметки</h4></center>
+    <textarea class="form-control" id="global_usernotes_form">
+
+    </textarea>
+    <button class="form-control btn btn-primary" id="save_global_usernote_changes">Сохранить</button>
+
+    <div id="global_note_saved_error" class="alert alert-danger alert-dismissable" style="height:100px; width:93.2%; position:absolute; bottom:39px; left:13px; display:none;">
+        <center><strong><h3>Ошибка!</h3></strong></center>
+    </div>
+    <div id="global_note_saved_ok" class="alert alert-success alert-dismissable" style="height:100px; width:93.2%; position:absolute; bottom:39px; left:13px; display:none;">
+        <center><strong><h3>Сохранено</h3></strong></center>
+    </div>
+
+    <script>
+        $('#global_usernotes_form').height($('#state_usernotes_form').parent().height()-90);
+    </script>
+{% endblock %}
+
+
+
+{% block state_user_notes %}
+    <center><h4 style="margin-top:0;">Заметки шага</h4></center>
+    <textarea class="form-control" id="state_usernotes_form">
+
+    </textarea>
+    <button class="form-control btn btn-primary" id="save_state_usernote_changes">Сохранить</button>
+
+    <div id="state_note_saved_error" class="alert alert-danger alert-dismissable" style="height:100px; width:93.2%; position:absolute; bottom:39px; left:13px; display:none;">
+        <center><strong><h3>Ошибка!</h3></strong></center>
+    </div>
+    <div id="state_note_saved_ok" class="alert alert-success alert-dismissable" style="height:100px; width:93.2%; position:absolute; bottom:39px; left:13px; display:none;">
+        <center><strong><h3>Сохранено</h3></strong></center>
+    </div>
+
+    <script>
+        $('#state_usernotes_form').height($('#state_usernotes_form').parent().height()-90);
+    </script>
+
+
+    {% for state_usernote in state_usernotes %}
+        <div style="display:none" id="state_usernote_{{state_usernote.state_id}}">{{state_usernote.note_body}}</div>
+    {% endfor %}
+{% endblock %}
+
 
 {% block file_manager %}
 <!---

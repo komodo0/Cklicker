@@ -1,10 +1,35 @@
 # coding: utf-8
 from types import NoneType
 from django.shortcuts import render_to_response, redirect
-from clickerApp.models import State, Tip, CheckboxInput, TextInput, RadioInput, RadioInputVariant, FunctionsBase
+from clickerApp.models import State, StateUserNotes, Tip, CheckboxInput, TextInput, RadioInput, RadioInputVariant, FunctionsBase, GlobalUserNotes
 from django.contrib import auth
+from django.http import HttpResponse
 
 def IndexView(request):
+    if request.is_ajax():
+        try:
+            comment_usr = auth.get_user(request)
+            is_global = request.POST.get('is_global', '')
+            comment = request.POST.get('note_body', '')
+            if is_global == "true":
+                try:
+                    note = GlobalUserNotes.objects.get(user=comment_usr)
+                    note.delete()
+                    GlobalUserNotes.objects.create(user=comment_usr, note_body=comment)
+                except:
+                    GlobalUserNotes.objects.create(user=comment_usr, note_body=comment)
+                return HttpResponse("1")
+            else:
+                state_id = request.POST.get('state_id', '')
+                try:
+                    note = StateUserNotes.objects.get(state=State.objects.get(id=state_id), user=comment_usr)
+                    note.delete()
+                    StateUserNotes.objects.create(state=State.objects.get(id=state_id), user=comment_usr, note_body=comment)
+                except:
+                    StateUserNotes.objects.create(state=State.objects.get(id=state_id), user=comment_usr, note_body=comment)
+                return HttpResponse("1")
+        except:
+            return HttpResponse("-1")
 
     beginState = -1
     fun = FunctionsBase()
@@ -48,6 +73,7 @@ def IndexView(request):
     args['text_inputs'] = TextInput.objects.all().values()
     args['radio_inputs'] = RadioInput.objects.all().values()
     args['radio_input_variants'] = RadioInputVariant.objects.all().values()
+    args['state_usernotes'] = StateUserNotes.objects.filter(user = auth.get_user(request)).values()
     response = render_to_response('clicker_content.html', args)
     response.set_cookie("fist_step_id", beginState)
     return response
@@ -89,12 +115,53 @@ def SchemaView(request):
     while i <= full_depth:
         formatted_states.append(i)
         formatted_states[i-1] = []
-
         for state in states:
             if state.state_level == i:
                 formatted_states[i-1].append(state)
-
         i += 1
+
+
+    for level in formatted_states:
+        if len(level) == 1:
+            level[0].position = 0
+        else:
+            i = 0
+            while i < len(level):
+                state = level[i]
+                if (i==0):
+                    if state.parent == level[i+1].parent:
+                        state.position = 1
+                    else:
+                        state.position = 0
+                elif (i==len(level)-1):
+                    if state.parent == level[i-1].parent:
+                        state.position = 3
+                    else:
+                        state.position = 0
+                else:
+                    if state.parent == level[i-1].parent:
+                        if state.parent == level[i+1].parent:
+                            state.position = 2
+                        else:
+                            state.position = 3
+                    elif state.parent == level[i+1].parent:
+                        state.position = 1
+                    else:
+                        state.position = 0
+
+                i+=1
+
+
+
+
+
+
+
+
+
+
+
+
 
     args['states'] = formatted_states
 

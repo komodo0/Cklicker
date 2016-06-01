@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.contrib import admin
-from clickerApp.models import State, Tip, CheckboxInput, TextInput, RadioInput, RadioInputVariant
+from clickerApp.models import State, StateUserNotes, Tip, CheckboxInput, TextInput, RadioInput, RadioInputVariant
 
 
 class ClickerTip(admin.TabularInline):
@@ -47,6 +47,9 @@ class ClickerRadioInputVariant(admin.TabularInline):
 class RadioInputAdmin(admin.ModelAdmin):
     inlines = [ClickerRadioInputVariant]
 
+class StateUserNotesAdmin(admin.ModelAdmin):
+    list_display = ('user', 'state', 'note_body')
 
 admin.site.register(State, ClickerState)
+admin.site.register(StateUserNotes, StateUserNotesAdmin)
 admin.site.register(RadioInput, RadioInputAdmin)

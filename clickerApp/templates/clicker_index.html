@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href='{% static "static/templates/fileManager/grid.css" %}'>
 
     <title>Интерактивная диагностика</title>
-
+    <script src='{% static "static/templates/jquery.min.js" %}'></script>
+    <script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
 </head>
 <body>
 
@@ -34,11 +35,13 @@
             {% endif %}
 
 
+            <!--------
             {% if user_is_staff %}
             <li>
                 <a href="/diagnostic/statistic/">Статистика использования</a>
             </li>
             {% endif %}
+            -------->
 
             {% if user_is_staff %}
             <li>
@@ -67,8 +70,6 @@
 {% block clicker_statistic %}{% endblock %}
 
 
-
-
 </div>
 
 
@@ -76,10 +77,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src='{% static "static/templates/jquery.min.js" %}'></script>
-<script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
-<script src='{% static "static/templates/functions.js" %}'></script>
 
+
+<script src='{% static "static/templates/functions.js" %}'></script>
 
 {% block schema_script %}{% endblock %}
 

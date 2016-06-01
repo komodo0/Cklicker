@@ -28,7 +28,7 @@ def Index(request):
     user_messages = FeedBackNote.objects.filter(from_user=auth.get_user(request), to_user=User.objects.get(username=PROJECT_ADMIN_USER_LOGIN))
     admin_messages = FeedBackNote.objects.filter(from_user = User.objects.get(username="kotelnikov.ii"), to_user=auth.get_user(request))
 
-    all_messages = list(user_messages)+ list(admin_messages)
+    all_messages = list(set(user_messages) | set(admin_messages))
     all_messages.sort(key= lambda x: x.feedback_date, reverse=True)
 
     args['feedback_notes'] = all_messages

@@ -37,17 +37,24 @@
         <tr>
 
         {% for state in level %}
-
             <td colspan="{{state.state_width}}" rowspan="{{state.cell_rowspan}}" style="text-align:center!important;">
 
-                {% if forloop.first and forloop.counter != forloop.revcounter %}
+
+
+
+
+                {% if state.position == 1 %}
                     <div style="display:inline-block; width:50%; border-right:1px solid black; height:20px;"></div><div style="  height:20px; display:inline-block; width:50%; border-top:1px solid black;"></div>
                 {% else %}
-                    {% if forloop.last and forloop.counter != forloop.revcounter %}
-                        <div style="  height:20px; display:inline-block; width:50%; border-top:1px solid black;"></div><div style="  height:20px; display:inline-block; width:50%; border-left:1px solid black;"></div>
+                    {% if state.position == 3 %}
+                        <div style="height:20px; display:inline-block; width:50%; border-top:1px solid black;"></div><div style="height:20px; display:inline-block; width:50%; border-left:1px solid black;"></div>
                     {% else %}
-                        {% if forloop.counter != forloop.revcounter or  forloop.counter > 1%}
-                            <div style="  height:20px; display:inline-block; width:50%; border-top:1px solid black; border-right:1px solid black;"></div><div style="  height:20px; display:inline-block; width:50%; border-top:1px solid black;"></div>
+                        {% if state.position == 2 %}
+                            <div style="height:20px; display:inline-block; width:50%; border-top:1px solid black; border-right:1px solid black;"></div><div style="height:20px; display:inline-block; width:50%; border-top:1px solid black;"></div>
+                        {% else %}
+                            {% if state.position == 0 %}
+                                <div style="display:inline-block; width:50%; border-right:1px solid black; height:20px;"></div><div style="height:20px; display:inline-block; width:50%;"></div>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 {% endif %}
@@ -55,11 +62,10 @@
 
 
 
-
         <div class="state_item">
 
             <div class="item_id" style="display:none;">id = {{ state.id }}</div>
-            <div class="parent_id" style="display:none;">parentid = {{ state.parent.id }}</div>
+            <div class="parent_id" style="display:none;">parentid = {{ state.parent.id }} </div>
 
 
             <div class="item_title vertical-text">{{state.state_title}}</div>
@@ -75,7 +81,7 @@
 
                 {% if state.cell_rowspan == 1 and forloop.parentloop.revcounter != 1 %}
                     <br>
-                    <div style="display:inline-block; width:50%; border-right:1px solid black; height:20px;"></div><div style="height:20px; display:inline-block; width:50%;"></div>
+                    <div class="bot_div" style="display:inline-block; width:50%; border-right:1px solid black; min-height:20px; "></div><div style="height:20px; display:inline-block; width:50%;"></div>
                 {% endif %}
                 </td>
         {% endfor %}
@@ -90,7 +96,14 @@
 
         </table>
 
-
+<script>
+    $(".bot_div").each(function(){
+        parent_height = $(this).parent().height()
+        prev_div_height = $(this).prev().height()
+        prev_prev_div_height = $(this).prev().prev().height()
+        $(this).height(parent_height-prev_div_height-prev_prev_div_height-20);
+    })
+</script>
     </div>
 
 {% endblock %}
@@ -99,3 +112,7 @@
 {% block schema_script %}
 
 {% endblock %}
+
+
+
+

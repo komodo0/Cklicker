@@ -13,7 +13,7 @@
             </a>
         </li>
     {% empty %}
-        <center><h6>Отзывов еще не было.</h6></center>
+        <center><h6>Отзывов еще не было.</h6>
     {% endfor %}
     </ul>
 </div>
@@ -24,33 +24,31 @@
     {% if not feedback_notes %}
         <center><h4>Когда-нибудь все будет работать, как должно.</h4></center>
     {% else %}
-        <table id="feedback_history" class="table news_list">
-            <tr>
-                <td>
-                    {% include "feedback_form_for_creator.html" %}
-                </td>
-            </tr>
-
-            {% for note in feedback_notes %}
-
-            <tr class="{% if not note.has_been_read %}info{% endif %}" >
-                <td>
-                    <div style="font-weight:bold!important">
-                        <div class="pull-left">{{ note.from_user }}</div>
-                        <div class="pull-right">{{ note.feedback_date|date:"d.m.Y"}}</div>
+        <div class="feedback_form_container_for_creator">
+            {% include "feedback_form_for_creator.html" %}
+        </div>
+        <div class="feedback_chat_container_creator">
+            <table id="feedback_history" class="table news_list">
+                {% for note in feedback_notes %}
+                <tr class="{% if not note.has_been_read %}info{% endif %}" >
+                    <td>
+                        <div style="font-weight:bold!important">
+                            <div class="pull-left">{{ note.from_user }}</div>
+                            <div class="pull-right">{{ note.feedback_date|date:"d.m.Y"}}</div>
+                            <br>
+                            <div class="pull-right">{{ note.feedback_date|date:"h:i:s"}}</div>
+                        </div>
                         <br>
-                        <div class="pull-right">{{ note.feedback_date|date:"h:i:s"}}</div>
-                    </div>
-                    <br>
-                    <div>
-                        {{ note.feedback_body | linebreaksbr}}
-                    </div>
-                </td>
-            </tr>
+                        <div>
+                            {{ note.feedback_body | linebreaksbr}}
+                        </div>
+                    </td>
+                </tr>
 
-            {% endfor %}
+                {% endfor %}
 
-        </table>
+            </table>
+        </div>
     {% endif %}
     </div>
 </div>
