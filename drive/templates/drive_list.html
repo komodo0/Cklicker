@@ -33,12 +33,9 @@
 
 {% else %}
 
-
-
     <div class="page-header">
         <h1>Развозка на {{ date }}</h1>
     </div>
-
 
     {% for time_variant in drive_time_variants %}
 
@@ -53,7 +50,10 @@
                     Подразделение:
                 </th>
                 <th>
-                    Оператор:
+                    Оператор (логин):
+                </th>
+                <th>
+                    Оператор (имя):
                 </th>
                 <th>
                     Район:
@@ -72,6 +72,9 @@
                         </td>
                         <td>
                             {{ note.address.operator }}
+                        </td>
+                        <td>
+                            {{ note.address.operator.last_name }} {{ note.address.operator.first_name }}
                         </td>
                         <td>
                             {{ note.address.area.name }}

@@ -264,8 +264,6 @@ width:882px;
 }
 
 .close_tips:active{
-
-
     text-shadow: 1px 1px 2px black, 0 0 1em white;
     background-color:#bbb;
 }
@@ -275,23 +273,34 @@ width:882px;
     position:absolute;
     left:895px;
     top:415px;
-	padding:12px;
-	width:380px;
-	height:336px!important;
-	vertical-align:top;
+    width:380px;
+    height:336px!important;
+}
+
+#user_global_notes_form_container{
+    padding:12px;
+    width:380px;
+    height:336px!important;
+    vertical-align:top;
 	text-align:center;
 	border-top:1px solid #aaa;
 	border-bottom:2px solid #aaa;
 	border-right:2px solid #aaa;
 	border-left:2px solid #aaa;
 	background-color:#eee;
-	border-radius: 0 10px 10px  0;
+	border-radius: 0 0 10px  0;
+
 }
 
 .section-state-user-notes{
     position:absolute;
     left:895px;
-	padding:12px;
+    width:380px;
+	height:335px!important;
+}
+
+#user_state_notes_form_container{
+    padding:12px;
 	width:380px;
 	height:335px!important;
 	vertical-align:top;
@@ -301,8 +310,10 @@ width:882px;
 	border-right:2px solid #aaa;
 	border-left:2px solid #aaa;
 	background-color:#eee;
-	border-radius: 0 10px 10px  0;
+	border-radius: 0 10px 0  0;
 }
+
+
 
 #state_usernotes_form{
     height: auto;
@@ -732,8 +743,6 @@ line-height: 1.42857143;
    text-align:center;
    min-width:80px;
    max-width:130px;
-   min-height:80px;
-
 }
 
 
@@ -837,6 +846,11 @@ line-height: 1.42857143;
 
 .news_list > tbody > tr > td{
     word-wrap:break-word!important;
+    //word-break: break-all!important;
+}
+
+.chat_list > tbody > tr > td{
+    word-wrap:break-word!important;
     word-break: break-all!important;
 }
 
@@ -858,11 +872,49 @@ line-height: 1.42857143;
 }
 
 
+#close_state_user_notes_button{
+    position:absolute;
+    left:-33px;
+    bottom:15px;
+    border-right:1px solid #888!important;
+    border-radius: 5px 0 0 5px !important;
+}
+
+#open_state_user_notes_button{
+    position:absolute;
+    left:1px;
+    bottom:15px;
+    border-left:1px solid #888!important;
+    border-radius: 0 5px 5px 0 !important;
+    display:none;
+}
+
+#close_global_user_notes_button{
+    position:absolute;
+    left:-33px;
+    top:15px;
+    border-right:1px solid #888!important;
+    border-radius: 5px 0 0 5px !important;
+}
+
+#open_global_user_notes_button{
+    position:absolute;
+    left:1px;
+    top:15px;
+    border-left:1px solid #888!important;
+    border-radius:0 5px 5px 0!important;
+    display:none;
+}
+
+
+
+
+
 
 
 
 .navbar-header{
-display:none!important;
+//display:none!important;
 }
 
 

@@ -28,7 +28,7 @@
             {% include "feedback_form_for_creator.html" %}
         </div>
         <div class="feedback_chat_container_creator">
-            <table id="feedback_history" class="table news_list">
+            <table id="feedback_history" class="table chat_list">
                 {% for note in feedback_notes %}
                 <tr class="{% if not note.has_been_read %}info{% endif %}" >
                     <td>

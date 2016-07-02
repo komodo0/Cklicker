@@ -9,7 +9,7 @@
     {% if wrong_time %}
     <div class="jumbotron">
         <h1>Запись окончена </h1>
-        <p>Сейчас {{current_time}}!</p>
+        <p>Времени уже <strong>{{current_time |date:"H:i" }}!</strong></p>
         <p>Запись на развозку производится с 9:00 до 19:00, у тебя было 10 часов, чтобы подумать об этом.</p>
         <p>На сегодня запись закончена, ищи себя в списках, если успел записаться.</p>
         <p>Если не успел, тебя ждет увлекательная прогулка пешком до дома.</p>
@@ -70,7 +70,7 @@
 
                     <button type="submit"
                             {% if addresses %}
-                                class="btn btn-default">Записаться</button>
+                                class="btn btn-success">Записаться</button>
                             {% else %}
                                 disabled class="btn btn-danger">Записаться</button>
                                 <br>

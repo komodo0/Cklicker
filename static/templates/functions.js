@@ -390,6 +390,23 @@ step:
     feedbackHasBeenRead();
     $("input[type='text']").val("");
     $("input[type='checkbox").prop("checked", false);
+
+    if (getCookie("global_user_notes")==undefined){
+        setCookie("global_user_notes", true);
+    } else if (getCookie("global_user_notes")=="false"){
+        $("#user_global_notes_form_container").hide();
+        $("#close_global_user_notes_button").hide();
+        $("#open_global_user_notes_button").show();
+    }
+
+    if (getCookie("state_user_notes")==undefined){
+        setCookie("state_user_notes", true);
+    } else if (getCookie("state_user_notes")=="false"){
+        $("#user_state_notes_form_container").hide();
+        $("#close_state_user_notes_button").hide();
+        $("#open_state_user_notes_button").show();
+    }
+
     if (getCookie("step_0")==undefined){
 
         $(".go_prev_state img").hide();
@@ -671,7 +688,6 @@ $("#save_state_usernote_changes").click(function(){
     });
 })
 
-
 /*Для изменения глобальных заметов */
 $("#save_global_usernote_changes").click(function(){
     var note_body = $("#global_usernotes_form").val();
@@ -693,17 +709,11 @@ $("#save_global_usernote_changes").click(function(){
     });
 })
 
-
 /*Event Listener для кнопки "Предыдущий шаг"*/
 $(".go_prev_state img").click(function(){
         deleteCookie("step_" + (count_current_step-1));
         window.location.reload();
 });
-
-/*Event Listener для кнопки "Следующий шаг"*/
-$(".go_next_state img").click(function(){
-    alert("go next page")
-})
 
 /*Event Listener для кнопки тест again*/
 $("#again").click(function(){
@@ -982,3 +992,35 @@ $(".div2").each(function(){
 });
 */
 
+
+
+/*=======      Открытие-закрытие полей заметок для кликера      ==========*/
+$("#close_state_user_notes_button").click(function(){
+    $("#user_state_notes_form_container").toggle("fast");
+    $(this).hide();
+    $("#open_state_user_notes_button").show();
+    setCookie("state_user_notes", false)
+})
+
+
+$("#close_global_user_notes_button").click(function(){
+    $("#user_global_notes_form_container").toggle("fast");
+    $(this).hide();
+    $("#open_global_user_notes_button").show();
+    setCookie("global_user_notes", false)
+})
+
+$("#open_state_user_notes_button").click(function(){
+    $("#user_state_notes_form_container").toggle("fast");
+    $(this).hide();
+    $("#close_state_user_notes_button").show();
+    setCookie("state_user_notes", true)
+})
+
+
+$("#open_global_user_notes_button").click(function(){
+    $("#user_global_notes_form_container").toggle("fast");
+    $(this).hide();
+    $("#close_global_user_notes_button").show();
+    setCookie("global_user_notes", true)
+})

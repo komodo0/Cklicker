@@ -15,5 +15,6 @@ urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + pa
     url(r'^diagnostic/', include('clickerApp.urls')),
     url(r'^testing/', include('testingsys.urls')),
     url(r'^feedback/', include('feedback.urls')),
+    url(r'^profile/', include('userProfile.urls')),
     url(r'^', include('mainpage.urls')),
 )

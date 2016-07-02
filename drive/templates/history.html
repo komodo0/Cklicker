@@ -59,7 +59,10 @@
                     Подразделение:
                 </th>
                 <th>
-                    Оператор:
+                    Оператор(логин):
+                </th>
+                <th>
+                    Оператор(имя):
                 </th>
                 <th>
                     Район:
@@ -79,6 +82,9 @@
                         </td>
                         <td>
                             {{ note.address.operator }}
+                        </td>
+                        <td>
+                            {{ note.address.operator.last_name }} {{ note.address.operator.first_name }}
                         </td>
                         <td>
                             {{ note.address.area.name }}

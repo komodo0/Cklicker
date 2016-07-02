@@ -31,17 +31,20 @@ class State(models.Model):
     move_title = models.CharField(max_length=300, null=False, blank=False)
     move_description = models.TextField(max_length=2000, blank=True, null=False)
     seq = models.PositiveIntegerField(default=0)
-    path = TreeOrderField(max_length=255, blank=True)
+    path = models.CharField(max_length=255, blank=True)
 
     @property
     def level(self):
         return max(0, len(self.path)/3-1)
 
-    def alredyUpdated(self):
-        if self.seq == 0:
-            return False
-        else:
-            return True
+    def save(self, *args, **kwargs):
+        super(State, self).save(*args, **kwargs)
+        if len(State.objects.filter(parent = self)) == 0 and self.path == "":
+            if self.parent != None:
+                self.parent.seq = self.parent.seq + 1
+                self.parent.save()
+                self.path = '%s%03d'%(self.parent.path, self.parent.seq, )[:255]
+                self.save()
 
     def __str__(self):
         parent = self.parent
@@ -253,30 +256,30 @@ class FunctionsBase():
     #         value = model_instance.path
     #         setattr(model_instance, self.attname, value)
     #         return value
-    def reinitializeStates(self):
-        states = State.objects.all()
-        for state in states:
-            seq = 0
-            for inner_state in states:
-                if inner_state.parent_id == state.id:
-                    seq+=1
-            state.seq = seq
+    #def reinitializeStates(self):
+    #    states = State.objects.all()
+    #    for state in states:
+    #        seq = 0
+    #        for inner_state in states:
+    #            if inner_state.parent_id == state.id:
+    #                seq+=1
+    #        state.seq = seq
 
-            if type(state.parent) == NoneType:
-                state.path = "001"
-            else:
-                counter = 1
-                parent_seq = state.parent.seq
-                parent_path = state.parent.path
-                current_path = parent_path + "001"
-                for inner_state in states:
-                    if inner_state.path == current_path:
-                        counter += 1
-                        current_path = parent_path + "00" + str(counter)
+    #        if type(state.parent) == NoneType:
+    #            state.path = "001"
+    #        else:
+    #            counter = 1
+    #            parent_seq = state.parent.seq
+    #            parent_path = state.parent.path
+    #            current_path = parent_path + "001"
+    #            for inner_state in states:
+    #                if inner_state.path == current_path:
+    #                    counter += 1
+    #                    current_path = parent_path + "00" + str(counter)
 
-                state.path = current_path
+     #           state.path = current_path
 
-            state.save()
+      #      state.save()
 
 
     #находится ли элемент "под" другим

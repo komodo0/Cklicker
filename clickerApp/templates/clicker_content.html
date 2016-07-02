@@ -1,9 +1,10 @@
 {%extends 'clicker_container.html' %}
 <!--- {% load staticfiles %} --->
 
-
-
 {% block user_global_notes %}
+    <button type="button" id="open_global_user_notes_button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button type="button" id="close_global_user_notes_button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div id="user_global_notes_form_container">
     <center><h4 style="margin-top:0;">Общие заметки</h4></center>
     <textarea class="form-control" id="global_usernotes_form">
 
@@ -20,11 +21,15 @@
     <script>
         $('#global_usernotes_form').height($('#state_usernotes_form').parent().height()-90);
     </script>
+</div>
 {% endblock %}
 
-
+<!------------------------------------------->
 
 {% block state_user_notes %}
+    <button type="button" id="open_state_user_notes_button" class="btn btn-primary  btn-sm"><span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button type="button" id="close_state_user_notes_button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
+<div id="user_state_notes_form_container">
     <center><h4 style="margin-top:0;">Заметки шага</h4></center>
     <textarea class="form-control" id="state_usernotes_form">
 
@@ -46,6 +51,7 @@
     {% for state_usernote in state_usernotes %}
         <div style="display:none" id="state_usernote_{{state_usernote.state_id}}">{{state_usernote.note_body}}</div>
     {% endfor %}
+</div>
 {% endblock %}
 
 

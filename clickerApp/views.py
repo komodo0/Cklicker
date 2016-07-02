@@ -44,13 +44,10 @@ def IndexView(request):
     else:
         args['user_is_staff'] = auth.get_user(request).is_staff
 
-
     states = State.objects.order_by("path").values()
 
-    i = 0
     for state in states:
         state['depth'] = len(state['path'])/3 - 1
-        i += 1
 
     i = 0
     for state in states:
@@ -187,5 +184,3 @@ def Statistic(request):
 
     response = render_to_response('clicker_statistic.html', args)
     return response
-
-

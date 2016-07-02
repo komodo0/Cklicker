@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'testingsys',
     'feedback',
     'news',
+    'userProfile',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -87,7 +88,8 @@ TEMPLATE_DIRS = (
     'loginsys/templates/',
     'testingsys/templates/',
     'feedback/templates/',
-    'news/templates'
+    'news/templates/',
+    'userProfile/templates/'
 )
 
 DEFAULT_CHARSET = "utf-8"

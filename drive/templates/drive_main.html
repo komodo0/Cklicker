@@ -4,7 +4,7 @@
 <html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Развозка</title>
+    <title>Автоматизированная развозка</title>
     <link rel="shortcut icon" href="{% static 'static/templates/favicon.png' %}"/>
     <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap.css" %}'>
     <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap-datetimepicker.min.css" %}'>
@@ -22,7 +22,7 @@
 
 <nav role="navigation" class="navbar navbar-default">
     <div class="navbar-header">
-        <a href="#" class="navbar-brand">Автоматическая развозка</a>
+        <a href="#" class="navbar-brand">Автоматизированная развозка</a>
     </div>
 
 
@@ -55,6 +55,11 @@
             {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            {% if username %}
+            <li style="background-color:orange;">
+                <a href="/profile/">Профиль</a>
+            </li>
+            {% endif %}
             <li>
                 {% if username %}
                 <a href="/auth/logout/">Выйти ({{ username }})</a>

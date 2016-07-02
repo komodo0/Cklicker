@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset=utf-8"/>
+    <title>Профиль пользователя</title>
+    <link rel="shortcut icon" href="{% static 'static/templates/favicon.png' %}"/>
+    <link rel="stylesheet" type="text/css" href='{% static "static/templates/bootstrap/css/bootstrap.css" %}'>
+</head>
+
+<body>
+
+<nav role="navigation" class="navbar navbar-default">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">Профиль пользователя</a>
+    </div>
+
+
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav">
+            <li><a href="/">Главная</a></li>
+
+            <li>
+                <a href="/profile/">Мой профиль</a>
+            </li>
+
+            {% if supervisor %}
+                <li>
+                    <a href="/profile/">Профили пользователей</a>
+                </li>
+            {% endif %}
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                {% if username %}
+                <a href="/auth/logout/">Выйти ({{ username }})</a>
+                {% else %}
+                <a href="/auth/login/">Войти</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+    {% block my_profile %}{% endblock %}
+
+    {% block department_user_profiles %}{% endblock %}
+
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src='{% static "static/templates/jquery.min.js" %}'></script>
+<script src='{% static "static/templates/bootstrap/js/bootstrap.min.js" %}'></script>
+</body>
+</html>
